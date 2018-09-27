@@ -27,7 +27,7 @@ public class MemberController {
 	public String viewRegistNewUploader() {	
 		
 		return "/member/regist";
-	}
+	} 
 	
 	
 	// <로그인>
