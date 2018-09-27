@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace="현재 패키지의 인터페이스명" -->
+<mapper namespace="MemberDao">
+
+<insert id="insertNewMember" parameterType="MemberVO">
+INSERT INTO MEMBER (	
+						EMAIL
+						, NAME
+						, NICKNAME
+						, PASSWORD
+						, SALT
+						, POINT
+						, MEMBERSHIP
+					) 
+VALUES 				(
+						#{email}
+						, #{name}
+						, #{nickname}
+						, #{password}
+						, #{salt}
+						, 1000
+						, 'TRPEOPLE'
+					)
+</insert>
+
+
+<select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
+SELECT	EMAIL email
+		, NAME name
+		, NICKNAME nickname
+		, PASSWORD password
+		, SALT salt
+		, POINT point
+		, MEMBERSHIP membership
+FROM	MEMBER
+WHERE	EMAIL = #{email}
+AND		PASSWORD = #{password}
+</select>
+
+
+<update id="updatePoint">
+UPDATE	MEMBER
+SET		POINT  = POINT + #{point}
+WHERE	EMAIL = #{email}
+</update>
+
+</mapper>
