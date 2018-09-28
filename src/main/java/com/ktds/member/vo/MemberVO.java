@@ -1,22 +1,23 @@
 package com.ktds.member.vo;
 
 public class MemberVO {
-	private String email;
+
+	private String memberId;
 	private String name;
-	private String nickname;
 	private String password;
 	private String salt;
 	private int point;
 	private String membership;
+	private String email;
+	private String birth;
 
 	
-	
-	public String getEmail() {
-		return email;
+	public String getMemberId() {
+		return memberId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getName() {
@@ -25,14 +26,6 @@ public class MemberVO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 
 	public String getPassword() {
@@ -67,4 +60,19 @@ public class MemberVO {
 		this.membership = membership;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
 }

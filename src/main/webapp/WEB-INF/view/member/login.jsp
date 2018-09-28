@@ -49,7 +49,11 @@
 	      }
 	    });
 	   //]]>
-	    
+		$("#loginForm").attr({
+			"method" : "post"
+			, "action" : "/TraditionalMarket/member/login"
+		})
+		.submit() 
 	})
 
 	
@@ -61,18 +65,17 @@
 
 <body>
 
-	<form>
+	<form id="loginForm">
 		<div>
-			<input type="id" name="id" placeholder="아이디"/>
+			<input type="text" id="memberId" name="memberId" placeholder="아이디"/>
 		</div>
 		<div>
-			<input type="password" name="password" placeholder="비밀번호" />
+			<input type="password" id="password" name="password" placeholder="비밀번호" />
 		</div>
 		<div id="submit">
 			<input type="submit" value="로그인" />
 			<a id="kakao-login-btn"></a>
 		</div>
-
 	</form>
 
 

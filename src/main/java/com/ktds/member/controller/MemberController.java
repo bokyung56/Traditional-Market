@@ -1,7 +1,5 @@
 package com.ktds.member.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ktds.member.service.MemberService;
 import com.ktds.member.vo.MemberVO;
@@ -22,33 +17,52 @@ public class MemberController {
 	@Autowired 
 	private MemberService memberService;
 	
+	
 	// <회원가입>
 	@GetMapping("/member/regist")
-	public String viewRegistNewUploader() {	
+	public String viewRegistNewMember() {	
 		
-		return "/member/regist";
+		return "member/regist";
 	} 
+	
+	
+	@PostMapping("/member/regist")
+	public String doRegistAction( @ModelAttribute MemberVO memberVO ) {
+		
+		this.memberService.createNewMember(memberVO);
+		
+		return "redirect:/main/main";
+	}
 	
 	
 	// <로그인>
 	@GetMapping("/member/login")
 	public String showLoginPage() {
 		
-		return "/member/login";
+		return "member/login";
 	}
 	
+	// <일반회원-로그인>
 	@PostMapping("/member/login")
 	public String doLoginAction( @ModelAttribute MemberVO memberVO
 									, HttpSession session) {
 		
 		MemberVO param = this.memberService.readOneMember(memberVO);
+			
+		session.setAttribute("_USER_", param);		// 1. session 등록 (session key == _USER_) -> 2. SessionInterceptor.java
 		
-		// session 등록 (session key == _USER_)
-		session.setA
-		
-		return ;
+		return "redirect:/main/main";
 	}
 	
+	// <카카오회원-로그인>
+	
+	
+	
+	@GetMapping("/main/main")
+	public String viewMain() {	
+		
+		return "main/main";
+	} 
 	
 	
 

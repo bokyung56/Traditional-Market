@@ -6,6 +6,13 @@
 	<display-name>Traditional-Market</display-name>
 	<!-- The front controller of this Spring Web application, responsible for 
 		handling all application requests -->
+	
+	<!-- session 유지시간 60분 -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	
+	
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

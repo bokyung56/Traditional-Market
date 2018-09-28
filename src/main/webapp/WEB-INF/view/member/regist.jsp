@@ -1,20 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>전통시장: 회원가입</title>
-<script src="Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="/TraditionalMarket/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-<!-- 1. 똑같은 form이여도 전송하는 위치가 다를 수 있으니
+/* <!-- 1. 똑같은 form이여도 전송하는 위치가 다를 수 있으니
      2. 벨리데이션 체크: 공백이면 종료(return)하고 만약 이 모든것들이 이상이 없으면 submit을 해라. 
-                     다시 말하면. submit하기전에 체크하는건 다 벨리데이션 체크 -->
+                     다시 말하면. submit하기전에 체크하는건 다 벨리데이션 체크 --> */
 	$(document).ready( function(){
 		$("#regist").click( function(){
-			if( $("#id").val() == "" ){
+			if( $("#memberId").val() == "" ){
 				
-				$("#id").focus()
+				$("#memberId").focus()
 				return;
 			}
 			else if( $("#password").val() == "" ){
@@ -52,7 +51,7 @@
 			}
 			$("#registForm").attr({
 				"method" : "post"
-				, "action" : "/Traditional-Market/member/regist"
+				, "action" : "/TraditionalMarket/member/regist"
 			})
 			.submit()
 			
@@ -66,7 +65,7 @@
 <form id="registForm">
 	<div>
 		<h3 class="join_title">아이디</h3>
-		<input type="text" id="id" name="id" placeholder="아이디">
+		<input type="text" id="memberId" name="memberId" placeholder="아이디">
 	</div>
 	<div>
 		<h3 class="join_title">비밀번호</h3>
@@ -80,7 +79,8 @@
 	</div>
 	<div class="bir_wrap">
 		<h3 class="join_title">생년월일</h3>
-		<span>
+		<input type="date" name="birth" min="1930-01-01">
+		<!-- <span>
 			<input type="text" id="yy" placeholder="년(4자)" maxlength="4">
 		</span>
 		<span>
@@ -101,12 +101,13 @@
 		</span>
 		<span>
 			<input type="text" id="dd" placeholder="일" maxlength="2">
-		</span>
+		</span> -->
 	</div>
 	<div>
 		<h3 class="join_title">이메일</h3>
 		<input type="text" id="email" name="email" placeholder="이메일">
 	</div>
+	
 	<div>
 		<input type="button" id="regist" value="회원가입">
 	</div>

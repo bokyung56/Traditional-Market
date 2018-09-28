@@ -9,44 +9,50 @@
 
 <insert id="insertNewMember" parameterType="MemberVO">
 INSERT INTO MEMBER (	
-						EMAIL
-						, NAME
-						, NICKNAME
-						, PASSWORD
+						MEMBER_ID				
+						, PASSWORD			
+						, NAME				
 						, SALT
-						, POINT
-						, MEMBERSHIP
+						, BIRTH
+						, EMAIL
+
 					) 
 VALUES 				(
-						#{email}
-						, #{name}
-						, #{nickname}
-						, #{password}
+						#{memberId}				
+						, #{password}			
+						, #{name}				
 						, #{salt}
-						, 1000
-						, 'TRPEOPLE'
+						, #{birth}
+						, #{email}
 					)
 </insert>
 
 
 <select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
-SELECT	EMAIL email
+SELECT	MEMBER_ID memberId
 		, NAME name
-		, NICKNAME nickname
 		, PASSWORD password
 		, SALT salt
 		, POINT point
 		, MEMBERSHIP membership
+		, EMAIL email
+		, BIRTH birth
 FROM	MEMBER
-WHERE	EMAIL = #{email}
+WHERE	MEMBER_ID = #{memberId}
 AND		PASSWORD = #{password}
+</select>
+
+<select id="getSaltById" parameterType="string" resultType="string">
+SELECT	SALT 
+FROM	MEMBER
+WHERE	MEMBER_ID = #{memberId}
 </select>
 
 
 <update id="updatePoint">
 UPDATE	MEMBER
 SET		POINT  = POINT + #{point}
-WHERE	EMAIL = #{email}
+WHERE	MEMBER_ID = #{memberId}
 </update>
 
 </mapper>
