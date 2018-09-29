@@ -31,7 +31,7 @@ public class MemberController {
 		
 		this.memberService.createNewMember(memberVO);
 		
-		return "redirect:/main/main";
+		return "redirect:/main/mainPage";
 	}
 	
 	
@@ -51,17 +51,24 @@ public class MemberController {
 			
 		session.setAttribute("_USER_", param);		// 1. session 등록 (session key == _USER_) -> 2. SessionInterceptor.java
 		
-		return "redirect:/main/main";
+		return "redirect:/main/mainPage";
 	}
 	
 	// <카카오회원-로그인>
 	
 	
 	
-	@GetMapping("/main/main")
+	@GetMapping("/main/mainPage")
 	public String viewMain() {	
 		
-		return "main/main";
+		return "main/mainPage";
+	} 
+	
+	
+	@GetMapping("/main/m")
+	public String viewM() {	
+		
+		return "main/m";
 	} 
 	
 	

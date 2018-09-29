@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public boolean createNewMember(MemberVO memberVO) {		
 		String salt = SHA256Util.generateSalt();			// 난수값을 이용해 5글자를 만들어냄
-		String password = this.getHashedPassword(salt, memberVO.getPassword());
+		String password = this.getHashedPassword(memberVO.getPassword(), salt);
 		
 		memberVO.setPassword(password);
 		memberVO.setSalt(salt);
@@ -27,16 +27,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	
-	public String getHashedPassword(String salt, String password) {
+	public String getHashedPassword(String password, String salt) {
 		
 		return SHA256Util.getEncrypt(password, salt);
 	}
 	
-	public static String getEncrypt(String source, String salt) {
-		return getEncrypt(source, salt.getBytes());
-	}
 
-	
 	// <로그인>
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {		
