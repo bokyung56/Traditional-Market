@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.board.dao;
+package com.ktds.traditionalmarket.board.dao;
 
 public interface BoardDao {
 

@@ -1,6 +1,6 @@
-package com.ktds.traditionalMarket.member.service;
+package com.ktds.traditionalmarket.member.service;
 
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public interface MemberService {
 	

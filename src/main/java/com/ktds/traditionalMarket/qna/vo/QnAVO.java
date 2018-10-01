@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.qna.vo;
+package com.ktds.traditionalmarket.qna.vo;
 
 public class QnAVO {
 

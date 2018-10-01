@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.board.biz;
+package com.ktds.traditionalmarket.board.biz;
 
 import org.springframework.stereotype.Component;
 

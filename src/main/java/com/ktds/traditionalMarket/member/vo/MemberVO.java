@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.member.vo;
+package com.ktds.traditionalmarket.member.vo;
 
 public class MemberVO {
 

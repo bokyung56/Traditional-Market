@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.qna.dao;
+package com.ktds.traditionalmarket.qna.dao;
 
 public interface QnADao {
 

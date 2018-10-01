@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.member.controller;
+package com.ktds.traditionalmarket.member.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.ktds.traditionalMarket.member.service.MemberService;
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.service.MemberService;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 @Controller
 public class MemberController {

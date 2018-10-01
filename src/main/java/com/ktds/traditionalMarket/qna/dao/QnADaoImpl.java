@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.qna.dao;
+package com.ktds.traditionalmarket.qna.dao;
 
 import org.springframework.stereotype.Repository;
 

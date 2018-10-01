@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.board.service;
+package com.ktds.traditionalmarket.board.service;
 
 public interface BoardService {
 

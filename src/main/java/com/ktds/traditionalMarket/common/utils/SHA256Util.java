@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.common.utils;
+package com.ktds.traditionalmarket.common.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

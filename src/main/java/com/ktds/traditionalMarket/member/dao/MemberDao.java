@@ -1,8 +1,8 @@
-package com.ktds.traditionalMarket.member.dao;
+package com.ktds.traditionalmarket.member.dao;
 
 import java.util.Map;
 
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public interface MemberDao {
 

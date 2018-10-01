@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.board.vo;
+package com.ktds.traditionalmarket.board.vo;
 
 public class BoardVO {
 

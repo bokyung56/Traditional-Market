@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.member.dao;
+package com.ktds.traditionalmarket.member.dao;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 @Repository
 public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {

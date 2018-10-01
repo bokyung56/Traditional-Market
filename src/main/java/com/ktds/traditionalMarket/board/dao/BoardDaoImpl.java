@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.board.dao;
+package com.ktds.traditionalmarket.board.dao;
 
 import org.springframework.stereotype.Repository;
 

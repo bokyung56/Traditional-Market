@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.common.interceptors;
+package com.ktds.traditionalmarket.common.interceptors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ktds.traditionalMarket.member.dao.MemberDao;
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.dao.MemberDao;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter{
 

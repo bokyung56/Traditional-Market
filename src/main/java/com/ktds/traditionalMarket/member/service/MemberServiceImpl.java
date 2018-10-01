@@ -1,11 +1,11 @@
-package com.ktds.traditionalMarket.member.service;
+package com.ktds.traditionalmarket.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ktds.traditionalMarket.common.utils.SHA256Util;
-import com.ktds.traditionalMarket.member.biz.MemberBiz;
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.common.utils.SHA256Util;
+import com.ktds.traditionalmarket.member.biz.MemberBiz;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{

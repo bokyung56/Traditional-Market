@@ -1,6 +1,6 @@
-package com.ktds.traditionalMarket.member.biz;
+package com.ktds.traditionalmarket.member.biz;
 
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public interface MemberBiz {
 

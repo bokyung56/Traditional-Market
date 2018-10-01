@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.qna.controller;
+package com.ktds.traditionalmarket.qna.controller;
 
 import org.springframework.stereotype.Component;
 

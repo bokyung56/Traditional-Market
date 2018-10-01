@@ -1,10 +1,10 @@
-package com.ktds.traditionalMarket.member.biz;
+package com.ktds.traditionalmarket.member.biz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ktds.traditionalMarket.member.dao.MemberDao;
-import com.ktds.traditionalMarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.member.dao.MemberDao;
+import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 
 @Component

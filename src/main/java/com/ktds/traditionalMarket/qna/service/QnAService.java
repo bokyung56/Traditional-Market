@@ -1,4 +1,4 @@
-package com.ktds.traditionalMarket.qna.service;
+package com.ktds.traditionalmarket.qna.service;
 
 public interface QnAService {
 
