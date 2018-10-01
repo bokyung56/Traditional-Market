@@ -3,7 +3,7 @@ package com.ktds.traditionalMarket.member.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ktds.traditionalMarket.common.util.SHA256Util;
+import com.ktds.traditionalMarket.common.utils.SHA256Util;
 import com.ktds.traditionalMarket.member.biz.MemberBiz;
 import com.ktds.traditionalMarket.member.vo.MemberVO;
 
