@@ -9,7 +9,7 @@
 	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 <title>전통시장: 로그인</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
 
 <script type="text/javascript">
@@ -49,11 +49,16 @@
 	      }
 	    });
 	   //]]>
-		$("#loginForm").attr({
-			"method" : "post"
-			, "action" : "/TraditionalMarket/member/login"
+		
+		$("#login").click(function(){
+	 		$("#loginForm").attr({
+				"method" : "post"
+				, "action" : "/Traditional-Market/member/login"
+			})
+			.submit()  
 		})
-		.submit() 
+		
+
 	})
 
 	
@@ -73,7 +78,7 @@
 			<input type="password" id="password" name="password" placeholder="비밀번호" />
 		</div>
 		<div id="submit">
-			<input type="submit" value="로그인" />
+			<input type="submit" id="login" value="로그인" />
 			<a id="kakao-login-btn"></a>
 		</div>
 	</form>

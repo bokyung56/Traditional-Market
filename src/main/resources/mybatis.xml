@@ -6,7 +6,7 @@
  <configuration>
  
   <typeAliases>
-  	<typeAlias type="com.ktds.member.vo.MemberVO" alias="MemberVO" />
+  	<typeAlias type="com.ktds.traditionalmarket.member.vo.MemberVO" alias="MemberVO" />
   </typeAliases>
   
  </configuration> 

@@ -1,4 +1,4 @@
-package com.ktds.traditionalmarket.board.controller;
+package com.ktds.traditionalmarket.board.web;
 
 import org.springframework.stereotype.Controller;
 

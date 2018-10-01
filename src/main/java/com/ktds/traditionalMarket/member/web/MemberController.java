@@ -1,4 +1,4 @@
-package com.ktds.traditionalmarket.member.controller;
+package com.ktds.traditionalmarket.member.web;
 
 import javax.servlet.http.HttpSession;
 

@@ -1,14 +1,31 @@
 package com.ktds.traditionalmarket.member.vo;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.ktds.traditionalmarket.member.validator.MemberValidator;
+
 public class MemberVO {
 
+	@NotEmpty(message="아이디는 필수 입력 값입니다.", groups= {MemberValidator.Regist.class, MemberValidator.Login.class})
 	private String memberId;
+	
+	@NotEmpty(message="이름은 필수 입력 값입니다.", groups= {MemberValidator.Regist.class})
 	private String name;
+	
+	@NotEmpty(message="비밀번호는 필수 입력 값입니다.", groups= {MemberValidator.Regist.class, MemberValidator.Login.class})
+	@Length(min=10, max=20, message="비밀번호는 10~20글자 사이로 입력해 주세요.", groups={MemberValidator.Regist.class})
 	private String password;
+		
 	private String salt;
 	private int point;
 	private String membership;
+	
+	@NotEmpty(message="이메일은 필수 입력 값입니다.", groups= {MemberValidator.Regist.class})
 	private String email;
+	
+	@NotEmpty(message="생일은 필수 입력 값입니다.", groups= {MemberValidator.Regist.class})
 	private String birth;
 
 	
