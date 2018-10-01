@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="Traditional-Market/css/layout.css">
 <script src="TraditionalMarket/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+	$().ready(function(){
 		$("#login").click(function(){
 			location.href="../member/login"
 		});
