@@ -1,1 +1,61 @@
 @charset "UTF-8";
+
+#member_login{
+	margin-top:0px;
+	margin-right:0px;
+	text-align: right;
+}
+#header_logo{
+	text-align: center;
+} 
+
+#member_login, #header_logo, #header_search, .menu { 
+	/* vertical-align: top; */ 
+	display: inline-block; 		/* line-block이 inline-block으로 바뀜 */
+}
+
+#lojo_button {
+	margin-top:300px;
+	margin-left:900px;
+}
+
+header{
+   	height:100px;
+   	/* background-color:#ff6060; */
+   	width: 100%;
+   	text-align: center;
+	position: fixed;	/* 항상 그 자리에 잇게 */
+	top:0 px;
+	left: 0px;
+	z-index: 1;			/* 쌓이게? 태그 위에 태그 위에 태그 이런식으로! 얘가 1이니까  맨위에 */
+}
+
+aside{
+   position:fixed;
+   width:200px;
+   background-color:#efefef;
+   margin-top:150px;
+   padding-top: 30px;
+   padding-bottom: 150px;
+   top:30px;
+   bottom:0px;
+   /* overflow-y: scroll; */
+}
+
+section.inline > section {
+	position : relative;
+    left:200px;
+    padding:15px;
+}
+
+footer{
+   width:100%;
+   height:150px;
+   background-color:#efefef;
+   margin-top:760px;
+   margin-left:200px;
+   color:#333;
+}
+
+
+

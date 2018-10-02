@@ -28,6 +28,13 @@ VALUES 				(
 </insert>
 
 
+<select id="selectOneId" parameterType="string" resultType="int">
+SELECT	count(1)
+FROM	MEMBER
+WHERE	MEMBER_ID = #{memberId}
+</select>
+
+
 <select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
 SELECT	MEMBER_ID memberId
 		, NAME name

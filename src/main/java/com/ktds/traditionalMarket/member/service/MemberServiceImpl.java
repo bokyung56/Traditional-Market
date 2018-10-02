@@ -13,7 +13,13 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberBiz memberBiz;
 
-	
+	// 입력한 아이디가 DB에 있는지 확인하기
+	@Override
+	public boolean readOneId(String memberId) {
+
+		return this.memberBiz.readOneId(memberId);
+	}
+		
 	// <회원가입>
 	@Override
 	public boolean createNewMember(MemberVO memberVO) {		
@@ -37,14 +43,14 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {		
 		String salt = memberBiz.getSaltById(memberVO.getMemberId());
-		String password = this.getHashedPassword(salt, memberVO.getPassword());
-		
-		MemberVO member = memberBiz.readOneMember(memberVO);
+		System.out.println(salt);
+		String password = this.getHashedPassword(memberVO.getPassword(),salt);
 		
 		memberVO.setPassword(password);
+		MemberVO member = memberBiz.readOneMember(memberVO);
+		
 			
-		return this.memberBiz.readOneMember(member);
+		return member;
 	}
-	
 	
 }

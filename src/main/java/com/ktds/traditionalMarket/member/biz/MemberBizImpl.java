@@ -13,6 +13,11 @@ public class MemberBizImpl implements MemberBiz{
 	@Autowired
 	private MemberDao memberDao;
 
+	@Override
+	public boolean readOneId(String memberId) {
+		
+		return memberDao.selectOneId(memberId) > 0;
+	}
 	
 	@Override
 	public boolean createNewMember(MemberVO memberVO) {
@@ -31,6 +36,8 @@ public class MemberBizImpl implements MemberBiz{
 	
 		return memberDao.getSaltById(memberId);
 	}
+
+
 	
 	
 	

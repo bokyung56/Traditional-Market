@@ -5,6 +5,8 @@ import java.util.Map;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public interface MemberDao {
+	// 회원의 아이디 가져오기
+	public int selectOneId(String memberId);
 
 	// 회원가입하기
 	public int insertNewMember(MemberVO memberVO);

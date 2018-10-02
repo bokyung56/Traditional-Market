@@ -18,6 +18,11 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 	
+	@Override
+	public int selectOneId(String memberId) {
+		
+		return getSqlSession().selectOne("MemberDao.selectOneId", memberId);
+	}
 	
 	@Override 
 	public int insertNewMember(MemberVO memberVO) {
@@ -42,8 +47,5 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 		
 		return getSqlSession().update("MemberDao.updatePoint", memberVO);
 	}
-
-
-
 
 }

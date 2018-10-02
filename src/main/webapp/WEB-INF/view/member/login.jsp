@@ -14,12 +14,33 @@
 
 <script type="text/javascript">
 	$(document).ready( function(){
+		
+	    $("#loginBtn").click( function(){
+				if( $("#memberId").val() == "" ){
+					
+					$("#memberId").focus();
+					return;
+				}
+				if( $("#password").val() == "" ){
+					
+					$("#password").focus();
+					return;
+				} 
+	 		$("#loginForm").attr({
+				"method" : "post"
+				, "action" : "/Traditional-Market/member/login"
+			}).submit();	
+	 	   });
+		
+
+	 		
+	});
 	/* 	var loginBtn = $("<a/>", {"class":"kakao-login-btn", "text":"카카오로그인"});
 		$("submit").append(loginBtn); */
 		
 		//<![CDATA[
 	    
-	    Kakao.init('32cdf8d5c7307247cda3f39acf0762a3');		// 사용할 앱의 JavaScript 키를 설정해 주세요.
+	   /*  Kakao.init('32cdf8d5c7307247cda3f39acf0762a3');		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 	    
 	    Kakao.Auth.createLoginButton({	// 카카오 로그인 버튼을 생성합니다.
 	      container: '#kakao-login-btn',
@@ -47,24 +68,10 @@
 	      fail: function(err) {
 	         alert(JSON.stringify(err));
 	      }
-	    });
+	    }); */
 	   //]]>
-		
-		$("#login").click(function(){
-	 		$("#loginForm").attr({
-				"method" : "post"
-				, "action" : "/Traditional-Market/member/login"
-			})
-			.submit()  
-		})
-		
-
-	})
-
-	
-
+			
 </script>
-
 </head>
 
 
@@ -78,11 +85,10 @@
 			<input type="password" id="password" name="password" placeholder="비밀번호" />
 		</div>
 		<div id="submit">
-			<input type="submit" id="login" value="로그인" />
-			<a id="kakao-login-btn"></a>
+			<input type="button" id="loginBtn" value="로그인" />
+			<a id="kakao-login-btn"></a>			
 		</div>
 	</form>
-
 
 </body>
 </html>
