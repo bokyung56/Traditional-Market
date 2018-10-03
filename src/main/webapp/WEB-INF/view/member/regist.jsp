@@ -105,11 +105,11 @@
 				$("#email").focus()
 				return;
 			}
-			$("#registForm").attr({
+/* 			$("#registForm").attr({
 				"method" : "post"
 				, "action" : "/Traditional-Market/member/regist"
 			})
-			.submit()			
+			.submit()	 */		
 		})
 	})
 

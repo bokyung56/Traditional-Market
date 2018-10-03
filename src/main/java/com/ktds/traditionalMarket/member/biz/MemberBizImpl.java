@@ -46,22 +46,26 @@ public class MemberBizImpl implements MemberBiz{
 	public boolean readOneMember(MemberVO memberVO, HttpSession session) {
 		
 		String salt = this.memberDao.getSaltById(memberVO.getMemberId());
-		String password = this.getHashedPassword(memberVO.getPassword(),salt);
-		
-		memberVO.setPassword(password);
-		MemberVO member = this.memberDao.selectOneMember(memberVO);
-		// session.setAttribute("_USER_", member);
-		
-		if ( member == null ) {
-			this.memberDao.increaseLoginFailCount(memberVO.getMemberId());
+		if ( salt != null ) {	// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이 아니라면(즉, 해당 ID가 있다는 뜻)
+			String password = this.getHashedPassword(memberVO.getPassword(), salt);
+			memberVO.setPassword(password);
+			
+			MemberVO member = this.memberDao.selectOneMember(memberVO);
+			// session.setAttribute("_USER_", member);
+			
+			if ( member == null ) {
+				this.memberDao.increaseLoginFailCount(memberVO.getMemberId());
+				return false;
+			}
+			else {
+				this.memberDao.unBlockUser(member.getMemberId());
+				session.setAttribute("_USER_", member);
+				return true;
+			}
+		}
+		else {					// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이라면(즉, 해당 ID가 없다는 뜻)
 			return false;
 		}
-		else {
-			this.memberDao.unBlockUser(member.getMemberId());
-			session.setAttribute("_USER_", member);
-			return true;
-		}
-		
 	}
 	
 	
@@ -76,10 +80,15 @@ public class MemberBizImpl implements MemberBiz{
 	// 시큐리티
 	@Override
 	public boolean isBlockUser(String memberId) {
-		Integer isBlockUser = memberDao.isBlockUser(memberId);
-		if ( isBlockUser == null ) {
+		Integer isBlockUser = memberDao.isBlockUser(memberId);	// isBlockUser = LOGIN_FAIL_COUNT;
+		
+		// 1번. WHERE MEMBER_ID = #{memberId} 2번. AND LOGIN_FAIL_TIME + 1/24 >= SYSDATE
+		// 둘 중 하나라도 조건이 성립하지 않으면 null값을 가져온다. (memberDao.xml)
+		if ( isBlockUser == null ) {	
 			isBlockUser = 0;
 		}
+		
+		// true: isBlockUser >= 3, false: isBlockUser < 3
 		return isBlockUser >= 3;
 	}
 

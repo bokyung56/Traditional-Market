@@ -13,9 +13,17 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
 
 <script type="text/javascript">
-	$(document).ready( function(){
-		
+	$(document).ready( function(){		
 	    $("#loginBtn").click( function(){
+	    	
+			if( $("#memberId").val() == "" ){						
+				$("#memberId").focus();
+				return;
+			}
+			else if( $("#password").val() == "" ){							
+				$("#password").focus();
+				return;
+			}
 	    	
 			// Ajax 요쳥
 			// $.post("URL", 요청 파라미터(항상 객체 리터럴 방식), function(response):응답파라미터 {})
@@ -27,16 +35,15 @@
 					  } */
 					  $("#loginForm").serialize()
 					, function(response) {						// Response Call back
-						if( response.isBlockUser ){				// true
+						if( response.isBlockUser ){				// isBlockUser가 "true": LOGIN_FAIL_COUNT가 3회 이상시
 							alert("잠긴 계정입니다.");
 							location.href="../member/login";
 						}
-						else {
-							if( response.isLoginSuccess ) {
-								//alert("잠긴 계정입니다.");
+						else {									// isBlockUser가 "false": LOGIN_FAIL_COUNT가 3회 미만시
+							if( response.isLoginSuccess ) {		// isLoginSuccess가 "true": 로그인 성공!
 								location.href="../main/main";
 							}
-							else {									
+							else {								// isLoginSuccess가 "false": 로그인 실패!(LOGIN_FAIL_COUNT값 증가+1)				
 								alert("로그인에 실패하였습니다.");
 								location.href="../member/login";
 							}
@@ -46,16 +53,7 @@
 		});
 	    	
 	    	
-				/* if( $("#memberId").val() == "" ){
-					
-					$("#memberId").focus();
-					return;
-				}
-				if( $("#password").val() == "" ){
-					
-					$("#password").focus();
-					return;
-				}  */
+ 
 /* 	 		$("#loginForm").attr({
 				"method" : "post"
 				, "action" : "/Traditional-Market/member/login"
@@ -110,9 +108,15 @@
 	<form id="loginForm">
 		<div>
 			<input type="text" id="memberId" name="memberId" placeholder="아이디"/>
+			<div id="memberId-error" style="display: none;">
+				아이디를 입력해주세요.
+			</div>
 		</div>
 		<div>
 			<input type="password" id="password" name="password" placeholder="비밀번호" />
+			<div id="password-error" style="display: none;">
+				비밀번호를 입력해주세요.
+			</div>
 		</div>
 		<div id="submit">
 			<input type="button" id="loginBtn" value="로그인" />
