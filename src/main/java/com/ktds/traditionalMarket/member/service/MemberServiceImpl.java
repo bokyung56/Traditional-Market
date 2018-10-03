@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ktds.traditionalmarket.common.utils.SHA256Util;
 import com.ktds.traditionalmarket.member.biz.MemberBiz;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
@@ -41,5 +40,4 @@ public class MemberServiceImpl implements MemberService{
 	public boolean isBlockUser(String memberId) {
 		return this.memberBiz.isBlockUser(memberId);
 	}
-	
 }

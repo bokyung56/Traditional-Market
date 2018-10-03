@@ -108,15 +108,9 @@
 	<form id="loginForm">
 		<div>
 			<input type="text" id="memberId" name="memberId" placeholder="아이디"/>
-			<div id="memberId-error" style="display: none;">
-				아이디를 입력해주세요.
-			</div>
 		</div>
 		<div>
 			<input type="password" id="password" name="password" placeholder="비밀번호" />
-			<div id="password-error" style="display: none;">
-				비밀번호를 입력해주세요.
-			</div>
 		</div>
 		<div id="submit">
 			<input type="button" id="loginBtn" value="로그인" />
