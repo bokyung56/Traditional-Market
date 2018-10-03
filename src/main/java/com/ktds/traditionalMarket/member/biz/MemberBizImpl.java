@@ -46,7 +46,7 @@ public class MemberBizImpl implements MemberBiz{
 	public boolean readOneMember(MemberVO memberVO, HttpSession session) {
 		
 		String salt = this.memberDao.getSaltById(memberVO.getMemberId());
-		if ( salt != null ) {	// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이 아니라면(즉, 해당 ID가 있다는 뜻)
+		if ( salt != null ) {	// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이 아니라면(즉, 해당 ID가 DB에  있다는 뜻)
 			String password = this.getHashedPassword(memberVO.getPassword(), salt);
 			memberVO.setPassword(password);
 			
@@ -63,7 +63,7 @@ public class MemberBizImpl implements MemberBiz{
 				return true;
 			}
 		}
-		else {					// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이라면(즉, 해당 ID가 없다는 뜻)
+		else {					// 사용자가 입력한 ID로 DB에 해당하는 ID의 SALT값이 null이라면(즉, 해당 ID가 DB에 없다는 뜻)
 			return false;
 		}
 	}
