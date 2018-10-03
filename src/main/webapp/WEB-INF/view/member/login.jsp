@@ -16,7 +16,37 @@
 	$(document).ready( function(){
 		
 	    $("#loginBtn").click( function(){
-				if( $("#memberId").val() == "" ){
+	    	
+			// Ajax 요쳥
+			// $.post("URL", 요청 파라미터(항상 객체 리터럴 방식), function(response):응답파라미터 {})
+			// short cut형식으로 쓴거임.
+			$.post("/Traditional-Market/member/login"	// URL
+					, /* {
+						"memberId":$(this).val()				// Request Parameter
+						, "password":$(this).val()
+					  } */
+					  $("#loginForm").serialize()
+					, function(response) {						// Response Call back
+						if( response.isBlockUser ){				// true
+							alert("잠긴 계정입니다.");
+							location.href="../member/login";
+						}
+						else {
+							if( response.isLoginSuccess ) {
+								//alert("잠긴 계정입니다.");
+								location.href="../main/main";
+							}
+							else {									
+								alert("로그인에 실패하였습니다.");
+								location.href="../member/login";
+							}
+						}
+						
+					})
+		});
+	    	
+	    	
+				/* if( $("#memberId").val() == "" ){
 					
 					$("#memberId").focus();
 					return;
@@ -25,12 +55,12 @@
 					
 					$("#password").focus();
 					return;
-				} 
-	 		$("#loginForm").attr({
+				}  */
+/* 	 		$("#loginForm").attr({
 				"method" : "post"
 				, "action" : "/Traditional-Market/member/login"
-			}).submit();	
-	 	   });
+			}).submit(); */	
+	 	 
 		
 
 	 		

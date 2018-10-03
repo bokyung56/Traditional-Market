@@ -1,5 +1,7 @@
 package com.ktds.traditionalmarket.member.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public interface MemberService {
@@ -11,5 +13,9 @@ public interface MemberService {
 	public boolean createNewMember(MemberVO memberVO);
 	
 	// 회원 한명정보 가져오기
-	public MemberVO readOneMember(MemberVO memberVO);
+	public boolean readOneMember(MemberVO memberVO, HttpSession session);
+	
+	public boolean isBlockUser(String memberId);
+	
+
 }

@@ -80,43 +80,28 @@
 		
 		
 		$("#regist").click( function(){
-			if( $("#memberId").val() == "" ){
-				
+			if( $("#memberId").val() == "" ){	
 				$("#memberId").focus();
 				return;
 			}
-			else if( $("#password").val() == "" ){
-				
+			else if( $("#password").val() == "" ){			
 				$("#password").focus()
 				return;
 			}
-			else if( $("#password_ckeck").val() == "" ){
-				
+			else if( $("#password_ckeck").val() == "" ){	
 				$("#password_ckeck").focus()
 				return;
 			}
 			else if( $("#name").val() == "" ){
-				
+			
 				$("#name").focus()
 				return;
 			}
-			else if( $("#yy").val() == "" ){
-				
-				$("#yy").focus()
+			else if( $("#birth").val() == "" ){				
+				$("#birth").focus()
 				return;
 			}
-			else if( $("#mm").val() == "" ){
-				
-				$("#mm").focus()
-				return;
-			}
-			else if( $("#dd").val() == "" ){
-				
-				$("#dd").focus()
-				return;
-			}
-			else if( $("#email").val() == "" ){
-				
+			else if( $("#email").val() == "" ){	
 				$("#email").focus()
 				return;
 			}
@@ -158,7 +143,7 @@
 		</div>
 		<div class="bir_wrap">
 			<h3 class="join_title">생년월일</h3>
-			<input type="date" name="birth" min="1930-01-01" value="${memberVO.birth}">
+			<input type="date" id="birth" name="birth" min="1930-01-01" value="${memberVO.birth}">
 			<!-- <span>
 			<input type="text" id="yy" placeholder="년(4자)" maxlength="4">
 		</span>

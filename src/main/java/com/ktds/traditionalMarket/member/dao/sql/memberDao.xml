@@ -62,4 +62,30 @@ SET		POINT  = POINT + #{point}
 WHERE	MEMBER_ID = #{memberId}
 </update>
 
+
+
+<select id="isBlockUser" parameterType="string" resultType="int">
+SELECT	LOGIN_FAIL_COUNT
+FROM	MEMBER
+WHERE	MEMBER_ID = #{memberId}
+AND     LOGIN_FAIL_TIME + 1/24 >= SYSDATE
+</select>
+
+<update id="unBlockUser" parameterType="string">
+UPDATE	MEMBER
+SET		LOGIN_FAIL_COUNT = 0 
+WHERE	MEMBER_ID = #{memberId}
+</update>
+
+<update id="increaseLoginFailCount" parameterType="string">
+UPDATE	MEMBER
+SET		LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1
+		, LOGIN_FAIL_TIME = SYSDATE
+WHERE	MEMBER_ID = #{memberId}
+</update>
+
+
+
+
+
 </mapper>

@@ -48,4 +48,24 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 		return getSqlSession().update("MemberDao.updatePoint", memberVO);
 	}
 
+	
+	// 시큐리티
+	@Override
+	public Integer isBlockUser(String memberId) {
+		
+		return getSqlSession().selectOne("MemberDao.isBlockUser", memberId);
+	}
+
+	@Override
+	public int unBlockUser(String memberId) {
+
+		return getSqlSession().update("MemberDao.unBlockUser", memberId);
+	}
+
+	@Override
+	public int increaseLoginFailCount(String memberId) {
+		
+		return getSqlSession().update("MemberDao.increaseLoginFailCount", memberId);
+	}	
+
 }

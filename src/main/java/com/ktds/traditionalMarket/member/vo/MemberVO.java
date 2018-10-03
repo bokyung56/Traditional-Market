@@ -29,6 +29,9 @@ public class MemberVO {
 	
 	@NotEmpty(message="생일은 필수 입력 값입니다.", groups= {MemberValidator.Regist.class})
 	private String birth;
+	
+	private int loginFailCount;
+	private String loginFailTime;
 
 	
 	public String getMemberId() {
@@ -94,4 +97,21 @@ public class MemberVO {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+
+	public int getLoginFailCount() {
+		return loginFailCount;
+	}
+
+	public void setLoginFailCount(int loginFailCount) {
+		this.loginFailCount = loginFailCount;
+	}
+
+	public String getLoginFailTime() {
+		return loginFailTime;
+	}
+
+	public void setLoginFailTime(String loginFailTime) {
+		this.loginFailTime = loginFailTime;
+	}
+
 }

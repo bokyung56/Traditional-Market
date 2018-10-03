@@ -155,30 +155,52 @@ public class MemberController {
 	
 	// <일반회원-로그인>
 	@PostMapping("/member/login")
-	public ModelAndView doLoginMemberAction(	@Validated({MemberValidator.Login.class})
-												@ModelAttribute MemberVO memberVO
-												, Errors errors
-												, HttpSession session) {
-		// 로그인 성공시, 메인페이지로!
-		ModelAndView view = new ModelAndView("redirect:/main/main");
+	@ResponseBody
+	public Map<String, Object> doLoginMemberAction(	@Validated({MemberValidator.Login.class})
+													@ModelAttribute MemberVO memberVO
+													, Errors errors
+													, HttpSession session) {
 		
-		// 만약, 로그인하는데 에러가 있다면 다시 로그인페이지로 가서 입력했던 값 살려두기.
-		if( errors.hasErrors() ) {
-			view.setViewName("member/login");
-			view.addObject("memberVO", memberVO);
-			return view;
-		}
+		Map<String, Object> result = new HashMap<>();
 		
-		MemberVO param = this.memberService.readOneMember(memberVO);
-		
-		if( param != null ) {
-			session.setAttribute("_USER_", param);		// 1. session 등록 (session key == _USER_) -> 2. SessionInterceptor.java
+		boolean isBlockUser = this.memberService.isBlockUser(memberVO.getMemberId());		
+		if ( isBlockUser ) {
+			//로그인 실패 (계정 블럭된 유저 )
+			result.put("isBlockUser", isBlockUser);
 		}
 		else {
-			view.setViewName("member/login");
+			boolean isLoginSuccess = this.memberService.readOneMember(memberVO, session);
+			if ( isLoginSuccess ) {
+				//로그인 성공 - true(isLoginSuccess)
+			}
+			else {
+				//실패 (그냥 아이디 비밀번호 틀린사람) - false(isLoginSuccess)
+			}
+			result.put("isLoginSuccess", isLoginSuccess);
 		}
 		
-		return view;	// return "redirect:/main/mainPage";
+		
+		// 로그인 성공시, 메인페이지로!
+		// ModelAndView view = new ModelAndView("redirect:/main/main");
+		
+		
+		// 만약, 로그인하는데 에러가 있다면 다시 로그인페이지로 가서 입력했던 값 살려두기.
+		//if( errors.hasErrors() ) {
+		//	view.setViewName("member/login");
+		//	view.addObject("memberVO", memberVO);
+		//	return view;
+		//}
+		
+		//MemberVO param = this.memberService.readOneMember(memberVO);
+		
+		//if( param != null ) {
+		//	session.setAttribute("_USER_", param);		// 1. session 등록 (session key == _USER_) -> 2. SessionInterceptor.java
+		//}
+		//else {
+		//	view.setViewName("member/login");
+		//}
+		
+		return result;	// return view;	// return "redirect:/main/mainPage";
 	}
 	
 	// <카카오회원-로그인>
