@@ -8,6 +8,7 @@
   <typeAliases>
   	<typeAlias type="com.ktds.traditionalmarket.member.vo.MemberVO" alias="MemberVO" />
   	<typeAlias type="com.ktds.traditionalmarket.board.vo.BoardVO" alias="BoardVO" />
+  	<typeAlias type="com.ktds.traditionalmarket.board.vo.BoardSearchVO" alias="BoardSearchVO" />
   </typeAliases>
   
  </configuration> 

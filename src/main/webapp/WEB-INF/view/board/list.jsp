@@ -6,12 +6,54 @@
 <head>
 <meta charset="UTF-8">
 <title>Traditional-Market</title>
-<link rel="stylesheet" type="text/css" href="Traditional-Market/css/layout.css">
-<script src="Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/Traditional-Market/css/layout.css">
+<script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 <body>
 
-	list페이지입니다아~~~~
+	<div id="wrapper">
+		<div id="headerWrapper">
+			<div class="number header box">글 번호</div><!-- 
+			 --><div class="subject header box">제목</div><!--
+			 --><div class="writer header box">작성자</div><!--
+			 --><div class="create-date header box">작성일</div>
+		</div>
+		<c:choose>
+			<c:when test="${not empty boardVOList}">
+				<c:forEach items="${boardVOList}" var="board">
+					<div class="contentWrapper">
+						<div class="number box">${board.rowNum}</div><!-- 
+						 --><div class="subject box">
+						 		<a href="/Traditional-Market/board/detail/${board.boardId}">
+						 			${board.title}
+						 		</a>
+						 </div><!--
+						 --><div class="writer box">${board.memberVO.memberId}</div><!--
+						 --><div class="create-date box">${board.crtDate}</div>
+					</div>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<div id="no-articles">
+					등록된 게시글이 없습니다.
+				</div>
+			</c:otherwise>
+		</c:choose>
+		
+		<div class="padded">
+			<form id="searchForm" onsubmit="javascript:movePage(0);">
+				${pagenation}
+				<div>
+					<input type="text" name="searchKeyword" value='${boardSearchVO.searchKeyword}'/>
+					<a href="/Traditional-Market/board/list/init">검색 초기화</a> <!-- 이렇게하면 사용자가 검색했던 칸에 검색어 지워서 엔터쳐서 전체목록페이지를 보게할 필요가 없음. -->
+				</div>
+			</form>
+		</div>
+		
+		<div class="padded">	
+			<a href="/Traditional-Market/board/write">글 작성</a>
+		</div>
+	</div>
 	
 </body>
 </html>

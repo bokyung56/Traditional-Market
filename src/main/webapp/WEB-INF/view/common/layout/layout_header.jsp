@@ -35,7 +35,7 @@
 						<a href="/Traditional-Market/trdtnmarket">재래시장</a>
 					</li>
 					<li class="menu">
-						<a href="/Traditional-Market/baord">게시판</a>
+						<a href="/Traditional-Market/board/list">게시판</a>
 					</li>
 					<li class="menu">
 						<a href="/Traditional-Market/qna">QnA</a>

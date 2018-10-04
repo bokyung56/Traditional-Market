@@ -13,6 +13,7 @@ public class BoardVO {
 	@NotEmpty(message="제목은 필수 입력 값입니다.")
 	private String title;
 	
+	private int rowNum;
 	private String writer;
 	
 	@NotEmpty(message="내용은 필수 입력 값입니다.")
@@ -39,8 +40,26 @@ public class BoardVO {
 		this.picture = "";
 	}
 	
+	
+	
 
 	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+
+
+
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+
+
+
+
 	public String getBoardId() {
 		return boardId;
 	}

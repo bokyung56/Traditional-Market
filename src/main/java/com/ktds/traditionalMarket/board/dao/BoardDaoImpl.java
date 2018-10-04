@@ -1,10 +1,13 @@
 package com.ktds.traditionalmarket.board.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 
 @Repository
@@ -45,5 +48,19 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	public int updateViewCount(String boardId) {
 		
 		return getSqlSession().update("BoardDao.updateViewCount", boardId);
+	}
+
+	// 전체글 개수
+	@Override
+	public int selectAllBoardsCount(BoardSearchVO boardSearchVO) {
+		
+		return getSqlSession().selectOne("BoardDao.selectAllBoardsCount", boardSearchVO);
+	}
+	
+	// 전체 글 가져오기
+	@Override
+	public List<BoardVO> selectAllBoards(BoardSearchVO boardSearchVO) {
+		
+		return getSqlSession().selectList("BoardDao.selectAllBoards", boardSearchVO);
 	}	
 }

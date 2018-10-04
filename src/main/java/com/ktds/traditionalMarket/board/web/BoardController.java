@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,13 +15,17 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.traditionalmarket.board.service.BoardService;
+import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
-//import com.ktds.traditionalmarket.common.session.Session;
+import com.ktds.traditionalmarket.common.session.Session;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
+
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 @Controller
 public class BoardController {
@@ -36,6 +41,40 @@ public class BoardController {
 		return "D:/uploadVideos";
 	}*/
 	
+	
+	
+	
+	@RequestMapping("/board/list/init")
+	public String viewBoardListPageForInitiate( HttpSession session ) {	// init이 들어오면 검색을 초기화하기위해서 session받음
+		session.removeAttribute(Session.SEARCH); 	// search세션을 지워라. null값이 되버림.
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/board/list")
+	public ModelAndView viewBoardListPage(
+			@ModelAttribute BoardSearchVO boardSearchVO					// 1. 얘한테 페이지번호를 줄거임
+			, HttpServletRequest request, HttpSession session) {
+		
+		// 전체검색 or 상세 -> 목록 or 글쓰기
+		if ( boardSearchVO.getSearchKeyword() == null ) {
+			boardSearchVO = (BoardSearchVO) session.getAttribute(Session.SEARCH);	// Session.SEARCH
+			if( boardSearchVO == null ) {	// 전체 페이지보여주기
+				boardSearchVO = new BoardSearchVO();
+				boardSearchVO.setPageNo(0);
+			}
+		}
+		System.out.println("여기오냐");
+		PageExplorer pageExplorer= this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
+		
+		session.setAttribute(Session.SEARCH, boardSearchVO);
+		System.out.println("!!!!!!!pageExplorer.getList()= "+pageExplorer.getList());				
+		ModelAndView view = new ModelAndView("board/list");
+		view.addObject("boardVOList", pageExplorer.getList());	// 4. boardVOList);
+		view.addObject("pagenation", pageExplorer.make()); 		// 5.
+		view.addObject( "size", pageExplorer.getTotalCount() );	// 몇개의 게시글이 검색되었습니다.
+		view.addObject("boardSearchVO", boardSearchVO	);		// 검색시 검색칸에 검색한 글자가 안사라지게 하기위해서
+		return view;
+	}	
 	
 	@GetMapping("/board/write")
 	public String viewCreateOneBoardPage() {
@@ -89,7 +128,7 @@ public class BoardController {
 				} 			
 		}
 		
-		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. // (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import주석도 풀어주기
+		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
 		String memberId = loginMemberVO.getMemberId();
 		boardVO.setMemberVO(loginMemberVO);
 		boardVO.setMemberId(memberId);
@@ -98,13 +137,6 @@ public class BoardController {
 		
 		return  view;
 	}
-	
-	
-	
-	@GetMapping("/board/list")
-	public String viewMain() {	
-		
-		return "board/list";
-	}
+
 
 }

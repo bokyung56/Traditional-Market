@@ -36,7 +36,8 @@
 	<!-- Join된 query를 쓸 때는 무조건 얘를 써준다. query결과를 객체와 매핑시켜준다. -->
 	<resultMap type="BoardVO" id="boardResultMap">
 		<id property="boardId" column="BOARD_ID"/>			<!-- PK -->
-		<result property="memberId" column="MEMBER_ID"/>
+		<result property="rowNum" column="RNUM" /> 			<!-- 글번호 -->
+		<result property="memberId" column="B_MEMBER_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="writer" column="WRITER"/>
 		<result property="content" column="CONTENT"/>
@@ -49,7 +50,7 @@
 		<!-- property는 BoardVO에 있는 선언한  MemberVO변수명 -->
 		<!-- 이렇게 함으로써 BoardVO에 MemberVO를 가지게 됨.-->
 		<association property="memberVO" javaType="MemberVO">
-			<id property="memberId" column="MEMBER_ID"/>
+			<id property="memberId" column="M_MEMBER_ID"/>
 			<result property="name" column="NAME"/>
 			<result property="password" column="PASSWORD"/>
 			<result property="salt" column="SALT"/>
@@ -77,5 +78,69 @@
 	
 	<delete id="deleteOneBoard" parameterType="string">
 	</delete>
+	
+	
+	<select id="selectAllBoardsCount" parameterType="BoardSearchVO" resultType="_int">
+		SELECT	COUNT(1)
+		FROM	BOARD B
+				, MEMBER M
+		WHERE	B.MEMBER_ID = M.MEMBER_ID
+		<if test="searchKeyword != null and searchKeyword != ''">
+		AND		TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</select>
+	
+	
+	<select id="selectAllBoards" parameterType="BoardSearchVO" resultMap="boardResultMap">
+		SELECT	*
+		FROM	(
+					SELECT	A.*
+							, ROWNUM RNUM	<!-- ROWNUM? 오라클에서 지원하는 가상컬럼으로 쿼리의 결과에 1부터 하나씩 증가하여 붙는 컬럼입니다. -->
+					FROM	(
+								SELECT	B.BOARD_ID
+										, B.TITLE
+										, B.CONTENT
+										, B.CRT_DATE
+										, B.MDFY_DATE
+										, B.VIEW_COUNT
+										, B.RECOMMEND_COUNT
+										, B.PICTURE
+										, B.MEMBER_ID B_MEMBER_ID
+										, M.MEMBER_ID M_MEMBER_ID
+										, M.NAME
+										, M.PASSWORD
+										, M.SALT
+										, M.POINT
+										, M.MEMBERSHIP
+										, M.EMAIL
+										, M.BIRTH
+										, M.LOGIN_FAIL_COUNT
+										, M.LOGIN_FAIL_TIME
+								FROM	BOARD B
+										, MEMBER M
+								WHERE	B.MEMBER_ID = M.MEMBER_ID
+								<if test="searchKeyword != null and searchKeyword !=''">
+								AND	TITLE LIKE '%' || #{searchKeyword} || '%' 
+								</if>
+								
+								ORDER	BY BOARD_ID DESC			
+							) A
+					WHERE	ROWNUM <![CDATA[<=]]> #{endRow} <!-- WHERE	ROWNUM <= #{endRow}: '<'를새로운 태그가 열린줄 알고 에러발생 -->
+				)											<!-- <![CDATA[<=]]>: xml문법 -->
+		WHERE	RNUM >= #{startRow}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>
