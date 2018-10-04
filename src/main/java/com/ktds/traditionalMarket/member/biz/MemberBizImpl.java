@@ -1,10 +1,14 @@
 package com.ktds.traditionalmarket.member.biz;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.common.utils.SHA256Util;
 import com.ktds.traditionalmarket.member.dao.MemberDao;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
@@ -69,13 +73,36 @@ public class MemberBizImpl implements MemberBiz{
 	}
 	
 	
-
 	@Override
 	public String getSaltById(String memberId) {
 	
 		return memberDao.getSaltById(memberId);
 	}
-
+	
+	
+	// 회원 point 업데이트하기(글 작성시)
+	@Override
+	public boolean updatePoint(String memberId, int point) {
+		
+		Map<String, Object> memberVO = new HashMap<String, Object>();
+		memberVO.put("memberId", memberId);
+		memberVO.put("point", point);
+		
+		return memberDao.updatePoint(memberVO) > 0;
+	}
+	// +부연설명
+	// Biz에 있는 updatePoint는 누가 부를까? 바로 board패키지 serviceImpl에 있는~!
+	//
+	// @Autowired
+	// private MemberBiz memberBiz; -> 다른 패키지에 있는 Biz 불러오기
+	//
+	// public boolean createOneBoard(BoardVO boardVO)
+	//	  boolean isSuccess = boardBiz.createOneBoard(boardVO); -> insert가 false될 일은 거의 없고(그래서 if문으로 체크 사용안함), update는 있음
+	//    memberBiz.updatePoint(boardVO.getMemberId(), 500);
+	//    return isSuccess;
+	
+	
+	
 	
 	// 시큐리티
 	@Override
@@ -104,8 +131,4 @@ public class MemberBizImpl implements MemberBiz{
 		return memberDao.increaseLoginFailCount(memberId) > 0;
 	}
 
-	
-	
-	
-	
 }

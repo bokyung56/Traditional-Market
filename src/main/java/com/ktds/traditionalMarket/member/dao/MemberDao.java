@@ -17,7 +17,7 @@ public interface MemberDao {
 	// 회원의 salt값 가져오기
 	public String getSaltById(String memberId);
 	
-	// 회원 포인트 업데이트하기	
+	// 회원 포인트 업데이트하기(글 작성시)
 	public int updatePoint(Map<String, Object> memberVO);	// Dao에서 argument는 하나만 써줄 수 있음! String은 uploaderId, Object는 point를 
 
 		

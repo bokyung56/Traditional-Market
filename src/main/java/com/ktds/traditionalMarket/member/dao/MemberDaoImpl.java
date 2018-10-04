@@ -42,6 +42,7 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 		return getSqlSession().selectOne("MemberDao.getSaltById", memberId);
 	}
 
+	// 회원 포인트 업데이트하기(글 작성시)
 	@Override
 	public int updatePoint(Map<String, Object> memberVO) {
 		

@@ -13,7 +13,10 @@
 		});
 		$("#joinBtn").click(function(){
 			location.href="../member/regist";
-		});		
+		});	
+		$("#writeBtn").click(function(){
+			location.href="../board/write";
+		});	
 	});
 </script>
 
@@ -21,6 +24,9 @@
 		<input type="button" id="loginBtn" name="loginBtn" value="로그인" />
 		<input type="button" id="logoutBtn" name="logoutBtn" value="로그아웃" />
 		<input type="button" id="joinBtn" name="joinBtn" value="회원가입" />
+	</div>
+	<div>
+		<input type="button" id="writeBtn" name="writeBtn" value="글쓰기" />
 	</div>
 	
 	

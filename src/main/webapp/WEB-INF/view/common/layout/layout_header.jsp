@@ -21,7 +21,7 @@
 				</c:if>
 			</div>
  			<div id="header_logo" style="text-align: center;">
-				<img src="http://localhost:8081/Traditional-Market/img/logo.png" width="200" height="100">
+				<img src="http://localhost:8080/Traditional-Market/img/logo.png" width="200" height="100">
 			</div> 
 			<div id="header_search" style="text-align: center;">
 				<input type="text" id="search_main" name="search_main">

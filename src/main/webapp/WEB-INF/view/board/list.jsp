@@ -11,15 +11,7 @@
 </head>
 <body>
 
-	<div id="wrapper">
-		<header>
-			<c:if test=${not empty sessionScope._USER_}">
-				${sessionScope._USER_.name}
-			</c:if>
-		</header>
-	
-	
-	</div>
+	list페이지입니다아~~~~
 	
 </body>
 </html>

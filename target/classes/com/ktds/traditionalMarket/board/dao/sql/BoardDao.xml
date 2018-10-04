@@ -6,8 +6,76 @@
   
 <!-- namespace="현재 패키지의 인터페이스명" -->
 <mapper namespace="BoardDao">
-
-
-
+	<!-- 각 하나의 태그(<insert>,<select>....)마다 이거를 "Mapped Statement"라 한다  -->
+	<!-- 이제, 별칭해주기! src/main/resources에 있는 myBatis.xml로 간다. -->
+	
+	
+	<!-- 글 작성하기 -->
+	<insert id="insertOneBoard" parameterType="BoardVO">
+		INSERT INTO BOARD	(
+								BOARD_ID
+								, TITLE
+								, CONTENT
+								, CRT_DATE
+								, MDFY_DATE
+								, PICTURE
+								, MEMBER_ID 
+							) 
+		VALUES				( 
+								'VD-' || TO_CHAR (SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(BOARD_ID_SEQ.NEXTVAL, 6, '0')
+								, #{title}
+								, #{content} 
+								, SYSDATE
+								, SYSDATE 
+								, #{picture} 
+								, #{memberId}
+							)
+	</insert>
+	
+	
+	<!-- Join된 query를 쓸 때는 무조건 얘를 써준다. query결과를 객체와 매핑시켜준다. -->
+	<resultMap type="BoardVO" id="boardResultMap">
+		<id property="boardId" column="BOARD_ID"/>			<!-- PK -->
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="writer" column="WRITER"/>
+		<result property="content" column="CONTENT"/>
+		<result property="crtDate" column="CRT_DATE"/>
+		<result property="mdfyDate" column="MDFY_DATE"/>
+		<result property="viewCount" column="VIEW_COUNT"/>
+		<result property="recommendCount" column="RECOMMEND_COUNT"/>
+		<result property="picture" column="PICTURE"/>
+		<!-- 객체가 다른 객체한테 -->
+		<!-- property는 BoardVO에 있는 선언한  MemberVO변수명 -->
+		<!-- 이렇게 함으로써 BoardVO에 MemberVO를 가지게 됨.-->
+		<association property="memberVO" javaType="MemberVO">
+			<id property="memberId" column="MEMBER_ID"/>
+			<result property="name" column="NAME"/>
+			<result property="password" column="PASSWORD"/>
+			<result property="salt" column="SALT"/>
+			<result property="point" column="POINT"/> 
+			<result property="membership" column="MEMBERSHIP"/>
+			<result property="email" column="EMAIL"/>
+			<result property="birth" column="BIRTH"/>
+			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
+			<result property="loginFailTime" column="LOGIN_FAIL_TIME"/>
+		</association>
+	</resultMap>
+	
+	<!-- 해당 글 읽을 시, 조회수 증가시키기 -->
+	<update id="updateViewCount" parameterType="string">
+		UPDATE	BOARD
+		SET		VIEW_COUNT = VIEW_COUNT + 1
+		WHERE	BOARD_ID = #{boardId}
+	</update>
+	
+	<select id="selectOneBoard" parameterType="string" resultType="BoardVO">
+	</select>
+	
+	<update id="updateOneBoard" parameterType="string">
+	</update>
+	
+	<delete id="deleteOneBoard" parameterType="string">
+	</delete>
 
 </mapper>

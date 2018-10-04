@@ -56,7 +56,7 @@ WHERE	MEMBER_ID = #{memberId}
 </select>
 
 
-<update id="updatePoint">
+<update id="updatePoint" parameterType="map">
 UPDATE	MEMBER
 SET		POINT  = POINT + #{point}
 WHERE	MEMBER_ID = #{memberId}
