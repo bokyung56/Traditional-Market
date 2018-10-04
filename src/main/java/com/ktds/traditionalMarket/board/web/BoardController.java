@@ -50,7 +50,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/board/list")
+	@RequestMapping("/board/list")
 	public ModelAndView viewBoardListPage(
 			@ModelAttribute BoardSearchVO boardSearchVO					// 1. 얘한테 페이지번호를 줄거임
 			, HttpServletRequest request, HttpSession session) {
@@ -63,11 +63,11 @@ public class BoardController {
 				boardSearchVO.setPageNo(0);
 			}
 		}
-		System.out.println("여기오냐");
+
 		PageExplorer pageExplorer= this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
 		
 		session.setAttribute(Session.SEARCH, boardSearchVO);
-		System.out.println("!!!!!!!pageExplorer.getList()= "+pageExplorer.getList());				
+			
 		ModelAndView view = new ModelAndView("board/list");
 		view.addObject("boardVOList", pageExplorer.getList());	// 4. boardVOList);
 		view.addObject("pagenation", pageExplorer.make()); 		// 5.

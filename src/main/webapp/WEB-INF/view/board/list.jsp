@@ -8,6 +8,19 @@
 <title>Traditional-Market</title>
 <link rel="stylesheet" type="text/css" href="/Traditional-Market/css/layout.css">
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+/* 	$().ready(function(){
+		var selectSearch = $("#selectSearch").val();
+		
+		if ( selectSearch == 1 ){
+			$("searchText").val();
+		}
+		else if ( selectSearch == 2 ) {
+			$("searchText").val();
+		}
+		
+	}) */
+</script>
 </head>
 <body>
 
@@ -44,7 +57,11 @@
 			<form id="searchForm" onsubmit="javascript:movePage(0);">
 				${pagenation}
 				<div>
-					<input type="text" name="searchKeyword" value='${boardSearchVO.searchKeyword}'/>
+<!-- 					<select id="selectSearch">   title="월" class="sel">
+						<option value="1">제목</option>
+						<option value="2">작성자</option>
+					</select> -->
+					<input type="text" name="searchKeyword" value='${boardSearchVO.searchKeyword}'/>			
 					<a href="/Traditional-Market/board/list/init">검색 초기화</a> <!-- 이렇게하면 사용자가 검색했던 칸에 검색어 지워서 엔터쳐서 전체목록페이지를 보게할 필요가 없음. -->
 				</div>
 			</form>

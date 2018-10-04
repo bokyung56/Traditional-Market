@@ -119,9 +119,20 @@
 								FROM	BOARD B
 										, MEMBER M
 								WHERE	B.MEMBER_ID = M.MEMBER_ID
-								<if test="searchKeyword != null and searchKeyword !=''">
-								AND	TITLE LIKE '%' || #{searchKeyword} || '%' 
+								<if test="searchKeyword != null and searchKeyword != ''">
+								AND		TITLE LIKE '%' || #{searchKeyword} || '%'
 								</if>
+			<!-- 					<choose>
+									<when test="searchTitle != null">
+										AND TITLE LIKE '%' || #{searchTitle} || '%'
+									</when>
+									<when test="searchMemberId != null">
+										AND B_MEMBER_ID LIKE '%' || #{searchMemberId} || '%'
+									</when>
+									<otherwise>
+										AND featured = 1
+									</otherwise>
+								</choose> -->
 								
 								ORDER	BY BOARD_ID DESC			
 							) A
