@@ -2,9 +2,13 @@ package com.ktds.traditionalmarket.board.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,15 +18,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.ktds.traditionalmarket.board.service.BoardService;
 import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.common.session.Session;
+import com.ktds.traditionalmarket.common.utils.DownloadUtil;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
@@ -76,21 +86,18 @@ public class BoardController {
 		return view;
 	}	
 	
+	// 글 작성하기
 	@GetMapping("/board/write")
 	public String viewCreateOneBoardPage() {
 		
 		return  "board/write";
 	} 
 	
-	
+	// 글 작성하기
 	@PostMapping("/board/write")
 	public ModelAndView doCreateOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
 											, Errors errors
 											, HttpSession session) {
-		
-		System.out.println("title= " + boardVO.getTitle());
-		System.out.println("content= " + boardVO.getContent());
-		System.out.println("picture= " + boardVO.getPicture());
 		
 		ModelAndView view = new ModelAndView("redirect:/board/list");
 		
@@ -137,6 +144,127 @@ public class BoardController {
 		
 		return  view;
 	}
+	
+	
+	// 글 하나 읽기
+	@GetMapping("/board/detail/{boardId}")
+	public ModelAndView viewBoardDetailPage(@PathVariable String boardId){
+		
+		BoardVO boardVO  = this.boardService.readOneBoard(boardId);
+		
+		ModelAndView view = new ModelAndView("board/detail");
+		view.addObject("boardVO", boardVO);
+		
+		return view;
+	}
+	
+	
+	@RequestMapping("/board/download/{boardId}")
+	public void fileDownload( 
+			@PathVariable String boardId
+			, HttpServletRequest request
+			, HttpServletResponse response
+			
+		) {
+	
+	
+	BoardVO boardVO = this.boardService.readOneBoard(boardId);
 
+	// String originFileName = boardVO.getOriginFileName();
+	String pictureName = boardVO.getPicture();
+	
+	// Windows \
+	// Unix/Linux/macos /
+	
+	try {
+		new DownloadUtil(this.uploadPath + File.separator + pictureName)
+				.download(request, response, pictureName);
+	} catch (UnsupportedEncodingException e) {
+		throw new RuntimeException(e.getMessage(), e);
+	}
+}
+	
+	
+	// 글 삭제하기
+	@GetMapping("/board/delete/{boardId}")
+	public String doBoardDeleteAction(@PathVariable String boardId) {
+		
+		boolean isSuccess = this.boardService.deleteOneBoard(boardId);
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	// 글 수정하기
+	@GetMapping("/board/modify/{boardId}")
+	public ModelAndView viewModifyOneBoardPage(@PathVariable String boardId) {
+			
+		ModelAndView view = new ModelAndView("redirect:/board/modify");
+			
+		BoardVO boardVO = this.boardService.readOneBoard(boardId);
+		view.setViewName("board/modify");
+		view.addObject("boardVO", boardVO);
+						
+		return  view;
+	} 
+	
+	
+		
+		// 글 수정하기
+		@RequestMapping("/board/modify")
+		public ModelAndView doModifyOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
+													,  @SessionAttribute(Session.USER) MemberVO memberVO
+													, Errors errors
+													, HttpSession session) {
+			System.out.println("**** boardVO.getBoardId()= " + boardVO.getBoardId());
+			System.out.println("**** boardVO.getTitle()= " + boardVO.getTitle());
+			System.out.println("**** boardVO.getContent()= " + boardVO.getContent());
+			System.out.println("**** boardVO.getPicture()= " + boardVO.getPicture());
+			
+			ModelAndView view = new ModelAndView("redirect:/board/list");
+			
+			// Validation Annotation이 실패했는지 체크( 실패하면, 다시 글쓰기페이지로 내용 유지해서 돌아감 )
+			if ( errors.hasErrors() ) {
+				view.setViewName("board/modify");
+				view.addObject("boardVO", boardVO);
+				
+				return view;
+			}
+			
+				
+			// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
+			MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+			
+			if( !uploadPictureFile.isEmpty() ) {
+				// 파일시스템에 저장될 파일의 이름(난수)
+				String pictureFileName = UUID.randomUUID().toString();
+				
+				// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
+				File uploadDir = new File(uploadPath);
+				if( !uploadDir.exists() ) {
+					uploadDir.mkdirs();
+				}
+				
+				//파일 업로드될 경로 지정
+				File destPictureFile = new File(uploadPath, pictureFileName);
+				
+					// 업로드
+					try {
+						uploadPictureFile.transferTo(destPictureFile);
+						boardVO.setPicture(pictureFileName);
+					} catch (IllegalStateException | IOException e) {
+						throw new RuntimeException(e.getMessage(), e);
+					} 			
+			}
+			
+			MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
+			String memberId = loginMemberVO.getMemberId();
+			boardVO.setMemberVO(loginMemberVO);
+			boardVO.setMemberId(memberId);
+			
+			this.boardService.updateOneBoard(boardVO);
+			
+			return  view;
+		}
 
 }

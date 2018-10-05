@@ -28,6 +28,21 @@
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 	
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- <mvc:mapping path="/**"/> 전체 url에 거는것-->
+			<mvc:mapping path="/board/**" />
+			
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/img/**" />
+						
+			<bean id="SessionInterceptor" class="com.ktds.traditionalmarket.common.interceptors.SessionInterceptor"/>
+			
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 
 	
 	

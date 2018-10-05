@@ -70,13 +70,43 @@
 		WHERE	BOARD_ID = #{boardId}
 	</update>
 	
-	<select id="selectOneBoard" parameterType="string" resultType="BoardVO">
+	<select id="selectOneBoard" parameterType="string" resultMap="boardResultMap"><!-- resultType="BoardVO"> -->
+		SELECT	B.BOARD_ID
+				, B.TITLE
+				, B.CONTENT
+				, B.CRT_DATE
+				, B.MDFY_DATE
+				, B.VIEW_COUNT		
+				, B.RECOMMEND_COUNT
+				, B.PICTURE
+				, B.MEMBER_ID B_MEMBER_ID
+				, M.MEMBER_ID M_MEMBER_ID
+				, M.NAME
+				, M.PASSWORD
+				, M.SALT
+				, M.POINT
+				, M.MEMBERSHIP
+				, M.EMAIL
+				, M.BIRTH
+				, M.LOGIN_FAIL_COUNT
+				, M.LOGIN_FAIL_TIME
+		FROM	BOARD B
+				, MEMBER M
+		WHERE	B.MEMBER_ID = M.MEMBER_ID
+		AND	B.BOARD_ID = #{BOARD_ID}		
 	</select>
 	
-	<update id="updateOneBoard" parameterType="string">
+	<update id="updateOneBoard" parameterType="BoardVO">
+		UPDATE	BOARD
+		SET		TITLE = #{title}, CONTENT = #{content}, PICTURE = #{picture}, MDFY_DATE = SYSDATE
+		WHERE	BOARD_ID = #{boardId}
+		AND		MEMBER_ID = #{memberId}
 	</update>
 	
 	<delete id="deleteOneBoard" parameterType="string">
+		DELETE	
+		FROM	BOARD
+		WHERE	BOARD_ID = #{boardId}
 	</delete>
 	
 	

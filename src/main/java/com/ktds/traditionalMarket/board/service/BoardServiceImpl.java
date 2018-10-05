@@ -33,9 +33,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean updateOneBoard(String boardId) {
+	public boolean updateOneBoard(BoardVO boardVO) {
 		
-		return boardBiz.updateOneBoard(boardId);
+		return boardBiz.updateOneBoard(boardVO);
 	}
 
 	@Override

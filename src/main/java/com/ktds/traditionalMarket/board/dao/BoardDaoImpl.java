@@ -33,8 +33,8 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 
 	// 글 수정하기
 	@Override
-	public int updateOneBoard(String boardId) {	
-		return getSqlSession().update("BoardDao.updateOneBoard", boardId);
+	public int updateOneBoard(BoardVO boardVO) {	
+		return getSqlSession().update("BoardDao.updateOneBoard", boardVO);
 	}
 
 	// 글 지우기

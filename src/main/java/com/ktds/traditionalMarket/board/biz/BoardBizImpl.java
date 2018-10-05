@@ -48,9 +48,9 @@ public class BoardBizImpl implements BoardBiz{
 	}
 
 	@Override
-	public boolean updateOneBoard(String boardId) {
+	public boolean updateOneBoard(BoardVO boardVO) {
 		
-		return boardDao.updateOneBoard(boardId) > 0;
+		return boardDao.updateOneBoard(boardVO) > 0;
 	}
 
 	@Override

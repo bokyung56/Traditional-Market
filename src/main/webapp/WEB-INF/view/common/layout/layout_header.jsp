@@ -21,7 +21,9 @@
 				</c:if>
 			</div>
  			<div id="header_logo" style="text-align: center;">
-				<img src="http://localhost:8080/Traditional-Market/img/logo.png" width="200" height="100">
+ 				<a href="/Traditional-Market/main/main">
+					<img src="http://localhost:8080/Traditional-Market/img/logo.png" width="200" height="100">
+				</a>
 			</div> 
 			<div id="header_search" style="text-align: center;">
 				<input type="text" id="search_main" name="search_main">
@@ -43,6 +45,7 @@
 				</ul>
 			</div>
 		</header>
+	</div>
 		<section class="inline">
 			<aside>
 			
