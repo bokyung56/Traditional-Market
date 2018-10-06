@@ -8,6 +8,7 @@
 <title>${boardVO.title}</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/view/common/header.jsp"/>
 	<h1>
 		${boardVO.title} 
 		<span style="font-size: 12pt;">${boardVO.crtDate}</span>
@@ -31,6 +32,28 @@
 	
 	<hr/>
 	
+	<div>
+		야~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		${boardVO.replyList}
+		<c:forEach items="${boardVO.replyList}" var="reply">
+			야!!!!!!!!!!!!!!!!!!!!!
+			<%-- <div style="margin-left: ${(reply.level-1) * 30}px">  --%>
+				<div>${reply.memberVO.name} (${reply.memberVO.memberId})</div>
+				<div>${reply.crtDate}</div>
+				<div>${reply.reply}</div>
+			<!-- </div> -->
+		</c:forEach>
+	</div>
+	
+	<hr/>
+	
+	<form action="/Traditional-Market/reply/write" method="post">
+		<input type="hidden" name="boardReplyId" value="${boardReplyVO.boardReplyId}" />
+		<input type="hidden" name="boardId" value="${boardVO.boardId}" />
+		<input type="hidden" name="parentReplyId" value="0" />
+		<textarea name="reply"></textarea>
+		<input type="submit" value="등록" />
+	</form>
 	
 </body>
 </html>
