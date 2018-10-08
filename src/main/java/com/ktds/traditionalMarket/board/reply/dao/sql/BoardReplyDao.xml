@@ -40,9 +40,9 @@
 		<!-- id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"-->					
 		<id column="BOARD_REPLY_ID" property="boardReplyId"/>			
 		<result column="REPLY" property="reply"/>
-		<result column="CRT_DATE" property="BR_CRT_DATE"/>
-		<result column="MEMBER_ID" property="BR_MEMBER_ID"/>
-		<result column="BOARD_ID" property="BR_BOARD_ID"/>
+		<result column="BR_CRT_DATE" property="crtDate"/>
+		<result column="BR_MEMBER_ID" property="memberId"/>
+		<result column="BR_BOARD_ID" property="boardId"/>
 		<result column="PARENT_REPLY_ID" property="parentReplyId"/>
 		<result column="LEVEL" property="level"/>
 		<!-- 객체가 다른 객체한테...이렇게 함으로써 BoardReplyVO에 BoardVO, MemberVO를 가지게 됨.  -->
@@ -110,6 +110,15 @@
 		AND		B.BOARD_ID = #{boardId}
 		START	WITH BR.PARENT_REPLY_ID = '0'	<!-- 댓댓글만들기위해서 사용함! -->
 		CONNECT BY PRIOR BR.BOARD_REPLY_ID = BR.PARENT_REPLY_ID	
+	</select>
+	
+	
+	
+	<select id="" parameterType="string" resultType="BoardReplyVO">
+		SELECT	MEMBER_ID
+		FROM	BOARD_REPLY
+		WHERE	MEMBER_ID = #{memberId}
+		AND		BOARD_ID = #{boardId}
 	</select>
 	
 </mapper>

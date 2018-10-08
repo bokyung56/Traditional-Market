@@ -3,7 +3,14 @@ package com.ktds.traditionalmarket.board.reply.vo;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
+
+//   -----------------------
+//   l                     l
+// Member --- Reply ---- Board
+
+
 public class BoardReplyVO {
+	
 	// DB에 있는 columns 6개
 	private String boardReplyId;
 	private String reply;
@@ -15,7 +22,7 @@ public class BoardReplyVO {
 	// 아마 Rownum 역할?
 	private int level;
 
-	// MEMBER --- BOARDREPLY --- BOARD
+	// join 해줄 테이블들
 	private BoardVO boardVO;
 	private MemberVO memberVO;
 

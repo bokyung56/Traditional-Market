@@ -114,5 +114,20 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.6</version>
 		</dependency>
+
+		<!-- XSS(크로스 사이트 스크립팅): 주요해킹내용은 서버에 있는게 아니라 사용자의 컴퓨터에 있는 개인정보들을 털음. 즉, 
+			쿠키를 털음 -->
+			<!-- 해커가 게시판쪽에 스크립트를 심어놓으면서 사용자의 쿠키정보들이 다 전달됨. -->
+			<!-- 그래서 웹페이지들 중에 쿠키를 사용하겠냐고 사용자들한테 묻는 사이트도 있음 -->
+			<!-- 오페라는 쿠키를 못쓰게 막아 놓음. 하지만 엣지나IE는 안 막아 놓음 -->
+			<!-- 목적 2가지) 쿠키 털거나 좀비 PC만들거나 -->
+			<!-- 3가지 공격 유형: Reflective XSS, Stored XSS, DOM XSS -->
+		<!-- Luxy-XSS: 쓸 수 있는 태그만 화이트리스트로 관리해주는 것! 이건 네이버가 만들어서 무료로 배포하는 중~ -->
+		<dependency>
+			<groupId>com.navercorp.lucy</groupId>
+			<artifactId>lucy-xss</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
 	</dependencies>
 </project>

@@ -1,12 +1,15 @@
 package com.ktds.traditionalmarket.board.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktds.traditionalmarket.board.biz.BoardBiz;
+import com.ktds.traditionalmarket.board.reply.biz.BoardReplyBiz;
+import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
 import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
-import com.ktds.traditionalmarket.member.biz.MemberBiz;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
 
@@ -15,6 +18,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private BoardBiz boardBiz;
+	
+	@Autowired
+	private BoardReplyBiz boardReplyBiz;
 	
 
 
@@ -28,8 +34,13 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO readOneBoard(String boardId) {
 		// 해당 게시글 조회수(viewCount) 증가시키기!
-			
-		return boardBiz.readOneBoard(boardId);
+		BoardVO boardVO = this.readOneBoard(boardId);
+		List<BoardReplyVO> replyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
+		if (replyList != null ) {			
+			boardVO.setReplyList(replyList);
+		}
+		
+		return boardVO;
 	}
 
 	@Override

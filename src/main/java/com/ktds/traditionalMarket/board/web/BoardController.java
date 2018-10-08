@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,13 +28,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.ktds.traditionalmarket.board.reply.service.BoardReplyService;
+import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
 import com.ktds.traditionalmarket.board.service.BoardService;
 import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.common.session.Session;
 import com.ktds.traditionalmarket.common.utils.DownloadUtil;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
+import com.nhncorp.lucy.security.xss.XssFilter;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
 
@@ -74,26 +77,39 @@ public class BoardController {
 			}
 		}
 
-		PageExplorer pageExplorer= this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
+		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
 		
 		session.setAttribute(Session.SEARCH, boardSearchVO);
 			
 		ModelAndView view = new ModelAndView("board/list");
-		view.addObject("boardVOList", pageExplorer.getList());	// 4. boardVOList);
-		view.addObject("pagenation", pageExplorer.make()); 		// 5.
-		view.addObject( "size", pageExplorer.getTotalCount() );	// 몇개의 게시글이 검색되었습니다.
-		view.addObject("boardSearchVO", boardSearchVO	);		// 검색시 검색칸에 검색한 글자가 안사라지게 하기위해서
+		
+		
+		if(pageExplorer != null) {
+			// XSS: 게시판의 제목과 내용에 대해 XSS HTML 인코딩
+			XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
+			for ( Object boardVO : pageExplorer.getList() ){		// pageExplorer.getList()가 return이 object타입이라서
+				BoardVO board = (BoardVO) boardVO;
+				board.setTitle( filter.doFilter(board.getTitle()) );
+				board.setContent( filter.doFilter(board.getContent()) );
+			}
+			
+			view.addObject("boardVOList", pageExplorer.getList());	// 4. boardVOList);
+			view.addObject("pagenation", pageExplorer.make()); 		// 5.
+			view.addObject( "size", pageExplorer.getTotalCount() );	// 몇개의 게시글이 검색되었습니다.
+			view.addObject("boardSearchVO", boardSearchVO	);		// 검색시 검색칸에 검색한 글자가 안사라지게 하기위해서
+		}
+	
 		return view;
 	}	
 	
-	// 글 작성하기
+	// 글 작성하기 (Get)
 	@GetMapping("/board/write")
 	public String viewCreateOneBoardPage() {
 		
 		return  "board/write";
 	} 
 	
-	// 글 작성하기
+	// 글 작성하기 (Post)
 	@PostMapping("/board/write")
 	public ModelAndView doCreateOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
 											, Errors errors
@@ -101,15 +117,19 @@ public class BoardController {
 		
 		ModelAndView view = new ModelAndView("redirect:/board/list");
 		
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !boardVO.getToken().equals(sessionToken) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		}*/
+		
 		// Validation Annotation이 실패했는지 체크( 실패하면, 다시 글쓰기페이지로 내용 유지해서 돌아감 )
 		if ( errors.hasErrors() ) {
 			view.setViewName("board/write");
 			view.addObject("boardVO", boardVO);
-			System.out.println("여기는 Errors입니다!");
 			return view;
 		}
-		
 			
+		// <파일업로드하기>
 		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
 		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
 		
@@ -142,6 +162,11 @@ public class BoardController {
 		
 		boolean isSuccess = this.boardService.createOneBoard(boardVO);
 		
+		// XSS: 게시글 작성시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
+		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
+		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
+		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
+		
 		return  view;
 	}
 	
@@ -150,15 +175,26 @@ public class BoardController {
 	@GetMapping("/board/detail/{boardId}")
 	public ModelAndView viewBoardDetailPage(@PathVariable String boardId){
 		
-		BoardVO boardVO  = this.boardService.readOneBoard(boardId);
+		BoardVO boardVO  = this.boardService.readOneBoard(boardId);		
 		
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
 		
+		// XSS: 게시글 읽을 시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
+		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
+		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
+		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
+		
+		// XSS: 댓글 읽을 시
+		for ( Object boardReplyVO : boardVO.getReplyList() ) {
+			BoardReplyVO replyVO = (BoardReplyVO) boardReplyVO;
+			replyVO.setReply( filter.doFilter(replyVO.getReply()) );
+		}
+		
 		return view;
 	}
 	
-	
+	// 다운로드
 	@RequestMapping("/board/download/{boardId}")
 	public void fileDownload( 
 			@PathVariable String boardId
@@ -209,62 +245,63 @@ public class BoardController {
 	} 
 	
 	
-		
-		// 글 수정하기
-		@RequestMapping("/board/modify")
-		public ModelAndView doModifyOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
-													,  @SessionAttribute(Session.USER) MemberVO memberVO
-													, Errors errors
-													, HttpSession session) {
-			System.out.println("**** boardVO.getBoardId()= " + boardVO.getBoardId());
-			System.out.println("**** boardVO.getTitle()= " + boardVO.getTitle());
-			System.out.println("**** boardVO.getContent()= " + boardVO.getContent());
-			System.out.println("**** boardVO.getPicture()= " + boardVO.getPicture());
-			
-			ModelAndView view = new ModelAndView("redirect:/board/list");
-			
-			// Validation Annotation이 실패했는지 체크( 실패하면, 다시 글쓰기페이지로 내용 유지해서 돌아감 )
-			if ( errors.hasErrors() ) {
-				view.setViewName("board/modify");
-				view.addObject("boardVO", boardVO);
-				
-				return view;
-			}
-			
-				
-			// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
-			MultipartFile uploadPictureFile = boardVO.getPictureFile();	
-			
-			if( !uploadPictureFile.isEmpty() ) {
-				// 파일시스템에 저장될 파일의 이름(난수)
-				String pictureFileName = UUID.randomUUID().toString();
-				
-				// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
-				File uploadDir = new File(uploadPath);
-				if( !uploadDir.exists() ) {
-					uploadDir.mkdirs();
-				}
-				
-				//파일 업로드될 경로 지정
-				File destPictureFile = new File(uploadPath, pictureFileName);
-				
-					// 업로드
-					try {
-						uploadPictureFile.transferTo(destPictureFile);
-						boardVO.setPicture(pictureFileName);
-					} catch (IllegalStateException | IOException e) {
-						throw new RuntimeException(e.getMessage(), e);
-					} 			
-			}
-			
-			MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
-			String memberId = loginMemberVO.getMemberId();
-			boardVO.setMemberVO(loginMemberVO);
-			boardVO.setMemberId(memberId);
-			
-			this.boardService.updateOneBoard(boardVO);
-			
-			return  view;
+	// 글 수정하기
+	@RequestMapping("/board/modify")
+	public ModelAndView doModifyOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
+												,  @SessionAttribute(Session.USER) MemberVO memberVO
+												, Errors errors
+												, HttpSession session) {
+					
+		ModelAndView view = new ModelAndView("redirect:/board/list");
+					
+		// Validation Annotation이 실패했는지 체크( 실패하면, 다시 글쓰기페이지로 내용 유지해서 돌아감 )
+		if ( errors.hasErrors() ) {
+			view.setViewName("board/modify");
+			view.addObject("boardVO", boardVO);
+						
+			return view;
 		}
+					
+						
+		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
+		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+					
+		if( !uploadPictureFile.isEmpty() ) {
+			// 파일시스템에 저장될 파일의 이름(난수)
+			String pictureFileName = UUID.randomUUID().toString();
+						
+			// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
+			File uploadDir = new File(uploadPath);
+			if( !uploadDir.exists() ) {
+				uploadDir.mkdirs();
+			}
+						
+			//파일 업로드될 경로 지정
+			File destPictureFile = new File(uploadPath, pictureFileName);
+						
+			// 업로드
+			try {
+				uploadPictureFile.transferTo(destPictureFile);
+				boardVO.setPicture(pictureFileName);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 			
+		}
+					
+		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
+		String memberId = loginMemberVO.getMemberId();
+		boardVO.setMemberVO(loginMemberVO);
+		boardVO.setMemberId(memberId);
+					
+		boolean isSuccess = this.boardService.updateOneBoard(boardVO);
+		
+		// XSS: 게시글 수정시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
+		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
+		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
+		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
+					
+		return  view;
+	}			
+			
 
 }

@@ -1,5 +1,7 @@
 package com.ktds.traditionalmarket.board.reply.biz;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,4 +26,9 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 		return boardReplyDao.deleteOneBoardReply(boardReplyId) > 0;
 	}
 
+	@Override
+	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
+		
+		return boardReplyDao.selectAllBoardReplies(boardId);
+	}	
 }

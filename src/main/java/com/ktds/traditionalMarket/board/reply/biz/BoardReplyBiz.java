@@ -12,5 +12,7 @@ public interface BoardReplyBiz {
 	// 댓글 삭제
 	public boolean deleteOneBoardReply( String boardReplyId );
 	
+	// 댓글 읽어오기
+	public List<BoardReplyVO> selectAllBoardReplies(String boardId);
 	
 }
