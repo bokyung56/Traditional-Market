@@ -70,6 +70,14 @@
 		WHERE	BOARD_ID = #{boardId}
 	</update>
 	
+	
+	<!-- 해당 글 읽을 시, 추천수 증가시키기 -->
+	<update id="updateRecommendCount" parameterType="string">
+		UPDATE	BOARD
+		SET		RECOMMEND_COUNT = RECOMMEND_COUNT + 1
+		WHERE	BOARD_ID = #{boardId}
+	</update>
+	
 	<select id="selectOneBoard" parameterType="string" resultMap="boardResultMap"><!-- resultType="BoardVO"> -->
 		SELECT	B.BOARD_ID
 				, B.TITLE
@@ -96,6 +104,7 @@
 		AND	B.BOARD_ID = #{BOARD_ID}		
 	</select>
 	
+	<!-- 게시글 수정하기 -->
 	<update id="updateOneBoard" parameterType="BoardVO">
 		UPDATE	BOARD
 		SET		TITLE = #{title}, CONTENT = #{content}, PICTURE = #{picture}, MDFY_DATE = SYSDATE
@@ -103,12 +112,12 @@
 		AND		MEMBER_ID = #{memberId}
 	</update>
 	
+	<!-- 게시글 지우기 -->
 	<delete id="deleteOneBoard" parameterType="string">
 		DELETE	
 		FROM	BOARD
 		WHERE	BOARD_ID = #{boardId}
 	</delete>
-	
 	
 	<select id="selectAllBoardsCount" parameterType="BoardSearchVO" resultType="_int">
 		SELECT	COUNT(1)

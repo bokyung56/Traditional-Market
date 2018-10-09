@@ -2,6 +2,7 @@ package com.ktds.traditionalmarket.member.web;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktds.traditionalmarket.common.session.Session;
 import com.ktds.traditionalmarket.member.service.MemberService;
 import com.ktds.traditionalmarket.member.validator.MemberValidator;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
@@ -170,16 +172,20 @@ public class MemberController {
 		}
 		else {
 			boolean isLoginSuccess = this.memberService.readOneMember(memberVO, session);
-			if ( isLoginSuccess ) {
-				//로그인 성공 - true(isLoginSuccess)
+			
+			//로그인 성공 - true(isLoginSuccess)
+			if ( isLoginSuccess ) {	
+				// CSRF 방어: Token값 생성 및 등록 코드 작성
+				String token = UUID.randomUUID().toString();
+				session.setAttribute(Session.CSRF_TOKEN, token);
 			}
-			else {
-				//실패 (그냥 아이디 비밀번호 틀린사람) - false(isLoginSuccess)
+			//로그인 실패 (그냥 아이디 비밀번호 틀린사람) - false(isLoginSuccess)
+			else {	
+				
 			}
 			result.put("isLoginSuccess", isLoginSuccess);
 		}
-		
-		
+			
 		// 로그인 성공시, 메인페이지로!
 		// ModelAndView view = new ModelAndView("redirect:/main/main");
 		

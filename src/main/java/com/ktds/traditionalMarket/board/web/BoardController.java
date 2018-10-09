@@ -55,14 +55,14 @@ public class BoardController {
 	}*/
 	
 	
-	
-	
+		
 	@RequestMapping("/board/list/init")
 	public String viewBoardListPageForInitiate( HttpSession session ) {	// init이 들어오면 검색을 초기화하기위해서 session받음
 		session.removeAttribute(Session.SEARCH); 	// search세션을 지워라. null값이 되버림.
 		return "redirect:/board/list";
 	}
 	
+	// 여러 게시글 가져오기(게시판)
 	@RequestMapping("/board/list")
 	public ModelAndView viewBoardListPage(
 			@ModelAttribute BoardSearchVO boardSearchVO					// 1. 얘한테 페이지번호를 줄거임
@@ -85,7 +85,7 @@ public class BoardController {
 		
 		
 		if(pageExplorer != null) {
-			// XSS: 게시판의 제목과 내용에 대해 XSS HTML 인코딩
+			// XSS  방어하기: 게시판의 제목과 내용에 대해 XSS HTML 인코딩
 			XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 			for ( Object boardVO : pageExplorer.getList() ){		// pageExplorer.getList()가 return이 object타입이라서
 				BoardVO board = (BoardVO) boardVO;
@@ -117,10 +117,11 @@ public class BoardController {
 		
 		ModelAndView view = new ModelAndView("redirect:/board/list");
 		
-/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		// CSRF 방어하기
+		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
 		if ( !boardVO.getToken().equals(sessionToken) ){
 			throw new RuntimeException("잘못된 접근입니다.");
-		}*/
+		}
 		
 		// Validation Annotation이 실패했는지 체크( 실패하면, 다시 글쓰기페이지로 내용 유지해서 돌아감 )
 		if ( errors.hasErrors() ) {
@@ -162,7 +163,7 @@ public class BoardController {
 		
 		boolean isSuccess = this.boardService.createOneBoard(boardVO);
 		
-		// XSS: 게시글 작성시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
+		// XSS  방어하기: 게시글 작성시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
 		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
 		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
@@ -171,7 +172,33 @@ public class BoardController {
 	}
 	
 	
-	// 글 하나 읽기
+	// 게시글 추천 증가시키기
+	@PostMapping("/board/recommend")
+	@ResponseBody
+	public Map<String, Object> recommend(@RequestParam String boardId		// @PathVariable String boardId		// @PathVariable방식: http://localhost:8080/Traditional-Market/board/recommend/{boardId}
+									, @RequestParam String token			// @RequestParm방식: http://localhost:8080/Traditional-Market/board/recommend/{boardId}?token={sessionScope._CSRF_TOKEN_}
+									, HttpSession session) {
+		
+		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
+		
+		// CSRF 방어하기
+		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !sessionToken.equals(token) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		} 
+		
+		boolean isSuccess = this.boardService.updateRecommendCount(boardId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("recommend", isSuccess);
+		
+		// System.out.println("*********isSuccess= " + isSuccess);
+		
+		return result;	//return view; 		
+	}
+	
+	
+	// 게시글 하나 읽기
 	@GetMapping("/board/detail/{boardId}")
 	public ModelAndView viewBoardDetailPage(@PathVariable String boardId){
 		
@@ -180,12 +207,12 @@ public class BoardController {
 		ModelAndView view = new ModelAndView("board/detail");
 		view.addObject("boardVO", boardVO);
 		
-		// XSS: 게시글 읽을 시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
+		// XSS  방어하기: 게시글 읽을 시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
 		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
 		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
 		
-		// XSS: 댓글 읽을 시
+		// XSS  방어하기: 댓글 읽을 시
 		for ( Object boardReplyVO : boardVO.getReplyList() ) {
 			BoardReplyVO replyVO = (BoardReplyVO) boardReplyVO;
 			replyVO.setReply( filter.doFilter(replyVO.getReply()) );
@@ -194,7 +221,8 @@ public class BoardController {
 		return view;
 	}
 	
-	// 다운로드
+	
+	// 파일 다운로드
 	@RequestMapping("/board/download/{boardId}")
 	public void fileDownload( 
 			@PathVariable String boardId
@@ -221,7 +249,7 @@ public class BoardController {
 }
 	
 	
-	// 글 삭제하기
+	// 게시글 삭제하기
 	@GetMapping("/board/delete/{boardId}")
 	public String doBoardDeleteAction(@PathVariable String boardId) {
 		
@@ -231,7 +259,7 @@ public class BoardController {
 	}
 	
 	
-	// 글 수정하기
+	// 게시글 수정하기
 	@GetMapping("/board/modify/{boardId}")
 	public ModelAndView viewModifyOneBoardPage(@PathVariable String boardId) {
 			
@@ -245,7 +273,7 @@ public class BoardController {
 	} 
 	
 	
-	// 글 수정하기
+	// 게시글 수정하기
 	@RequestMapping("/board/modify")
 	public ModelAndView doModifyOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
 												,  @SessionAttribute(Session.USER) MemberVO memberVO

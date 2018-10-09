@@ -31,10 +31,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardBiz.createOneBoard(boardVO);
 	}
 
+	// 게시글 하나 읽어오기
 	@Override
 	public BoardVO readOneBoard(String boardId) {
-		// 해당 게시글 조회수(viewCount) 증가시키기!
-		BoardVO boardVO = this.readOneBoard(boardId);
+		
+		BoardVO boardVO = this.boardBiz.readOneBoard(boardId);
+		
 		List<BoardReplyVO> replyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
 		if (replyList != null ) {			
 			boardVO.setReplyList(replyList);
@@ -42,25 +44,32 @@ public class BoardServiceImpl implements BoardService{
 		
 		return boardVO;
 	}
-
+	
+	// 게시글 추천수 증가시키기
+	@Override
+	public boolean updateRecommendCount(String boardId) {
+		
+		return boardBiz.updateRecommendCount(boardId);
+	}
+	
+	// 게시글 수정하기
 	@Override
 	public boolean updateOneBoard(BoardVO boardVO) {
 		
 		return boardBiz.updateOneBoard(boardVO);
 	}
 
+	// 게시글 지우기
 	@Override
 	public boolean deleteOneBoard(String boardId) {
 		
 		return boardBiz.deleteOneBoard(boardId);
 	}
 
+	// 여러 게시글들 읽어오기(게시판)
 	@Override
 	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO) {
 		
 		return boardBiz.readAllBoards(boardSearchVO);
-	}
-
-	
-	
+	}	
 }

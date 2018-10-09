@@ -33,6 +33,11 @@ public class BoardVO {
 	
 	// 댓글
 	private List<BoardReplyVO> replyList;
+		
+	// CSRF
+	private String token;
+	
+	
 	
 	// 원래 글을 등록할때, 파일을 올려놓지 않으면 에러 발생하는뎁!
 	// 왜? Null이라서 그래서 초기값을 공백으로 줘버리니까 이제 파일 올리지 않아도 에러가 나지 않는다.
@@ -152,6 +157,17 @@ public class BoardVO {
 
 	public void setReplyList(List<BoardReplyVO> replyList) {
 		this.replyList = replyList;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}	
+	
+	
+	
 
 }

@@ -7,10 +7,13 @@ import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 public interface BoardService {
 
-	public boolean createOneBoard(BoardVO boardVO);		// 글 쓰기
-	public BoardVO readOneBoard(String boardId);		// 글 하나 읽어오기
-	public boolean updateOneBoard(BoardVO boardVO);		// 글 수정하기
-	public boolean deleteOneBoard(String boardId);		// 글 지우기
+	public boolean createOneBoard(BoardVO boardVO);			// 글 쓰기
+	
+	public BoardVO readOneBoard(String boardId);			// 글 하나 읽어오기
+	public boolean updateRecommendCount(String boardId);	// 게시글 추천수 증가시키기
+	
+	public boolean updateOneBoard(BoardVO boardVO);			// 글 수정하기
+	public boolean deleteOneBoard(String boardId);			// 글 지우기
 	
 	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO);
 	

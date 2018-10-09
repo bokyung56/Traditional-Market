@@ -49,6 +49,13 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 		
 		return getSqlSession().update("BoardDao.updateViewCount", boardId);
 	}
+	
+	// 추천수 증가시키기
+	@Override
+	public int updateRecommendCount(String boardId) {
+		
+		return getSqlSession().update("BoardDao.updateRecommendCount", boardId);
+	}
 
 	// 전체글 개수
 	@Override

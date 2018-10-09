@@ -22,6 +22,7 @@ public class BoardBizImpl implements BoardBiz{
 	@Autowired
 	private MemberBiz memberBiz;
 
+	// 게시글 작성하기
 	@Override
 	public boolean createOneBoard(BoardVO boardVO) {
 		boolean isSuccess = boardDao.insertOneBoard(boardVO) > 0;
@@ -38,6 +39,7 @@ public class BoardBizImpl implements BoardBiz{
 		return  isSuccess;
 	}
 
+	// 게시글 하나 읽어오기
 	@Override
 	public BoardVO readOneBoard(String boardId) {
 		// 1. 조회수 증가시키기
@@ -46,13 +48,22 @@ public class BoardBizImpl implements BoardBiz{
 		// 2.하나의 게시글 조회
 		return boardDao.selectOneBoard(boardId);
 	}
-
+	
+	// 게시글 추천수 증가시키기
+	@Override
+	public boolean updateRecommendCount(String boardId) {
+		
+		return this.boardDao.updateRecommendCount(boardId) > 0;
+	}
+	
+	// 게시글 수정하기 
 	@Override
 	public boolean updateOneBoard(BoardVO boardVO) {
 		
 		return boardDao.updateOneBoard(boardVO) > 0;
 	}
 
+	// 게시글 지우기
 	@Override
 	public boolean deleteOneBoard(String boardId) {
 		
@@ -80,5 +91,9 @@ public class BoardBizImpl implements BoardBiz{
 	 * 
 	 * 53: 시작번호와 끝번호를 boardSearchVO한테 넣어준다.
 	 */
+
+
+	
+
 	
 }

@@ -10,24 +10,49 @@
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function(){
-		var btn = '<input type="button" value="삭제"/>';  			// Shadow Dom
 		
+		var count = $("#reCount").val(); 			// Shadow Dom
 		
+		var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
+		$("#recommendBtn").after(countBtn);
 		
-		$.post("/Traditional-Market/reply/delete"					// URL
+ 		$("#recommendBtn").click(function(){
+			$.post("/Traditional-Market/board/recommend"		// URL
 					, {
-						"boardReplyId":$("#replyId").val();			// Request Parameter
-						"memberId":$("#memberId").val();
+						"boardId": $("#bId").val()
+						, "token":$("#csrfToken").val()		// Request Parameter
 					}
-					, function(response) {							// Response Call back
-						if( response.replyId ){						// true
-							alert("삭제되었습니다.");
-							$("#replyList").after(btn);
+					, function(response) {						// Response Call back
+						if( response.recommend ){				// true
+							alert("추천되었습니다.");
+							$("#countBtnnnn").remove();
+							++count;
+							var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
+							$("#recommendBtn").after(countBtn);
+							
 						}
-						else {										// false
-							alert("삭제 실패야~");
-						} 
-					});	  */
+						else {									// false
+							alert("추천 실패야~");
+						} 				
+					});
+		});
+		
+ 		var btn = '<input type="button" value="삭제"/>'; 			// Shadow Dom
+/*		
+		$.post("/Traditional-Market/reply/delete"					// URL
+				, {
+					"boardReplyId":$("#replyId").val();			// Request Parameter
+					, "memberId":$("#memberId").val();
+				}
+				, function(response) {							// Response Call back
+					if( response.replyId ){						// true
+						alert("삭제되었습니다.");
+						$("#replyList").after(btn);
+					}
+					else {										// false
+						alert("삭제 실패야~");
+					} 
+			});  */
 		
 /* 	 	var inputReply = '<input type="text" placeholder="주제와 무관한 댓글, 악플은 삭제 될 수 있습니다."/>';
 		var buttonReply = '<input type="button" value="등록"/>';
@@ -39,15 +64,25 @@
 			alert("과연 되나요?");
 		}); */
 		
-	});
+	})
 </script>
 
 </head>
 <body>
 	<%-- <jsp:include page="/WEB-INF/view/common/header.jsp"/> --%>
+	<div id="recoCount">
+		<%-- <a href="<c:url value='/board/recommend/${boardVO.boardId}?token=${sessionScope._CSRF_TOKEN_}'/>">추천</a> --%>
+		<input type="hidden"  id="bId" value="${boardVO.boardId}"/>
+		<input type="hidden"  id="csrfToken" value="${sessionScope._CSRF_TOKEN_}"/>
+		<input type="hidden"  id="reCount" value="${boardVO.recommendCount}"/>
+		<input type="button" id="recommendBtn" value="추천 " />
+	</div>
 	<div>
-		<a href="/Traditional-Market/board/modify/${boardVO.boardId}">수정</a>
-		<a href="/Traditional-Market/board/delete/${boardVO.boardId}">삭제</a>
+		<c:if test="${board.memberId eq sessionScope._USER_.memberId}">
+			<a href="/Traditional-Market/board/modify/${boardVO.boardId}">수정</a>
+			<a href="<c:url value='/board/delete/${boardVO.boardId}'/>">삭제</a>
+		</c:if>
+		
 	</div>
 	<h1>
 		${boardVO.title} 
@@ -68,7 +103,7 @@
 		<a href="/Traditional-Market/board/list">목록</a>
 	</div>
 	
-	댓글   조회수${boardVO.viewCount}
+	댓글   조회수${boardVO.viewCount} <%-- 추천수${boardVO.recommendCount} --%>
 	<hr/>
 	<form action="/Traditional-Market/reply/write" method="post">
 		<input type="hidden" name="boardId" value="${boardVO.boardId}" />

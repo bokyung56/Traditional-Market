@@ -35,6 +35,7 @@
 
 <body>
 	<form id="writeForm">
+		<input type="hidden" name="token" value="${sessionScope._CSRF_TOKEN_}"/>
 		<div>
 			<input type="text" id="title" name="title" placeholder="제목" value="${boardVO.title}"/>
 		</div>

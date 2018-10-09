@@ -36,4 +36,10 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 		return getSqlSession().selectList("BoardReplyDao.selectAllBoardReplies", boardId);
 	}
 
+	@Override
+	public BoardReplyVO selectOneMemberReplies(BoardReplyVO boardReplyVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
