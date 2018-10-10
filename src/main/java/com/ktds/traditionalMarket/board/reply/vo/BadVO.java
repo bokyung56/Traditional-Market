@@ -6,8 +6,6 @@ public class BadVO {
 	private String boardId;
 	private int badCount;
 	
-	
-	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -31,7 +29,4 @@ public class BadVO {
 	public void setBadCount(int badCount) {
 		this.badCount = badCount;
 	}	
-	
-	
-
 }

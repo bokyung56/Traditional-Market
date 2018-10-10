@@ -25,7 +25,7 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 	// 댓글들 읽어오기
 	@Override
 	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
-		List<BoardReplyVO> boardReplyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
+/*		List<BoardReplyVO> boardReplyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
 		
 		for (BoardReplyVO boardReplyVO : boardReplyList ) {
 			int goodCount = this.boardReplyBiz.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());
@@ -33,8 +33,10 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 			System.out.println("출력 " + goodCount);
 			boardReplyVO.setGoodCount(goodCount);
 			boardReplyVO.setBadCount(badCount);			
-		}
-		return boardReplyList;
+		}*/
+		//return boardReplyList;
+		
+		return this.boardReplyBiz.selectAllBoardReplies(boardId);
 	}
 
 	// 하나의 댓글 삭제
@@ -58,13 +60,17 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 		return this.boardReplyBiz.insertOneBoardReplyBad(badVO);
 	}
 
+	// 댓글 졸아요 수
 	@Override
 	public int selectOneBoardReplyGoodCount(String boardReplyId) {
+		
 		return this.boardReplyBiz.selectOneBoardReplyGoodCount(boardReplyId);
 	}
 
+	// 댓글 싫어요 수
 	@Override
 	public int selectOneBoardReplyBadCount(String boardReplyId) {
+		
 		return this.boardReplyBiz.selectOneBoardReplyBadCount(boardReplyId);
 	}
 	

@@ -64,11 +64,13 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 		return this.boardReplyDao.insertOneBoardReplyBad(badVO) > 0;
 	}
 
+	// 댓글 졸아요 수
 	@Override
 	public int selectOneBoardReplyGoodCount(String boardReplyId) {
 		return this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyId);
 	}
 
+	// 댓글 싫어요 수
 	@Override
 	public int selectOneBoardReplyBadCount(String boardReplyId) {
 		return this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyId);

@@ -67,8 +67,6 @@ public class BoardReplyController {
 	public Map<String, Object> doReplyGood( @RequestParam String boardReplyId		
 			 								, @SessionAttribute(Session.USER) MemberVO memberVO	) {
 		
-		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
-		
 		// CSRF 방어하기
 /*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
 		if ( !sessionToken.equals(token) ){
@@ -81,29 +79,22 @@ public class BoardReplyController {
 		goodVO.put("memberId", memberVO.getMemberId());
 		
 		
-		Map<String, Object> result = new HashMap<>();
-		boolean isSuccess = false;
-		isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
+		boolean isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
 		int goodCount = this.boardReplyService.selectOneBoardReplyGoodCount(boardReplyId);
-		if ( isSuccess ) {
-			result.put("good", isSuccess);			
-		}
-		else {
-			result.put("good", false);
-		}
+	
 		
+		Map<String, Object> result = new HashMap<>();
+		result.put("good", isSuccess);				
 		result.put("goodCount", goodCount);
 		
-		return result;	//return view; 		
+		return result;		
 	}
 	
 	// 댓글 싫어요
 	@PostMapping("/reply/bad")
 	@ResponseBody
 	public Map<String, Object> doReplyBad( @RequestParam String boardReplyId		
-			, @SessionAttribute(Session.USER) MemberVO memberVO	) {
-		
-		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
+											, @SessionAttribute(Session.USER) MemberVO memberVO	) {
 		
 		// CSRF 방어하기
 /*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
@@ -116,13 +107,14 @@ public class BoardReplyController {
 		badVO.put("memberId", memberVO.getMemberId());
 		
 		boolean isSuccess = this.boardReplyService.insertOneBoardReplyBad(badVO);
+		int badCount = this.boardReplyService.selectOneBoardReplyBadCount(boardReplyId);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("recommend", isSuccess);
+		result.put("bad", isSuccess);				
+		result.put("badCount", badCount);
 		
-		return result;	//return view; 		
+		return result;			
 	}
-	
 	
 	
 }

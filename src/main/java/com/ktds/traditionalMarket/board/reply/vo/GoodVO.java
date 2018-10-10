@@ -5,10 +5,7 @@ public class GoodVO {
 	private String memberId;
 	private String boardId;
 	private int goodCount;
-	
-	
-	
-	
+		
 	public String getMemberId() {
 		return memberId;
 	}
@@ -31,9 +28,5 @@ public class GoodVO {
 
 	public void setGoodCount(int goodCount) {
 		this.goodCount = goodCount;
-	}	
-	
-	
-
-	
+	}		
 }

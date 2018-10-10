@@ -22,7 +22,7 @@ public interface BoardReplyService {
 	public boolean insertOneBoardReplyBad( Map<String, String> badVO);
 	
 	// 댓글 졸아요 수
-		public int selectOneBoardReplyGoodCount( String boardReplyId);
+	public int selectOneBoardReplyGoodCount( String boardReplyId);
 		
 	// 댓글 싫어요 수
 	public int selectOneBoardReplyBadCount( String boardReplyId);

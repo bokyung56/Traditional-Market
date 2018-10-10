@@ -82,52 +82,45 @@
 		});
 		
 		
-		// 댓글 좋아요
-		//var count = $("#reCount").val(); 			// Shadow Dom
-		
+		// 댓글 좋아요		
  		$(".goodBtn").click(function(){
- 			var goodval = $(this).closest(".replyDiv").find(".replyId").val();
+ 			var goodValue = $(this).closest(".replyDiv").find(".replyId").val();
  			var goodSpan = $(this).closest(".replyDiv").find(".goodSpan");
 			$.post("/Traditional-Market/reply/good"		// URL
 					, {
-						"boardReplyId": goodval				// Request Parameter	
+						"boardReplyId": goodValue				// Request Parameter	
 					}
 					, function(response) {						// Response Call back
 						if( response.good ){				// true
 							alert("좋아요");
-							//++count;
 							goodSpan.text(response.goodCount);					
 						}
 						else {									// false
-							alert("싫어요");
+							alert("다시 시도해주세요");
 						} 				
 					});
 		});
  		
  		
-		// 댓글 싫어요
-		var count = $("#reCount").val(); 			// Shadow Dom
-		
- 		$("#recommendBtn").click(function(){
-			$.post("/Traditional-Market/board/recommend"		// URL
+		// 댓글 싫어요		
+ 		$(".badBtn").click(function(){
+ 			var badValue = $(this).closest(".replyDiv").find(".replyId").val();
+ 			var badSpan = $(this).closest(".replyDiv").find(".badSpan");
+			$.post("/Traditional-Market/reply/bad"		// URL
 					, {
-						"boardReplyId": $(".replyId").val()				// Request Parameter	
+						"boardReplyId": badValue				// Request Parameter	
 					}
 					, function(response) {						// Response Call back
-						if( response.recommend ){				// true
-							alert("추천되었습니다.");				
-							//++count;					
-							//$("#goodSpan").text(count);	
+						if( response.bad ){				// true
+							alert("싫어요");
+							badSpan.text(response.badCount);
 						}
 						else {									// false
-							alert("추천 실패야~");
+							alert("다시 시도해주세요");
 						} 				
 					});
 		});
 		
-		
-				
-			
 	}); 
 		
 
