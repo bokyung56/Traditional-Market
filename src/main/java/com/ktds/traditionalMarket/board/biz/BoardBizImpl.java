@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ktds.traditionalmarket.board.dao.BoardDao;
+import com.ktds.traditionalmarket.board.reply.biz.BoardReplyBiz;
 import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.member.biz.MemberBiz;
@@ -21,6 +22,9 @@ public class BoardBizImpl implements BoardBiz{
 	
 	@Autowired
 	private MemberBiz memberBiz;
+	
+	@Autowired
+	private BoardReplyBiz boardReplyBiz;
 
 	// 게시글 작성하기
 	@Override
@@ -66,6 +70,9 @@ public class BoardBizImpl implements BoardBiz{
 	// 게시글 지우기
 	@Override
 	public boolean deleteOneBoard(String boardId) {
+		
+		// 그 게시글안에 있는 댓글 전체 삭제
+		boardReplyBiz.deleteOneBoardReplies(boardId);
 		
 		return boardDao.deleteOneBoard(boardId) > 0;
 	}

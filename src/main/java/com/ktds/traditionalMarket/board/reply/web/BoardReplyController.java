@@ -3,13 +3,17 @@ package com.ktds.traditionalmarket.board.reply.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.traditionalmarket.board.reply.service.BoardReplyService;
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
@@ -36,28 +40,80 @@ public class BoardReplyController {
 		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 		boardReplyVO.setReply( filter.doFilter( boardReplyVO.getReply() ) );
 	
-		return "redirect:/board/detail/" + boardReplyVO.getBoardId();
+		return "redirect:/board/detail?boardId="+boardReplyVO.getBoardId();		//"redirect:/board/detail/" + boardReplyVO.getBoardId();
 	}
 	
-	
-	// 댓글 지우기
+	// 하나의 댓글 삭제(POST)
 	@PostMapping("/reply/delete")
 	@ResponseBody
-	public Map<String, Object> doCheckDuplicateId( @RequestParam String boardReplyId, @RequestParam String memberId
-													, @SessionAttribute(Session.USER) MemberVO memberVO ){
+	public Map<String, Object> doDeleteOneReply( @RequestParam String boardReplyId ){
 		
-		boolean replyId = false;
-		if ( memberVO.getMemberId().equals(memberId) ) {	// memberId(reply 작성자)와 지금 로그인한 회원의 memberId가 같은지 비교
-			replyId = this.boardReplyService.deleteOneBoardReply(boardReplyId);
-		}
-			
-		System.out.println("과연 두구두구두구두구 replyId= " + replyId);
+		//ModelAndView view = new ModelAndView("redirect:/board/detail/{boardId}");
+		
+		boolean replyId = this.boardReplyService.deleteOneBoardReply(boardReplyId);
+	
+		//System.out.println("****************replyId= " + replyId);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("status", "OK");
-		result.put("replyId", replyId);
+		result.put("reply_Id", replyId);
 		
 		return result;
 	}
+	
+	
+	// 댓글 좋아요 
+	@PostMapping("/reply/good")
+	@ResponseBody
+	public Map<String, Object> doReplyGood( @RequestParam String boardReplyId		
+			 								, @RequestParam String memberId	) {
+		
+		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
+		
+		// CSRF 방어하기
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !sessionToken.equals(token) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		} */
+
+		
+		Map<String, String> goodVO = new HashMap<>();
+		goodVO.put("boardReplyId", boardReplyId);
+		goodVO.put("memberId", memberId);
+		
+		boolean isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("recommend", isSuccess);
+		
+		return result;	//return view; 		
+	}
+	
+	// 댓글 싫어요
+	@PostMapping("/reply/bad")
+	@ResponseBody
+	public Map<String, Object> doReplyBad( @RequestParam String boardReplyId		
+											, @RequestParam String memberId) {
+		
+		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
+		
+		// CSRF 방어하기
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !sessionToken.equals(token) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		} */
+		
+		Map<String, String> badVO = new HashMap<>();
+		badVO.put("boardReplyId", boardReplyId);
+		badVO.put("memberId", memberId);
+		
+		boolean isSuccess = this.boardReplyService.insertOneBoardReplyBad(badVO);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("recommend", isSuccess);
+		
+		return result;	//return view; 		
+	}
+	
+	
 	
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktds.traditionalmarket.board.reply.service.BoardReplyService;
@@ -86,7 +87,7 @@ public class BoardController {
 		
 		if(pageExplorer != null) {
 			// XSS  방어하기: 게시판의 제목과 내용에 대해 XSS HTML 인코딩
-			XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
+     		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 			for ( Object boardVO : pageExplorer.getList() ){		// pageExplorer.getList()가 return이 object타입이라서
 				BoardVO board = (BoardVO) boardVO;
 				board.setTitle( filter.doFilter(board.getTitle()) );
@@ -113,7 +114,8 @@ public class BoardController {
 	@PostMapping("/board/write")
 	public ModelAndView doCreateOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
 											, Errors errors
-											, HttpSession session) {
+											, HttpSession session
+											, MultipartHttpServletRequest multipartRequest) {
 		
 		ModelAndView view = new ModelAndView("redirect:/board/list");
 		
@@ -129,31 +131,42 @@ public class BoardController {
 			view.addObject("boardVO", boardVO);
 			return view;
 		}
+		
+		
+
 			
 		// <파일업로드하기>
 		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
-		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+		// 단일 파일 업로드: MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+		 List<MultipartFile> uploadPictureFileList = multipartRequest.getFiles("pictureFiles");
 		
-		if( !uploadPictureFile.isEmpty() ) {
-			// 파일시스템에 저장될 파일의 이름(난수)
-			String pictureFileName = UUID.randomUUID().toString();
+		 System.out.println("***************uploadPictureFileList= " + uploadPictureFileList);
+		 
+		if( !uploadPictureFileList.isEmpty() ) {
 			
-			// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
-			File uploadDir = new File(uploadPath);
-			if( !uploadDir.exists() ) {
-				uploadDir.mkdirs();
+			for( MultipartFile mf : uploadPictureFileList ) {
+				
+				// 파일시스템에 저장될 파일의 이름(난수)
+				String pictureFileName = UUID.randomUUID().toString();
+				
+				// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
+				File uploadDir = new File(uploadPath);
+				if( !uploadDir.exists() ) {
+					uploadDir.mkdirs();
+				}
+				
+				//파일 업로드될 경로 지정
+				File destPictureFile = new File(uploadPath, pictureFileName);
+				
+					// 업로드
+					try {
+						mf.transferTo(destPictureFile);
+						boardVO.setPicture(pictureFileName);
+					} catch (IllegalStateException | IOException e) {
+						throw new RuntimeException(e.getMessage(), e);
+					} 				
 			}
-			
-			//파일 업로드될 경로 지정
-			File destPictureFile = new File(uploadPath, pictureFileName);
-			
-				// 업로드
-				try {
-					uploadPictureFile.transferTo(destPictureFile);
-					boardVO.setPicture(pictureFileName);
-				} catch (IllegalStateException | IOException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				} 			
+						
 		}
 		
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
@@ -182,41 +195,42 @@ public class BoardController {
 		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
 		
 		// CSRF 방어하기
-		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
 		if ( !sessionToken.equals(token) ){
 			throw new RuntimeException("잘못된 접근입니다.");
-		} 
+		} */
 		
 		boolean isSuccess = this.boardService.updateRecommendCount(boardId);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("recommend", isSuccess);
 		
-		// System.out.println("*********isSuccess= " + isSuccess);
-		
 		return result;	//return view; 		
 	}
 	
-	
 	// 게시글 하나 읽기
-	@GetMapping("/board/detail/{boardId}")
-	public ModelAndView viewBoardDetailPage(@PathVariable String boardId){
+	@GetMapping("/board/detail")
+	public ModelAndView viewBoardDetailPage(@RequestParam String boardId){
 		
 		BoardVO boardVO  = this.boardService.readOneBoard(boardId);		
 		
 		ModelAndView view = new ModelAndView("board/detail");
-		view.addObject("boardVO", boardVO);
+		// view.addObject("boardVO", boardVO);
 		
 		// XSS  방어하기: 게시글 읽을 시 제목과 내용에 대해 XSS HTML 인코딩 ( 파일은 이미 업로드 시, 이름난수화 시키고 jsp페이지에서 확장자 지정해주었으므로 ) 
 		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
 		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
 		
+		view.addObject("boardVO", boardVO);
+		
 		// XSS  방어하기: 댓글 읽을 시
 		for ( Object boardReplyVO : boardVO.getReplyList() ) {
 			BoardReplyVO replyVO = (BoardReplyVO) boardReplyVO;
-			replyVO.setReply( filter.doFilter(replyVO.getReply()) );
+			replyVO.setReply( filter.doFilter( replyVO.getReply()) );
 		}
+		
+		//view.addObject("boardVO.getReplyList()", boardVO.getReplyList());
 		
 		return view;
 	}
@@ -231,11 +245,11 @@ public class BoardController {
 			
 		) {
 	
-	
 	BoardVO boardVO = this.boardService.readOneBoard(boardId);
 
 	// String originFileName = boardVO.getOriginFileName();
-	String pictureName = boardVO.getPicture();
+	 String pictureName = boardVO.getPicture();
+
 	
 	// Windows \
 	// Unix/Linux/macos /
@@ -292,28 +306,31 @@ public class BoardController {
 					
 						
 		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
-		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+		List<MultipartFile> uploadPictureFileList = boardVO.getPictureFiles();	
 					
-		if( !uploadPictureFile.isEmpty() ) {
-			// 파일시스템에 저장될 파일의 이름(난수)
-			String pictureFileName = UUID.randomUUID().toString();
-						
-			// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
-			File uploadDir = new File(uploadPath);
-			if( !uploadDir.exists() ) {
-				uploadDir.mkdirs();
+		if( !uploadPictureFileList.isEmpty() ) {
+			
+			for( MultipartFile mf : uploadPictureFileList ) {
+				// 파일시스템에 저장될 파일의 이름(난수)
+				String pictureFileName = UUID.randomUUID().toString();
+							
+				// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
+				File uploadDir = new File(uploadPath);
+				if( !uploadDir.exists() ) {
+					uploadDir.mkdirs();
+				}
+							
+				//파일 업로드될 경로 지정
+				File destPictureFile = new File(uploadPath, pictureFileName);
+							
+				// 업로드
+				try {
+					mf.transferTo(destPictureFile);
+					boardVO.setPicture(pictureFileName);
+				} catch (IllegalStateException | IOException e) {
+					throw new RuntimeException(e.getMessage(), e);
+				} 
 			}
-						
-			//파일 업로드될 경로 지정
-			File destPictureFile = new File(uploadPath, pictureFileName);
-						
-			// 업로드
-			try {
-				uploadPictureFile.transferTo(destPictureFile);
-				boardVO.setPicture(pictureFileName);
-			} catch (IllegalStateException | IOException e) {
-				throw new RuntimeException(e.getMessage(), e);
-			} 			
 		}
 					
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import

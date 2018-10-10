@@ -1,6 +1,7 @@
 package com.ktds.traditionalmarket.board.reply.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -18,18 +19,28 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 
+	// 댓글 작성
 	@Override
 	public int insertOneBoardReply(BoardReplyVO boardReplyVO) {
 		
 		return getSqlSession().insert("BoardReplyDao.insertOneBoardReply", boardReplyVO);
 	}
 
+	// 그 게시글안에 있는 댓글 전체 삭제
+	@Override
+	public int deleteOneBoardReplies(String boardId) {
+		
+		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReplies", boardId);
+	}
+	
+	// 하나의 댓글 삭제
 	@Override
 	public int deleteOneBoardReply(String boardReplyId) {
 		
 		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReply", boardReplyId);
 	}
-
+	
+	// 댓글들 읽어오기
 	@Override
 	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
 		
@@ -38,8 +49,21 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 
 	@Override
 	public BoardReplyVO selectOneMemberReplies(BoardReplyVO boardReplyVO) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
+	// 댓글 졸아요
+	@Override
+	public int insertOneBoardReplyGood(Map<String, String> goodVO) {
+		
+		return getSqlSession().insert("BoardReplyDao.insertOneBoardReplyGood", goodVO);
+	}
+
+	// 댓글 싫어요
+	@Override
+	public int insertOneBoardReplyBad(Map<String, String> badVO) {
+		
+		return getSqlSession().insert("BoardReplyDao.insertOneBoardReplyBad", badVO);
+	}
 }

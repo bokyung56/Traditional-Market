@@ -27,7 +27,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter{
 		if ( session.getAttribute("_USER_") == null ) {
 			// request.getContextPath()는 프로젝트의 Context path명을 반환 => /TraditionalMarket
 			String contextPath = request.getContextPath();	
-			response.sendRedirect(contextPath + "/member/login");
+			response.sendRedirect(contextPath + "/main/main");
 			
 			return false;
 		}

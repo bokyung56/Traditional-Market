@@ -21,12 +21,13 @@
 				$("#content").focus();
 				return;
 			}			
-			$("#writeForm").attr({
+/* 			$("#writeForm").attr({
 				method : "post"
 				, action : "/Traditional-Market/board/write"
 				, enctype : "multipart/form-data"
 			})
-			.submit();		
+			.submit(); */	
+			$("#writeForm").submit();
 		});
 		
 	});
@@ -34,7 +35,7 @@
 </head>
 
 <body>
-	<form id="writeForm">
+	<form id="writeForm" method="post" action="/Traditional-Market/board/write"  enctype="multipart/form-data">
 		<input type="hidden" name="token" value="${sessionScope._CSRF_TOKEN_}"/>
 		<div>
 			<input type="text" id="title" name="title" placeholder="제목" value="${boardVO.title}"/>
@@ -43,7 +44,8 @@
 			<textarea type="text" id="content" name="content" placeholder="내용">${boardVO.content}</textarea>
 		</div>
 		<div>
-			<input type="file" id="pictureFile" name="pictureFile" placeholder="파일선택" accept=".jpg, .img, .png"/>
+			<!-- <input type="file" id="pictureFile" name="pictureFile" placeholder="파일선택" accept=".jpg, .img, .png"/> -->
+			<input type="file" multiple="multiple" id="pictureFiles" name="pictureFiles" placeholder="파일선택" accept=".jpg, .img, .png"/>
 		</div>
 		<div>
 			<!-- <input type="submit" id="wirte" value="글쓰기"/> -->

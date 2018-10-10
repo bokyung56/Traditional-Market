@@ -26,7 +26,14 @@
 	</insert>
 	
 	
-	<!-- 댓글 삭제 -->
+	<!-- 그 게시글안에 있는 댓글 전체 삭제 -->
+	<delete id="deleteOneBoardReplies" parameterType="string">
+		DELETE	
+		FROM	BOARD_REPLY
+		WHERE	BOARD_ID = #{boardId}
+	</delete>
+	
+	<!-- 하나의 댓글 삭제 -->
 	<delete id="deleteOneBoardReply" parameterType="string">
 		DELETE	
 		FROM	BOARD_REPLY
@@ -108,17 +115,31 @@
 		AND		BR.MEMBER_ID = R_M.MEMBER_ID
 		AND		BR.BOARD_ID = B.BOARD_ID
 		AND		B.BOARD_ID = #{boardId}
-		START	WITH BR.PARENT_REPLY_ID = '0'	<!-- 댓댓글만들기위해서 사용함! -->
-		CONNECT BY PRIOR BR.BOARD_REPLY_ID = BR.PARENT_REPLY_ID	
+		<!-- ORDER	BY BR.CRT_DATE DESC -->
+ 		START	WITH BR.PARENT_REPLY_ID = '0'	<!-- 댓댓글만들기위해서 사용함! -->
+		CONNECT BY PRIOR BR.BOARD_REPLY_ID = BR.PARENT_REPLY_ID	 
 	</select>
 	
 	
 	
-	<select id="" parameterType="string" resultType="BoardReplyVO">
+<!-- 	<select id="" parameterType="string" resultType="BoardReplyVO">
 		SELECT	MEMBER_ID
 		FROM	BOARD_REPLY
 		WHERE	MEMBER_ID = #{memberId}
 		AND		BOARD_ID = #{boardId}
-	</select>
+	</select> -->
+	
+	
+	<insert parameterType="map">
+		INSERT INTO GOOD (
+   							BOARD_REPLY_ID
+   							, MEMBER_ID
+   						  ) 
+		VALUES ( 
+					#{boardReplyId}
+ 					, #{memberId}
+ 		       )
+			
+	</insert>
 	
 </mapper>

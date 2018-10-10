@@ -33,17 +33,19 @@
 		<mvc:interceptor>
 			<!-- <mvc:mapping path="/**"/> 전체 url에 interceptor을 거는것-->
 			<mvc:mapping path="/board/**" />
-			
+			<mvc:mapping path="/reply/**" />	
 			<mvc:exclude-mapping path="/js/**" />
 			<mvc:exclude-mapping path="/css/**" />
-			<mvc:exclude-mapping path="/img/**" />
-						
-			<bean id="SessionInterceptor" class="com.ktds.traditionalmarket.common.interceptors.SessionInterceptor"/>
-			
+			<mvc:exclude-mapping path="/img/**" />		
+			<bean id="SessionInterceptor" class="com.ktds.traditionalmarket.common.interceptors.SessionInterceptor"/>		
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/img/**" />	
+			<bean id="XssInterceptor" class="com.ktds.traditionalmarket.common.interceptors.XssInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
-
-	
-	
+		
 </beans>

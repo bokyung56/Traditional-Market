@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <title>전통시장: 로그인</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> --%>
 
 <script type="text/javascript">
 	$(document).ready( function(){		
@@ -24,7 +24,7 @@
 				$("#password").focus();
 				return;
 			}
-	    	
+
 			// Ajax 요쳥
 			// $.post("URL", 요청 파라미터(항상 객체 리터럴 방식), function(response):응답파라미터 {})
 			// short cut형식으로 쓴거임.
@@ -107,10 +107,10 @@
 
 	<form id="loginForm">
 		<div>
-			<input type="text" id="memberId" name="memberId" placeholder="아이디"/>
+			<input type="text" id="mId" name="memberId" placeholder="아이디"/>
 		</div>
 		<div>
-			<input type="password" id="password" name="password" placeholder="비밀번호" />
+			<input type="password" id="mPassword" name="password" placeholder="비밀번호" />
 		</div>
 		<div id="submit">
 			<input type="button" id="loginBtn" value="로그인" />
@@ -118,5 +118,5 @@
 		</div>
 	</form>
 
-</body>
-</html>
+<!-- </body>
+</html> -->

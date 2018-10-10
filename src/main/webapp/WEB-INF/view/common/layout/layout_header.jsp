@@ -16,8 +16,8 @@
 		<header>
 			<div id="member_login">
 				<c:if test="${not empty sessionScope._USER_}">
-					${sessionScope._USER_.name}
-					${sessionScope._USER_.point}
+					${sessionScope._USER_.memberId}님 
+					${sessionScope._USER_.point}point
 				</c:if>
 			</div>
  			<div id="header_logo" style="text-align: center;">

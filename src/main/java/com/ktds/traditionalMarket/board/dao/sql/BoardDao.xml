@@ -159,7 +159,15 @@
 										, MEMBER M
 								WHERE	B.MEMBER_ID = M.MEMBER_ID
 								<if test="searchKeyword != null and searchKeyword != ''">
-								AND		TITLE LIKE '%' || #{searchKeyword} || '%'
+									<choose>
+										<when test="TITLE != null">
+											AND		TITLE LIKE '%' || #{searchKeyword} || '%'
+										</when>
+										<when test="B_MEMBER_ID != null">
+											AND		B_MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+										</when>
+									</choose>
+																
 								</if>
 			<!-- 					<choose>
 									<when test="searchTitle != null">
