@@ -65,7 +65,7 @@ public class BoardReplyController {
 	@PostMapping("/reply/good")
 	@ResponseBody
 	public Map<String, Object> doReplyGood( @RequestParam String boardReplyId		
-			 								, @RequestParam String memberId	) {
+			 								, @SessionAttribute(Session.USER) MemberVO memberVO	) {
 		
 		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
 		
@@ -78,12 +78,21 @@ public class BoardReplyController {
 		
 		Map<String, String> goodVO = new HashMap<>();
 		goodVO.put("boardReplyId", boardReplyId);
-		goodVO.put("memberId", memberId);
+		goodVO.put("memberId", memberVO.getMemberId());
 		
-		boolean isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("recommend", isSuccess);
+		boolean isSuccess = false;
+		isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
+		int goodCount = this.boardReplyService.selectOneBoardReplyGoodCount(boardReplyId);
+		if ( isSuccess ) {
+			result.put("good", isSuccess);			
+		}
+		else {
+			result.put("good", false);
+		}
+		
+		result.put("goodCount", goodCount);
 		
 		return result;	//return view; 		
 	}
@@ -92,7 +101,7 @@ public class BoardReplyController {
 	@PostMapping("/reply/bad")
 	@ResponseBody
 	public Map<String, Object> doReplyBad( @RequestParam String boardReplyId		
-											, @RequestParam String memberId) {
+			, @SessionAttribute(Session.USER) MemberVO memberVO	) {
 		
 		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
 		
@@ -104,7 +113,7 @@ public class BoardReplyController {
 		
 		Map<String, String> badVO = new HashMap<>();
 		badVO.put("boardReplyId", boardReplyId);
-		badVO.put("memberId", memberId);
+		badVO.put("memberId", memberVO.getMemberId());
 		
 		boolean isSuccess = this.boardReplyService.insertOneBoardReplyBad(badVO);
 		

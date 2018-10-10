@@ -130,7 +130,7 @@
 	</select> -->
 	
 	
-	<insert parameterType="map">
+	<insert id="insertOneBoardReplyGood" parameterType="map">
 		INSERT INTO GOOD (
    							BOARD_REPLY_ID
    							, MEMBER_ID
@@ -138,8 +138,44 @@
 		VALUES ( 
 					#{boardReplyId}
  					, #{memberId}
- 		       )
-			
+ 		       )			
 	</insert>
+	
+	<insert id="insertOneBoardReplyBad" parameterType="map">
+		INSERT INTO BAD (
+   							BOARD_REPLY_ID
+   							, MEMBER_ID
+   						  ) 
+		VALUES ( 
+					#{boardReplyId}
+ 					, #{memberId}
+ 		       )			
+	</insert>
+	
+<!-- 	<resultMap type="GoodVO" id="GoodVOMap">	
+		id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"					
+		<id column="BOARD_REPLY_ID" property="boardReplyId"/>
+		<id column="MEMBER_ID" property="memberId"/>		
+		<result column="GOODCOUNT" property="goodCount"/>
+	</resultMap>
+	
+	<resultMap type="BadVO" id="BadVOMap">	
+		id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"					
+		<id column="BOARD_REPLY_ID" property="boardReplyId"/>
+		<id column="MEMBER_ID" property="memberId"/>			
+		<result column="BADCOUNT" property="badCount"/>
+	</resultMap> -->
+	
+	<select id="selectOneBoardReplyGoodCount" parameterType="string" resultType="int">
+		SELECT 	COUNT(1)
+		FROM	GOOD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+	</select>
+	
+	<select id="selectOneBoardReplyBadCount" parameterType="string" resultType="int">
+		SELECT 	COUNT(1) 
+		FROM	BAD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+	</select>
 	
 </mapper>

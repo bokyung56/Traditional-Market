@@ -10,6 +10,10 @@
 	  	<typeAlias type="com.ktds.traditionalmarket.board.vo.BoardVO" alias="BoardVO" />
 	  	<typeAlias type="com.ktds.traditionalmarket.board.vo.BoardSearchVO" alias="BoardSearchVO" />
 	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO" alias="BoardReplyVO" />
+	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.GoodVO" alias="GoodVO" />
+	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.BadVO" alias="BadVO" />
+	  	 
+	  	 
 	  </typeAliases>
   
 	</configuration> 

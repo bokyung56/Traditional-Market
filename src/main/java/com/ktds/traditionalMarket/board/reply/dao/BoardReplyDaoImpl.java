@@ -66,4 +66,14 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 		
 		return getSqlSession().insert("BoardReplyDao.insertOneBoardReplyBad", badVO);
 	}
+	
+	@Override
+	public int selectOneBoardReplyBadCount(String boardReplyId) {
+		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyBadCount", boardReplyId);
+	}
+	
+	@Override
+	public int selectOneBoardReplyGoodCount(String boardReplyId) {
+		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyGoodCount", boardReplyId);
+	}
 }

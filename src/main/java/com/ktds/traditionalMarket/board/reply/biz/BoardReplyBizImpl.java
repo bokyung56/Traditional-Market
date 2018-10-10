@@ -34,11 +34,20 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 		
 		return this.boardReplyDao.deleteOneBoardReply(boardReplyId) > 0;
 	}
-
+	
+	// 전체 댓글 가져오기
 	@Override
 	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
+		List<BoardReplyVO> boardReplyList = this.boardReplyDao.selectAllBoardReplies(boardId);
 		
-		return this.boardReplyDao.selectAllBoardReplies(boardId);
+		for (BoardReplyVO boardReplyVO : boardReplyList ) {
+			int goodCount = this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());
+			int badCount = this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());
+			System.out.println("출력 " + goodCount);
+			boardReplyVO.setGoodCount(goodCount);
+			boardReplyVO.setBadCount(badCount);			
+		}
+		return boardReplyList;
 	}
 
 	// 댓글 졸아요
@@ -53,5 +62,15 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 	public boolean insertOneBoardReplyBad(Map<String, String> badVO) {
 	
 		return this.boardReplyDao.insertOneBoardReplyBad(badVO) > 0;
+	}
+
+	@Override
+	public int selectOneBoardReplyGoodCount(String boardReplyId) {
+		return this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyId);
+	}
+
+	@Override
+	public int selectOneBoardReplyBadCount(String boardReplyId) {
+		return this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyId);
 	}	
 }

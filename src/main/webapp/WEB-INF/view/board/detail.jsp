@@ -83,19 +83,20 @@
 		
 		
 		// 댓글 좋아요
-		var count = $("#reCount").val(); 			// Shadow Dom
+		//var count = $("#reCount").val(); 			// Shadow Dom
 		
- 		$("#recommendBtn").click(function(){
-			$.post("/Traditional-Market/board/recommend"		// URL
+ 		$(".goodBtn").click(function(){
+ 			var goodval = $(this).closest(".replyDiv").find(".replyId").val();
+ 			var goodSpan = $(this).closest(".replyDiv").find(".goodSpan");
+			$.post("/Traditional-Market/reply/good"		// URL
 					, {
-						"boardReplyId": $("#replyId").val()				// Request Parameter
-						, "memberId": $("#curentMemberId").val()	
+						"boardReplyId": goodval				// Request Parameter	
 					}
 					, function(response) {						// Response Call back
-						if( response.recommend ){				// true
+						if( response.good ){				// true
 							alert("좋아요");
-							++count;
-							$("#recommendSpan").text(count);					
+							//++count;
+							goodSpan.text(response.goodCount);					
 						}
 						else {									// false
 							alert("싫어요");
@@ -110,17 +111,13 @@
  		$("#recommendBtn").click(function(){
 			$.post("/Traditional-Market/board/recommend"		// URL
 					, {
-						"boardReplyId": $("#replyId").val()				// Request Parameter
-						, "memberId": $("#curentMemberId").val()	
+						"boardReplyId": $(".replyId").val()				// Request Parameter	
 					}
 					, function(response) {						// Response Call back
 						if( response.recommend ){				// true
-							alert("추천되었습니다.");
-							//$("#countBtnnnn").remove();
-							++count;
-							//var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
-							$("#recommendSpan").text(count);
-							//$("#recommendBtn").after(countBtn);						
+							alert("추천되었습니다.");				
+							//++count;					
+							//$("#goodSpan").text(count);	
 						}
 						else {									// false
 							alert("추천 실패야~");
@@ -206,9 +203,8 @@
 						<input type="button" class="replyDeleteBtn" value="삭제"/>
 					</c:if>
 					<div class="Reply_GoodBadDiv">
-						<input type="hidden" id="curentMemberId" value="${sessionScope._USER_.memberId}}" />
-						<input type="button" value="좋아요"/><span id="goodSpan">${boardVO.recommendCount}</span>
-						<input type="button" value="싫어요"/><span id="badSpan">${boardVO.recommendCount}</span>
+						<input type="button" class="goodBtn" value="좋아요"/><span class="goodSpan">${reply.goodCount}</span>
+						<input type="button" class="badBtn" value="싫어요"/><span class="badSpan">${reply.badCount}</span>
 					</div>			
 				</div>
 			</div> 

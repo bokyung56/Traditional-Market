@@ -3,14 +3,12 @@ package com.ktds.traditionalmarket.board.reply.vo;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
 
-
 //   -----------------------
 //   l                     l
 // Member --- Reply ---- Board
 
-
 public class BoardReplyVO {
-	
+
 	// DB에 있는 columns 6개
 	private String boardReplyId;
 	private String reply;
@@ -18,7 +16,9 @@ public class BoardReplyVO {
 	private String memberId;
 	private String boardId;
 	private String parentReplyId;
-	
+	private int goodCount;
+	private int badCount;
+
 	// 아마 Rownum 역할?
 	private int level;
 
@@ -26,8 +26,6 @@ public class BoardReplyVO {
 	private BoardVO boardVO;
 	private MemberVO memberVO;
 
-	
-	
 	// getter, setter
 	public String getBoardReplyId() {
 		return boardReplyId;
@@ -77,8 +75,6 @@ public class BoardReplyVO {
 		this.parentReplyId = parentReplyId;
 	}
 
-	
-	
 	public int getLevel() {
 		return level;
 	}
@@ -86,9 +82,7 @@ public class BoardReplyVO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
-	
-	
+
 	public BoardVO getBoardVO() {
 		return boardVO;
 	}
@@ -104,4 +98,21 @@ public class BoardReplyVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
+
+	public int getGoodCount() {
+		return goodCount;
+	}
+
+	public void setGoodCount(int goodCount) {
+		this.goodCount = goodCount;
+	}
+
+	public int getBadCount() {
+		return badCount;
+	}
+
+	public void setBadCount(int badCount) {
+		this.badCount = badCount;
+	}
+
 }
