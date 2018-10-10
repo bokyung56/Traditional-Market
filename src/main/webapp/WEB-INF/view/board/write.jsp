@@ -44,8 +44,8 @@
 			<textarea type="text" id="content" name="content" placeholder="내용">${boardVO.content}</textarea>
 		</div>
 		<div>
-			<!-- <input type="file" id="pictureFile" name="pictureFile" placeholder="파일선택" accept=".jpg, .img, .png"/> -->
-			<input type="file" multiple="multiple" id="pictureFiles" name="pictureFiles" placeholder="파일선택" accept=".jpg, .img, .png"/>
+			<input type="file" id="pictureFile" name="pictureFile" placeholder="파일선택" accept=".jpg, .img, .png"/> 
+			<!-- <input type="file" multiple="multiple" id="pictureFiles" name="pictureFiles" placeholder="파일선택" accept=".jpg, .img, .png"/> -->
 		</div>
 		<div>
 			<!-- <input type="submit" id="wirte" value="글쓰기"/> -->

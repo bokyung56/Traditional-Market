@@ -29,8 +29,8 @@ public class BoardVO {
 	private MemberVO memberVO;
 
 	// 이미지업로드 다운로드를 위한 변수
-	//단일 파일 업로드: private MultipartFile pictureFile;
-	private List<MultipartFile> pictureFiles;
+	private MultipartFile pictureFile;
+	//private List<MultipartFile> pictureFiles;
 	
 	// 댓글
 	private List<BoardReplyVO> replyList;
@@ -142,22 +142,22 @@ public class BoardVO {
 		this.picture = picture;
 	}
 
-/*	public MultipartFile getPictureFile() {
+	public MultipartFile getPictureFile() {
 		return pictureFile;
 	}
 
 	public void setPictureFile(MultipartFile pictureFile) {
 		this.pictureFile = pictureFile;
-	}*/
+	}
 	
 	
-	public List<MultipartFile> getPictureFiles() {
+/*	public List<MultipartFile> getPictureFiles() {
 		return pictureFiles;
 	}
 
 	public void setPictureFiles(List<MultipartFile> pictureFile) {
 		this.pictureFiles = pictureFiles;
-	}
+	}*/
 	
 	
 

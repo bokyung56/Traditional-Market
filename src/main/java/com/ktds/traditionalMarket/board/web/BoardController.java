@@ -63,6 +63,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	
 	// 여러 게시글 가져오기(게시판)
 	@RequestMapping("/board/list")
 	public ModelAndView viewBoardListPage(
@@ -103,6 +104,8 @@ public class BoardController {
 		return view;
 	}	
 	
+	
+	
 	// 글 작성하기 (Get)
 	@GetMapping("/board/write")
 	public String viewCreateOneBoardPage() {
@@ -133,18 +136,15 @@ public class BoardController {
 		}
 		
 		
-
-			
 		// <파일업로드하기>
 		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
-		// 단일 파일 업로드: MultipartFile uploadPictureFile = boardVO.getPictureFile();	
-		 List<MultipartFile> uploadPictureFileList = multipartRequest.getFiles("pictureFiles");
+		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+		//List<MultipartFile> uploadPictureFileList = multipartRequest.getFiles("pictureFiles");
 		
-		 System.out.println("***************uploadPictureFileList= " + uploadPictureFileList);
 		 
-		if( !uploadPictureFileList.isEmpty() ) {
+		if( !uploadPictureFile.isEmpty() ) {
 			
-			for( MultipartFile mf : uploadPictureFileList ) {
+			//for( MultipartFile mf : uploadPictureFileList ) {
 				
 				// 파일시스템에 저장될 파일의 이름(난수)
 				String pictureFileName = UUID.randomUUID().toString();
@@ -160,12 +160,12 @@ public class BoardController {
 				
 					// 업로드
 					try {
-						mf.transferTo(destPictureFile);
+						uploadPictureFile.transferTo(destPictureFile);
 						boardVO.setPicture(pictureFileName);
 					} catch (IllegalStateException | IOException e) {
 						throw new RuntimeException(e.getMessage(), e);
 					} 				
-			}
+			//}
 						
 		}
 		
@@ -306,32 +306,30 @@ public class BoardController {
 					
 						
 		// boardVO에 있는 MultipartFile pictureFile변수를 가져옴
-		List<MultipartFile> uploadPictureFileList = boardVO.getPictureFiles();	
-					
-		if( !uploadPictureFileList.isEmpty() ) {
-			
-			for( MultipartFile mf : uploadPictureFileList ) {
-				// 파일시스템에 저장될 파일의 이름(난수)
-				String pictureFileName = UUID.randomUUID().toString();
-							
-				// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
-				File uploadDir = new File(uploadPath);
-				if( !uploadDir.exists() ) {
-					uploadDir.mkdirs();
-				}
-							
-				//파일 업로드될 경로 지정
-				File destPictureFile = new File(uploadPath, pictureFileName);
-							
-				// 업로드
-				try {
-					mf.transferTo(destPictureFile);
-					boardVO.setPicture(pictureFileName);
-				} catch (IllegalStateException | IOException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				} 
+		MultipartFile uploadPictureFile = boardVO.getPictureFile();	
+		
+		if( !uploadPictureFile.isEmpty() ) {
+			// 파일시스템에 저장될 파일의 이름(난수)
+			String pictureFileName = UUID.randomUUID().toString();
+						
+			// 업로드될 폴더경로는 맨 위에서 uploadPath선언해줌, 폴더가 존재하지 않는다면 생성 
+			File uploadDir = new File(uploadPath);
+			if( !uploadDir.exists() ) {
+				uploadDir.mkdirs();
 			}
+						
+			//파일 업로드될 경로 지정
+			File destPictureFile = new File(uploadPath, pictureFileName);
+						
+			// 업로드
+			try {
+				uploadPictureFile.transferTo(destPictureFile);
+				boardVO.setPicture(pictureFileName);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 			
 		}
+
 					
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
 		String memberId = loginMemberVO.getMemberId();
