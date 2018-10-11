@@ -42,6 +42,13 @@ public class BoardServiceImpl implements BoardService{
 			boardVO.setReplyList(replyList);
 		}
 		
+		// 한 게시글당 댓글의 남녀 비율
+		int womenCnt = this.boardReplyBiz.oneBoardMenCount(boardId);
+		int menCnt = this.boardReplyBiz.oneBoardWomenCount(boardId);
+		
+		boardVO.setWomenCnt(womenCnt);
+		boardVO.setMenCnt(menCnt);
+		
 		return boardVO;
 	}
 	

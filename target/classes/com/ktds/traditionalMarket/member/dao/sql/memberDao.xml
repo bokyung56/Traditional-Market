@@ -88,4 +88,5 @@ WHERE	MEMBER_ID = #{memberId}
 
 
 
+
 </mapper>

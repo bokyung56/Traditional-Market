@@ -39,6 +39,10 @@ public class BoardVO {
 	private String token;
 	
 	
+	private int womenCnt;
+	private int menCnt;
+	
+	
 	
 	// 원래 글을 등록할때, 파일을 올려놓지 않으면 에러 발생하는뎁!
 	// 왜? Null이라서 그래서 초기값을 공백으로 줘버리니까 이제 파일 올리지 않아도 에러가 나지 않는다.
@@ -175,6 +179,22 @@ public class BoardVO {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public int getWomenCnt() {
+		return womenCnt;
+	}
+
+	public void setWomenCnt(int womenCnt) {
+		this.womenCnt = womenCnt;
+	}
+
+	public int getMenCnt() {
+		return menCnt;
+	}
+
+	public void setMenCnt(int menCnt) {
+		this.menCnt = menCnt;
 	}	
 	
 	

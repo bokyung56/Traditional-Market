@@ -75,6 +75,7 @@
 			<result property="birth" column="BIRTH"/>
 			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
 			<result property="loginFailTime" column="LOGIN_FAIL_TIME"/>
+			<result property="gender" column="GENDER"/>
 		</association>		
 	</resultMap>
 
@@ -107,6 +108,7 @@
 				, R_M.BIRTH
 				, R_M.LOGIN_FAIL_COUNT
 				, R_M.LOGIN_FAIL_TIME
+				, R_M.GENDER
 		FROM	BOARD_REPLY BR
 				, BOARD B
 				, MEMBER B_M
@@ -219,6 +221,26 @@
 		WHERE	BOARD_REPLY_ID = #{boardReplyId}
 		AND		MEMBER_ID = #{memberId}
 	</select>
+	
+	
+	<select id = "oneBoardWomenCount" parameterType="String" resultType="int">
+		SELECT	count(1)
+		FROM	BOARD_REPLY BR
+		        , MEMBER M
+		WHERE	BR.MEMBER_ID = M.MEMBER_ID
+		AND		BOARD_ID = #{boardId}
+		AND		GENDER = 'W'	
+	</select>
+	
+	<select id = "oneBoardMenCount" parameterType="String" resultType="int">
+		SELECT	count(1)
+		FROM	BOARD_REPLY BR
+		        , MEMBER M
+		WHERE	BR.MEMBER_ID = M.MEMBER_ID
+		AND		BOARD_ID = #{boardId}
+		AND		GENDER = 'M'
+	</select>
+	
 	
 	
 </mapper>

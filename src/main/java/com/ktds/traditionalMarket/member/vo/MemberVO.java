@@ -32,6 +32,8 @@ public class MemberVO {
 	
 	private int loginFailCount;
 	private String loginFailTime;
+	
+	private String gender;
 
 	
 	public String getMemberId() {
@@ -113,5 +115,15 @@ public class MemberVO {
 	public void setLoginFailTime(String loginFailTime) {
 		this.loginFailTime = loginFailTime;
 	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	
 
 }

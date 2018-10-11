@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,17 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> --%>
 
 <script type="text/javascript">
-	$(document).ready( function(){		
+	$().ready( function(){		
+		
+		$("#logoutBtn").click(function() {
+			location.href="../member/logout";
+		});
+		
+		$("#joinBtn").click(function(){
+			location.href="../member/regist";
+		});	
+		
+		
 	    $("#loginBtn").click( function(){
 	    	
 			if( $("#memberId").val() == "" ){						
@@ -102,21 +113,36 @@
 </script>
 </head>
 
-
-<body>
-
-	<form id="loginForm">
-		<div>
-			<input type="text" id="mId" name="memberId" placeholder="아이디"/>
-		</div>
-		<div>
-			<input type="password" id="mPassword" name="password" placeholder="비밀번호" />
-		</div>
-		<div id="submit">
-			<input type="button" id="loginBtn" value="로그인" />
-			<a id="kakao-login-btn"></a>			
-		</div>
-	</form>
+<!-- <body> -->	
+		<c:choose>
+			<c:when test="${not empty sessionScope._USER_.memberId}">
+					${sessionScope._USER_.memberId}님 환영합니다.
+					<div>
+						${sessionScope._USER_.membership}등급    
+						${sessionScope._USER_.point}point
+					</div>
+					<div>
+						<input type="button" id="logoutBtn" value="로그아웃" />
+						<a id="kakao-login-btn"></a>
+					</div>
+			</c:when>
+			<c:otherwise>
+				<form id="loginForm">
+					<div>
+						<input type="text" id="mId" name="memberId" placeholder="아이디"/>
+					</div>
+					<div>
+						<input type="password" id="mPassword" name="password" placeholder="비밀번호" />
+					</div>
+					<div id="submit">
+						<input type="button" id="loginBtn" value="로그인" />
+						<a id="kakao-login-btn"></a>
+						<input type="button" id="joinBtn" name="joinBtn" value="회원가입" />			
+					</div>
+				</form>
+			</c:otherwise>
+		</c:choose>
+	
 
 <!-- </body>
 </html> -->

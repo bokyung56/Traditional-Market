@@ -45,11 +45,16 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 		
 		for (BoardReplyVO boardReplyVO : boardReplyList ) {
 			int goodCount = this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());
-			int badCount = this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());
-			System.out.println("출력 " + goodCount);
+			int badCount = this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());			
 			boardReplyVO.setGoodCount(goodCount);
 			boardReplyVO.setBadCount(badCount);			
 		}
+		
+		//int womenCnt = this.boardReplyDao.oneBoardMenCount(boardId);
+		//int menCnt = this.boardReplyDao.oneBoardWomenCount(boardId);
+		
+		
+		
 		return boardReplyList;
 	}
 
@@ -141,6 +146,20 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 			return false;
 		}
 
+	}
+
+	// 한 게시글의 댓글의 여자 수
+	@Override
+	public int oneBoardWomenCount(String boardReplyId) {
+		
+		return this.boardReplyDao.oneBoardWomenCount(boardReplyId);
+	}
+
+	// 한 게시글의 댓글의 남자 수
+	@Override
+	public int oneBoardMenCount(String boardReplyId) {
+		
+		return this.boardReplyDao.oneBoardMenCount(boardReplyId);
 	}
 
 	

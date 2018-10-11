@@ -17,4 +17,6 @@ public interface BoardService {
 	
 	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO);
 	
+
+	
 }

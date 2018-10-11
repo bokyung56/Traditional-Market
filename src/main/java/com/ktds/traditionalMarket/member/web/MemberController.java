@@ -132,7 +132,7 @@ public class MemberController {
 	                                    @ModelAttribute MemberVO memberVO, Errors errors ) {
 		
 		// 회원가입 성공시, 로그인페이지로!
-		ModelAndView view = new ModelAndView("redirect:/member/login");
+		ModelAndView view = new ModelAndView("redirect:/main/main");
 		
 		// 만약, 회원가입하는데 에러가 있다면 다시 회원가입페이지로 가서 입력했던 값 살려두기.
 		if( errors.hasErrors() ) {

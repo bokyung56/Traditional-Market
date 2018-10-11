@@ -110,4 +110,18 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyBad", badVO);
 	}
 
+	// 한 게시글의 댓글의 여자 수
+	@Override
+	public int oneBoardWomenCount(String boardId) {
+		
+		return getSqlSession().selectOne("BoardReplyDao.oneBoardWomenCount", boardId);
+	}
+
+	// 한 게시글의 댓글의 남자 수
+	@Override
+	public int oneBoardMenCount(String boardId) {
+		
+		return getSqlSession().selectOne("BoardReplyDao.oneBoardMenCount", boardId);
+	}
+
 }

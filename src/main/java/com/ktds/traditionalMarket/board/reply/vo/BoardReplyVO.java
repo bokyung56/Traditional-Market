@@ -16,8 +16,11 @@ public class BoardReplyVO {
 	private String memberId;
 	private String boardId;
 	private String parentReplyId;
+	
 	private int goodCount;
 	private int badCount;
+	
+	
 
 	// 아마 Rownum 역할?
 	private int level;

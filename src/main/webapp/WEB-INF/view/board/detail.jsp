@@ -7,8 +7,54 @@
 <meta charset="UTF-8">
 <title>${boardVO.title}</title>
 
+<script src = "/Traditional-Market/js/Chart.bundle.js"></script>
+<script src = "/Traditional-Market/js/Chart.bundle.min.js"></script>
+<script src = "/Traditional-Market/js/Chart.js"></script>
+<script src = "/Traditional-Market/js/Chart.min.js"></script>
+
+
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+
+	var ctx = $("#genderChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+		genderChart: 'bar',
+	    data: {
+	        labels: ["여자 회원", "남자 회원"],
+	        datasets: [{	
+	            data: ['${womenCnt}', '${menCnt}'], //컨트롤러에서 모델로 받아온다.
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)'
+	
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)'
+	
+	            ],
+	            borderWidth: 1
+	        }
+	        ]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
+
+
+
+
+
 	$().ready(function(){
 		
 		// <게시글 추천하기>
@@ -198,7 +244,11 @@
 	<div style="width: 900px; height: 300px;">
 		${boardVO.content}
 	</div>
+
+	<input type="hidden"  id="womenCnt" value="${boardVO.womenCnt}"/>
+	<input type="hidden"  id="menCnt" value="${boardVO.menCnt}"/>
 	
+	<!-- 추천 -->	
 	<div id="recoCount" style="text-align: center;">
 		<%-- <a href="<c:url value='/board/recommend/${boardVO.boardId}?token=${sessionScope._CSRF_TOKEN_}'/>">추천</a> --%>
 		<input type="hidden"  id="bId" value="${boardVO.boardId}"/>
@@ -208,12 +258,17 @@
 		<span id="recommendSpan">${boardVO.recommendCount}</span>
 	</div>
 		
-	댓글   조회수${boardVO.viewCount} <%-- 추천수${boardVO.recommendCount} --%>
+	댓글   조회수${boardVO.viewCount} 
 	<hr/>
 	
 	<div style="width: 100%; text-align: right;">
 		<a href="/Traditional-Market/board/list">목록</a>
 		<a href="/Traditional-Market/board/write">글쓰기</a>
+	</div>
+	
+	
+	<div id="genderChart">
+	
 	</div>
 	
 	<hr/>

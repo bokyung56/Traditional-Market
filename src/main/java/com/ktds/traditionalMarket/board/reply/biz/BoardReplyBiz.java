@@ -44,4 +44,10 @@ public interface BoardReplyBiz {
 		
 	// 해당 댓글의 싫어요 한 회원 검색
 	public boolean readOneBoardReplyBad( String boardReplyId, String memberId );
+	
+	// 한 게시글의 댓글의 여자 수
+	public int oneBoardWomenCount( String boardReplyId );
+	
+	// 한 게시글의 댓글의 남자 수
+	public int oneBoardMenCount( String boardReplyId );
 }
