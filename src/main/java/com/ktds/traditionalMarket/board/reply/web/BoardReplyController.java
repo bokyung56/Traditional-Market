@@ -72,16 +72,35 @@ public class BoardReplyController {
 		if ( !sessionToken.equals(token) ){
 			throw new RuntimeException("잘못된 접근입니다.");
 		} */
-
 		
-		Map<String, String> goodVO = new HashMap<>();
-		goodVO.put("boardReplyId", boardReplyId);
-		goodVO.put("memberId", memberVO.getMemberId());
-		
-		
-		boolean isSuccess = this.boardReplyService.insertOneBoardReplyGood(goodVO);
-		int goodCount = this.boardReplyService.selectOneBoardReplyGoodCount(boardReplyId);
+		boolean isSuccess = this.boardReplyService.createOneBoardReplyGood(boardReplyId, memberVO.getMemberId());
+		int goodCount = this.boardReplyService.readOneBoardReplyGoodCount(boardReplyId);
 	
+		System.out.println("controller 좋아요의 isSuccess= " + isSuccess);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("good", isSuccess);				
+		result.put("goodCount", goodCount);
+		
+		return result;		
+	}
+	
+	// 댓글 좋아요 취소하기
+	@PostMapping("/reply/goodCancel")
+	@ResponseBody
+	public Map<String, Object> doReplyGoodCancel( @RequestParam String boardReplyId		
+			 								, @SessionAttribute(Session.USER) MemberVO memberVO	) {
+		
+		// CSRF 방어하기
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !sessionToken.equals(token) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		} */
+		
+		boolean isSuccess = this.boardReplyService.deleteOneBoardReplyGood(boardReplyId, memberVO.getMemberId());
+		int goodCount = this.boardReplyService.readOneBoardReplyGoodCount(boardReplyId);
+	
+		System.out.println("controller 싫어요의 isSuccess= " + isSuccess);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("good", isSuccess);				
@@ -102,12 +121,10 @@ public class BoardReplyController {
 			throw new RuntimeException("잘못된 접근입니다.");
 		} */
 		
-		Map<String, String> badVO = new HashMap<>();
-		badVO.put("boardReplyId", boardReplyId);
-		badVO.put("memberId", memberVO.getMemberId());
+		boolean isSuccess = this.boardReplyService.createOneBoardReplyBad(boardReplyId, memberVO.getMemberId());
+		int badCount = this.boardReplyService.readOneBoardReplyBadCount(boardReplyId);
 		
-		boolean isSuccess = this.boardReplyService.insertOneBoardReplyBad(badVO);
-		int badCount = this.boardReplyService.selectOneBoardReplyBadCount(boardReplyId);
+		System.out.println("싫어요의 isSuccess= " + isSuccess);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("bad", isSuccess);				
@@ -115,6 +132,29 @@ public class BoardReplyController {
 		
 		return result;			
 	}
+	
+	
+	// 댓글 싫어요 취소하기
+	@PostMapping("/reply/badCancel")
+	@ResponseBody
+	public Map<String, Object> doReplyBadCancel( @RequestParam String boardReplyId		
+												, @SessionAttribute(Session.USER) MemberVO memberVO	) {
+			
+			// CSRF 방어하기
+	/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+			if ( !sessionToken.equals(token) ){
+				throw new RuntimeException("잘못된 접근입니다.");
+			} */
+						
+			boolean isSuccess = this.boardReplyService.deleteOneBoardReplyBad(boardReplyId, memberVO.getMemberId());
+			int badCount = this.boardReplyService.readOneBoardReplyBadCount(boardReplyId);
+			
+			Map<String, Object> result = new HashMap<>();
+			result.put("bad", isSuccess);				
+			result.put("badCount", badCount);
+			
+			return result;			
+		}
 	
 	
 }

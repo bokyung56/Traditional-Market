@@ -3,7 +3,9 @@ package com.ktds.traditionalmarket.board.reply.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.ktds.traditionalmarket.board.reply.vo.BadVO;
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
+import com.ktds.traditionalmarket.board.reply.vo.GoodVO;
 
 public interface BoardReplyDao {
 	
@@ -23,16 +25,28 @@ public interface BoardReplyDao {
 	public List<BoardReplyVO> selectAllBoardReplies( String boardId );
 	
 	
-	// 댓글 졸아요
-	public int insertOneBoardReplyGood( Map<String, String> goodVO);
+	// 댓글 좋아요
+	public int insertOneBoardReplyGood( Map<String, String> goodVO );
 	
 	// 댓글 싫어요
-	public int insertOneBoardReplyBad( Map<String, String> badVO);
+	public int insertOneBoardReplyBad( Map<String, String> badVO );
 	
-	// 댓글 졸아요 수
-	public int selectOneBoardReplyGoodCount( String boardReplyId);
+	// 댓글 좋아요 수
+	public int selectOneBoardReplyGoodCount( String boardReplyId );
 	
 	// 댓글 싫어요 수
-	public int selectOneBoardReplyBadCount( String boardReplyId);
+	public int selectOneBoardReplyBadCount( String boardReplyId );
+	
+	// 해당 댓글에 좋아요를 한 회원이 다시 취소하기
+	public int deleteOneBoardReplyGood( Map<String, String> goodVO );
+	
+	// 해당 댓글에 싫어요를 한 회원이 다시 취소하기
+	public int deleteOneBoardReplyBad( Map<String, String> badVO );
+	
+	// 해당 댓글의 좋아요를 한 회원 검색
+	public GoodVO selectOneBoardReplyGood( Map<String, String> goodVO );
+		
+	// 해당 댓글의 싫어요 한 회원 검색
+	public BadVO selectOneBoardReplyBad( Map<String, String> badVO );
 	
 }

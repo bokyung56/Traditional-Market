@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		BoardVO boardVO = this.boardBiz.readOneBoard(boardId);
 		
-		List<BoardReplyVO> replyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
+		List<BoardReplyVO> replyList = this.boardReplyBiz.readAllBoardReplies(boardId);
 		if (replyList != null ) {			
 			boardVO.setReplyList(replyList);
 		}

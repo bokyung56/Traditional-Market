@@ -8,10 +8,13 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktds.traditionalmarket.board.reply.vo.BadVO;
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
+import com.ktds.traditionalmarket.board.reply.vo.GoodVO;
 
 @Repository
 public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardReplyDao{
+	
 	// 이걸 가지고 sql CRUD를 사용할 수 있어짐(rootContext.xml에 보면 <bean id="sqlSessionTemplate">이거 있음)
 	@Autowired
 	@Override
@@ -77,6 +80,34 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 	@Override
 	public int selectOneBoardReplyBadCount(String boardReplyId) {
 		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyBadCount", boardReplyId);
+	}
+
+	// 해당 댓글에 좋아요를 한 회원이 다시 취소하기
+	@Override
+	public int deleteOneBoardReplyGood(Map<String, String> goodVO) {
+		
+		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReplyGood", goodVO);
+	}
+
+	// 해당 댓글에 싫어요를 한 회원이 다시 취소하기
+	@Override
+	public int deleteOneBoardReplyBad(Map<String, String> badVO) {
+		
+		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReplyBad", badVO);
+	}
+
+	// 해당 댓글의 좋아요를 한 회원 검색
+	@Override
+	public GoodVO selectOneBoardReplyGood(Map<String, String> goodVO) {
+		
+		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyGood", goodVO);
+	}
+
+	// 해당 댓글의 싫어요를 한 회원 검색
+	@Override
+	public BadVO selectOneBoardReplyBad(Map<String, String> badVO) {
+		
+		return getSqlSession().selectOne("BoardReplyDao.selectOneBoardReplyBad", badVO);
 	}
 
 }

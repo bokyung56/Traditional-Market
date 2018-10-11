@@ -3,8 +3,9 @@ package com.ktds.traditionalmarket.board.reply.vo;
 public class GoodVO {
 
 	private String memberId;
-	private String boardId;
+	private String boardReplyId;
 	private int goodCount;
+	
 		
 	public String getMemberId() {
 		return memberId;
@@ -14,12 +15,12 @@ public class GoodVO {
 		this.memberId = memberId;
 	}
 	
-	public String getBoardId() {
-		return boardId;
+	public String getBoardReplyId() {
+		return boardReplyId;
 	}
 	
-	public void setBoardId(String boardId) {
-		this.boardId = boardId;
+	public void setBoardReplyId(String boardId) {
+		this.boardReplyId = boardReplyId;
 	}
 
 	public int getGoodCount() {
@@ -28,5 +29,9 @@ public class GoodVO {
 
 	public void setGoodCount(int goodCount) {
 		this.goodCount = goodCount;
-	}		
+	}
+
+	
+	
+	
 }

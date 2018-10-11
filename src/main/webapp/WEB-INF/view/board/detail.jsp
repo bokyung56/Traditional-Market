@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	$().ready(function(){
 		
-		// 게시글 추천하기
+		// <게시글 추천하기>
 		var count = $("#reCount").val(); 			// Shadow Dom
 		
 		//var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
@@ -40,7 +40,7 @@
  		
  		
  		
-	 	// 댓글 지우기
+	 	// <댓글 지우기>
 	 	$(".replyDeleteBtn").click(function(){
 	 		var reId = $(this).closest(".replyDiv").find(".replyId").val();
 	 			
@@ -60,7 +60,7 @@
 	 		});
 		
 
-		// 대댓글 달기
+		// <대댓글 달기>
  	 	var inputReply = '<textarea name="reply" id="rereplyinput" placeholder="주제와 무관한 댓글, 악플은 삭제 될 수 있습니다." style="width: 650px; height: 30px"></textarea>';
 		var buttonReply = '<input type="submit" id="rereplyBtn" value="등록"/>';
 		
@@ -82,44 +82,93 @@
 		});
 		
 		
-		// 댓글 좋아요		
+		// <댓글 좋아요>
+		var isGoodBtnStatus = true;
+		
  		$(".goodBtn").click(function(){
  			var goodValue = $(this).closest(".replyDiv").find(".replyId").val();
  			var goodSpan = $(this).closest(".replyDiv").find(".goodSpan");
-			$.post("/Traditional-Market/reply/good"		// URL
-					, {
-						"boardReplyId": goodValue				// Request Parameter	
-					}
-					, function(response) {						// Response Call back
-						if( response.good ){				// true
-							alert("좋아요");
-							goodSpan.text(response.goodCount);					
-						}
-						else {									// false
-							alert("다시 시도해주세요");
-						} 				
+ 			
+ 			if ( isGoodBtnStatus ) {							// 좋아요 +1
+					$.post("/Traditional-Market/reply/good"		// URL
+							, {
+								"boardReplyId": goodValue		// Request Parameter	
+							}
+							, function(response) {				// Response Call back
+								if( response.good ){			// true
+									alert("좋아요");
+									goodSpan.text(response.goodCount);
+									isGoodBtnStatus = false;
+								}
+								else {							// false
+									alert("이미 싫어요를 누르셨습니다.");
+								} 				
 					});
+ 			}
+ 			else {												// 좋아요 -1
+ 				$.post("/Traditional-Market/reply/goodCancel"	// URL
+						, {
+							"boardReplyId": goodValue			// Request Parameter	
+						}
+						, function(response) {					// Response Call back
+							if( response.good ){				// true
+								alert("좋아요가 취소되었습니다.");
+								goodSpan.text(response.goodCount);
+								isGoodBtnStatus = true;
+							}
+							else {								// false
+								alert("이미 좋아요를 누르셨습니다.");
+							} 				
+				});			
+ 			}
 		});
  		
  		
-		// 댓글 싫어요		
+		// <댓글 싫어요>
+		var isBadBtnStatus = true;
+		
  		$(".badBtn").click(function(){
  			var badValue = $(this).closest(".replyDiv").find(".replyId").val();
  			var badSpan = $(this).closest(".replyDiv").find(".badSpan");
-			$.post("/Traditional-Market/reply/bad"		// URL
-					, {
-						"boardReplyId": badValue				// Request Parameter	
-					}
-					, function(response) {						// Response Call back
-						if( response.bad ){				// true
-							alert("싫어요");
-							badSpan.text(response.badCount);
-						}
-						else {									// false
-							alert("다시 시도해주세요");
-						} 				
-					});
+ 			
+ 			if ( isBadBtnStatus ) {								// 싫어요 +1
+ 				$.post("/Traditional-Market/reply/bad"			// URL
+ 						, {
+ 							"boardReplyId": badValue			// Request Parameter	
+ 						}
+ 						, function(response) {					// Response Call back
+ 							if( response.bad ){					// true
+ 								alert("싫어요");
+ 								badSpan.text(response.badCount);
+ 								isBadBtnStatus = false;
+ 							}
+ 							else {								// false
+ 								alert("이미 좋아요를 누르셨습니다.");
+ 							} 				
+ 				});
+ 			}
+ 			else {												// 싫어요 -1
+ 				$.post("/Traditional-Market/reply/badCancel"	// URL
+ 						, {
+ 							"boardReplyId": badValue			// Request Parameter	
+ 						}
+ 						, function(response) {					// Response Call back
+ 							if( response.bad ){					// true
+ 								alert("싫어요가 취소되었습니다.");
+ 								badSpan.text(response.badCount);
+ 								isBadBtnStatus = true;
+ 							}
+ 							else {								// false
+ 								alert("다시 시도해주세요");
+ 							} 				
+ 				});
+ 			}
+
 		});
+ 		
+ 		
+ 		
+ 		
 		
 	}); 
 		

@@ -1,5 +1,6 @@
 package com.ktds.traditionalmarket.board.reply.biz;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ktds.traditionalmarket.board.reply.dao.BoardReplyDao;
+import com.ktds.traditionalmarket.board.reply.vo.BadVO;
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
+import com.ktds.traditionalmarket.board.reply.vo.GoodVO;
 
 @Component
 public class BoardReplyBizImpl implements BoardReplyBiz{
@@ -37,7 +40,7 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 	
 	// 전체 댓글 가져오기
 	@Override
-	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
+	public List<BoardReplyVO> readAllBoardReplies(String boardId) {
 		List<BoardReplyVO> boardReplyList = this.boardReplyDao.selectAllBoardReplies(boardId);
 		
 		for (BoardReplyVO boardReplyVO : boardReplyList ) {
@@ -52,27 +55,93 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 
 	// 댓글 졸아요
 	@Override
-	public boolean insertOneBoardReplyGood(Map<String, String> goodVO) {
-
-		return this.boardReplyDao.insertOneBoardReplyGood(goodVO) > 0;
+	public boolean createOneBoardReplyGood(String boardReplyId, String memberId) {
+		Map<String, String> goodParam = new HashMap<>();
+		goodParam.put("boardReplyId", boardReplyId);
+		goodParam.put("memberId", memberId);
+		
+		return this.boardReplyDao.insertOneBoardReplyGood(goodParam) > 0;
 	}
 
 	// 댓글 싫어요
 	@Override
-	public boolean insertOneBoardReplyBad(Map<String, String> badVO) {
-	
-		return this.boardReplyDao.insertOneBoardReplyBad(badVO) > 0;
+	public boolean createOneBoardReplyBad( String boardReplyId, String memberId ) {
+		Map<String, String> badParam = new HashMap<>();
+		badParam.put("boardReplyId", boardReplyId);
+		badParam.put("memberId", memberId);
+		
+		return this.boardReplyDao.insertOneBoardReplyBad(badParam) > 0;
 	}
 
 	// 댓글 졸아요 수
 	@Override
-	public int selectOneBoardReplyGoodCount(String boardReplyId) {
+	public int readOneBoardReplyGoodCount(String boardReplyId) {
 		return this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyId);
 	}
 
 	// 댓글 싫어요 수
 	@Override
-	public int selectOneBoardReplyBadCount(String boardReplyId) {
+	public int readOneBoardReplyBadCount(String boardReplyId) {
 		return this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyId);
-	}	
+	}
+
+	// 해당 댓글에 좋아요를 한 회원이 다시 취소하기
+	@Override
+	public boolean deleteOneBoardReplyGood(String boardReplyId, String memberId) {
+		Map<String, String> goodParam = new HashMap<>();
+		goodParam.put("boardReplyId", boardReplyId);
+		goodParam.put("memberId", memberId);
+	
+		return this.boardReplyDao.deleteOneBoardReplyGood(goodParam) > 0;
+	}
+
+	// 해당 댓글에 싫어요를 한 회원이 다시 취소하기
+	@Override
+	public boolean deleteOneBoardReplyBad(String boardReplyId, String memberId) {
+		Map<String, String> badParam = new HashMap<String, String>();
+		badParam.put("boardReplyId", boardReplyId);
+		badParam.put("memberId", memberId);
+		
+		return this.boardReplyDao.deleteOneBoardReplyBad(badParam) > 0;
+	}
+
+	// 해당 댓글의 좋아요를 한 회원 검색
+	@Override
+	public boolean readOneBoardReplyGood(String boardReplyId, String memberId) {
+		Map<String, String> goodParam = new HashMap<String, String>();
+		goodParam.put("boardReplyId", boardReplyId);
+		goodParam.put("memberId", memberId);
+		
+		GoodVO goodVO = this.boardReplyDao.selectOneBoardReplyGood(goodParam);
+		if( goodVO != null ) {
+			
+			System.out.println("BizImpl 이미 회원님은 좋아요를 하셨습니다. goodVO=" + goodVO+ " , true");
+			return true;	// 이미 회원은 해당 댓글에 좋아요를 했음
+		}
+		else {
+			System.out.println("BizImpl 회원님은 좋아요를 누른적이 없습니다. goodVO= " + goodVO + " , false");
+			return false;
+		}				
+	}
+
+	// 해당 댓글의 싫어요 한 회원 검색
+	@Override
+	public boolean readOneBoardReplyBad(String boardReplyId, String memberId) {
+		Map<String, String> badParam = new HashMap<String, String>();
+		badParam.put("boardReplyId", boardReplyId);
+		badParam.put("memberId", memberId);
+		
+		BadVO badVO = this.boardReplyDao.selectOneBoardReplyBad(badParam);
+		if( badVO != null ) {
+			System.out.println("BizImpl 이미 회원님은싫어요를 하셨습니다. badVO= " + badVO+ " , true");
+			return true;	// 이미 회원은 해당 댓글에 싫어요를 했음
+		}
+		else {
+			System.out.println("BizImpl 회원님은 싫어요를 누른적이 없습니다. badVO= " + badVO + " , false");
+			return false;
+		}
+
+	}
+
+	
 }

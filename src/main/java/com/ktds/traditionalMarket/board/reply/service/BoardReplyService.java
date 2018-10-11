@@ -16,14 +16,26 @@ public interface BoardReplyService {
 	public boolean deleteOneBoardReply( String boardReplyId );
 	
 	// 댓글 졸아요
-	public boolean insertOneBoardReplyGood( Map<String, String> goodVO);
+	public boolean createOneBoardReplyGood( String boardReplyId, String memberId );
 	
 	// 댓글 싫어요
-	public boolean insertOneBoardReplyBad( Map<String, String> badVO);
+	public boolean createOneBoardReplyBad( String boardReplyId, String memberId );
 	
 	// 댓글 졸아요 수
-	public int selectOneBoardReplyGoodCount( String boardReplyId);
+	public int readOneBoardReplyGoodCount( String boardReplyId);
 		
 	// 댓글 싫어요 수
-	public int selectOneBoardReplyBadCount( String boardReplyId);
+	public int readOneBoardReplyBadCount( String boardReplyId);
+	
+	// 해당 댓글에 좋아요를 한 회원이 다시 취소하기
+	public boolean deleteOneBoardReplyGood( String boardReplyId, String memberId );
+	
+	// 해당 댓글에 싫어요를 한 회원이 다시 취소하기
+	public boolean deleteOneBoardReplyBad( String boardReplyId, String memberId );
+	
+	// 해당 댓글의 좋아요를 한 회원 검색
+	//public boolean readOneBoardReplyGood( String boardReplyId, String memberId );
+		
+	// 해당 댓글의 싫어요 한 회원 검색
+	//public boolean readOneBoardReplyBad( String boardReplyId, String memberId );
 }

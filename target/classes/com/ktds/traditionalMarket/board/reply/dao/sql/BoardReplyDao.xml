@@ -129,7 +129,7 @@
 		AND		BOARD_ID = #{boardId}
 	</select> -->
 	
-	
+	<!-- 좋아요를 한 댓글과 회원정보 -->
 	<insert id="insertOneBoardReplyGood" parameterType="map">
 		INSERT INTO GOOD (
    							BOARD_REPLY_ID
@@ -141,6 +141,7 @@
  		       )			
 	</insert>
 	
+	<!-- 싫어요를 한 댓글과 회원정보 -->
 	<insert id="insertOneBoardReplyBad" parameterType="map">
 		INSERT INTO BAD (
    							BOARD_REPLY_ID
@@ -152,30 +153,72 @@
  		       )			
 	</insert>
 	
-<!-- 	<resultMap type="GoodVO" id="GoodVOMap">	
-		id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"					
-		<id column="BOARD_REPLY_ID" property="boardReplyId"/>
-		<id column="MEMBER_ID" property="memberId"/>		
-		<result column="GOODCOUNT" property="goodCount"/>
-	</resultMap>
 	
-	<resultMap type="BadVO" id="BadVOMap">	
-		id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"					
-		<id column="BOARD_REPLY_ID" property="boardReplyId"/>
-		<id column="MEMBER_ID" property="memberId"/>			
-		<result column="BADCOUNT" property="badCount"/>
-	</resultMap> -->
-	
+	<!-- 댓글의 좋아요 총 수 -->
 	<select id="selectOneBoardReplyGoodCount" parameterType="string" resultType="int">
 		SELECT 	COUNT(1)
 		FROM	GOOD
 		WHERE	BOARD_REPLY_ID = #{boardReplyId}
 	</select>
 	
+	<!-- 댓글의 싫어요 총 수 -->
 	<select id="selectOneBoardReplyBadCount" parameterType="string" resultType="int">
 		SELECT 	COUNT(1) 
 		FROM	BAD
 		WHERE	BOARD_REPLY_ID = #{boardReplyId}
 	</select>
+	
+	
+	<!-- 해당 댓글에 좋아요를 한 회원이 다시 취소하기 -->
+	<delete id="deleteOneBoardReplyGood" parameterType="map">
+		DELETE
+		FROM	GOOD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+		AND		MEMBER_ID = #{memberId}
+	</delete>
+	
+	<!-- 해당 댓글에 싫어요를 한 회원이 다시 취소하기 -->
+		<delete id="deleteOneBoardReplyBad" parameterType="map">
+		DELETE
+		FROM	BAD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+		AND		MEMBER_ID = #{memberId}
+	</delete>
+	
+	
+	
+<!--  	<resultMap type="GoodVO" id="GoodVOMap">
+		id는 PK를 뜻함, column="DB컬럼명" property="VO변수명"					
+		<id column="BOARD_REPLY_ID" property="boardReplyId"/>		PK		
+		<id column="MEMBER_ID" property="memberId"/>				PK
+		<result column="GOOD_COUNT" property="goodCount"/>
+		<association property="badVO" javaType="BadVO">	
+			<id property="BOARD_REPLY_ID" column="B_BOARD_ID"/>		PK
+			<id property="MEMBER_ID" column="memberId"/>			PK
+			<result property="BAD_COUNT" column="badCount"/>
+		</association>
+	</resultMap> -->
+	
+	
+	
+	<!-- 중요한 사실!!!!!!!!!!!!!!!!!!!!!!!! select에서 resultType을 사용할시에 별칭을 무조건 줘야한다. -->
+	<!-- 해당 댓글의 좋아요를 한 회원 검색 -->
+	<select id="selectOneBoardReplyGood" parameterType="map" resultType="GoodVO">
+		SELECT 	BOARD_REPLY_ID boardReplyId
+				, MEMBER_ID memberId
+		FROM	GOOD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+		AND		MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 해당 댓글의 싫어요 한 회원 검색 -->
+	<select id="selectOneBoardReplyBad" parameterType="map" resultType="BadVO">
+		SELECT 	BOARD_REPLY_ID boardReplyId
+				, MEMBER_ID memberId
+		FROM	BAD
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+		AND		MEMBER_ID = #{memberId}
+	</select>
+	
 	
 </mapper>
