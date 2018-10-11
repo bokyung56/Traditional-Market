@@ -223,6 +223,8 @@
 	</select>
 	
 	
+	
+	<!-- 하나의 게시글의 댓글을 작성한 여자 인원 -->
 	<select id = "oneBoardWomenCount" parameterType="String" resultType="int">
 		SELECT	count(1)
 		FROM	BOARD_REPLY BR
@@ -232,6 +234,7 @@
 		AND		GENDER = 'W'	
 	</select>
 	
+	<!-- 하나의 게시글의 댓글을 작성한 남자 인원 -->
 	<select id = "oneBoardMenCount" parameterType="String" resultType="int">
 		SELECT	count(1)
 		FROM	BOARD_REPLY BR

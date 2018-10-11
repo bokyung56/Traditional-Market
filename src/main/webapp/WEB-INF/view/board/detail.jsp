@@ -17,45 +17,47 @@
 <script type="text/javascript">
 
 
-	var ctx = $("#genderChart").getContext('2d');
-	var myChart = new Chart(ctx, {
-		genderChart: 'bar',
-	    data: {
-	        labels: ["여자 회원", "남자 회원"],
-	        datasets: [{	
-	            data: ['${womenCnt}', '${menCnt}'], //컨트롤러에서 모델로 받아온다.
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-	                'rgba(54, 162, 235, 0.2)'
-	
-	            ],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)'
-	
-	            ],
-	            borderWidth: 1
-	        }
-	        ]
-	    },
-	    options: {
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:true
-	                }
-	            }]
-	        }
-	    }
-	});
-
-
-
-
-
-
-
 	$().ready(function(){
+		
+		// 댓글 남녀 비율
+		var ctx = document.getElementById('genderChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'bar',									// 막대모양으로 차트를 그리겠다
+		    data: {
+		        labels: ["여자 회원", "남자 회원"],				// x축 데이터 
+		        datasets: [{
+		        	label: "회원 성별 비율",						// 그래프 제목
+		            data: [$("#menCnt").val(), $("#womenCnt").val()], //y축 데이터, 컨트롤러에서 모델로 받아온다. 
+		            backgroundColor: [
+		                //'rgba(255, 99, 132, 0.2' red
+		                //'rgba(54, 162, 235, 0.2)' blue
+						//'rgba(255, 206, 86, 0.2)' yellow
+		            	//'rgba(75, 192, 192, 0.2)' green
+		            	//'rgba(153, 102, 255, 0.2)' purple
+		            	//'rgba(255, 159, 64, 0.2)'orange
+		            	'rgba(255, 159, 64, 0.2)',
+		            	'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		            	'rgba(255, 159, 64, 1)',
+		                'rgba(153, 102, 255, 1)'
+		
+		            ],
+		            borderWidth: 1
+		        }
+		        ]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+		
 		
 		// <게시글 추천하기>
 		var count = $("#reCount").val(); 			// Shadow Dom
@@ -267,8 +269,8 @@
 	</div>
 	
 	
-	<div id="genderChart">
-	
+	<div style="width: 400px; height: 200px">
+		<canvas id="genderChart" ></canvas>
 	</div>
 	
 	<hr/>
