@@ -24,8 +24,12 @@
 						if( response.duplicated ){				// true
 							$("#memberId-error").slideDown(100);
 						}
+						else if( response.isBlockId ) {
+							$("#blockId-error").slideDown(100);
+						}
 						else {									// false
 							$("#memberId-error").slideUp(100);
+							$("#blockId-error").slideUp(100);
 						}
 					})
 		})
@@ -48,11 +52,11 @@
 		$("#password_ckeck").keyup(function(){		
 			$.post("/Traditional-Market/member/check/password_ckeck"	// URL
 					, {
-						"password":$("#password").val()						// Request Parameter
+						"password":$("#password").val()					// Request Parameter
 						, "password_ckeck":$(this).val()					
 					  }
 					, function(response) {								// Response Call back
-						if( response.password_ckeck ){						// true
+						if( response.password_ckeck ){					// true
 							$("#password_ckeck-error").slideDown(100);
 						}
 						else {											// false
@@ -122,6 +126,9 @@
 			<h3 class="join_title">아이디</h3>
 			<input type="text" id="memberId" name="memberId" value="${memberVO.memberId}" placeholder="아이디">
 			<div id="memberId-error" style="display: none;">
+				이미 사용중인 아이디입니다.
+			</div>
+			<div id="blockId-error" style="display: none;">
 				이 아이디는 사용할 수 없습니다.
 			</div>
 		</div>
@@ -140,6 +147,11 @@
 		<div>
 			<h3 class="join_title">이름</h3>
 			<input type="text" id="name" name="name" value="${memberVO.name}" placeholder="이름">
+		</div>
+		<div>
+			<h3 class="join_gender">성별</h3>
+			<input type="radio" name="gender" value="W"/>여자
+			<input type="radio" name="gender" value="M"/>남자
 		</div>
 		<div class="bir_wrap">
 			<h3 class="join_title">생년월일</h3>
@@ -176,7 +188,7 @@
 		</div>
 
 		<div>
-			<input type="button" id="regist" value="회원가입">
+			<input type="button" id="regist" value="가입하기">
 		</div>
 	</form>
 

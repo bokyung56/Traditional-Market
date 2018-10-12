@@ -4,7 +4,7 @@ public class BadVO {
 	
 	private String memberId;
 	private String boardReplyId;
-	private int badCount;
+
 	
 	public String getMemberId() {
 		return memberId;
@@ -22,11 +22,4 @@ public class BadVO {
 		this.boardReplyId = boardReplyId;
 	}
 
-	public int getBadCount() {
-		return badCount;
-	}
-
-	public void setBadCount(int badCount) {
-		this.badCount = badCount;
-	}	
 }

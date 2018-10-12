@@ -24,7 +24,7 @@
 		var myChart = new Chart(ctx, {
 			type: 'bar',									// 막대모양으로 차트를 그리겠다
 		    data: {
-		        labels: ["여자 회원", "남자 회원"],				// x축 데이터 
+		        labels: ["여자 회원👩", "남자 회원🧑"],				// x축 데이터 
 		        datasets: [{
 		        	label: "회원 성별 비율",						// 그래프 제목
 		            data: [$("#menCnt").val(), $("#womenCnt").val()], //y축 데이터, 컨트롤러에서 모델로 받아온다. 
@@ -59,31 +59,47 @@
 		});
 		
 		
-		// <게시글 추천하기>
-		var count = $("#reCount").val(); 			// Shadow Dom
-		
-		//var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
-		//$("#recommendBtn").after(countBtn);
-		
+		// <게시글 추천하기> ex) var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';	
+		//var recoCancelBtn = '<input type="button" id="recoCancelBtn" value="추천♥"/>';	
+		var isRecommendBtnStatus = true;
  		$("#recommendBtn").click(function(){
-			$.post("/Traditional-Market/board/recommend"		// URL
-					, {
-						"boardId": $("#bId").val()				// Request Parameter
-						, "token":$("#csrfToken").val()	
-					}
-					, function(response) {						// Response Call back
-						if( response.recommend ){				// true
-							alert("추천되었습니다.");
-							//$("#countBtnnnn").remove();
-							++count;
-							//var countBtn = '<input type="button" id="countBtnnnn" value="'+count+'"/>';
-							$("#recommendSpan").text(count);
-							//$("#recommendBtn").after(countBtn);						
+			if( isRecommendBtnStatus ) {
+				$.post("/Traditional-Market/board/recommend"		// URL
+						, {
+							"boardId": $("#bId").val()				// Request Parameter
+							, "token":$("#csrfToken").val()	
 						}
-						else {									// false
-							alert("추천 실패야~");
-						} 				
-					});
+						, function(response) {						// Response Call back
+							if( response.isSuccess ){				// true
+								alert("추천되었습니다.");
+								$("#recommendSpan").text(response.recommendCnt);
+								isRecommendBtnStatus = false;
+							}
+							else {									// false
+								alert("다시시도해주세요.");
+							} 				
+						});
+			}
+			else {
+				$.post("/Traditional-Market/board/recommend/cancel"		// URL
+						, {
+							"boardId": $("#bId").val()					// Request Parameter
+							, "token":$("#csrfToken").val()	
+						}
+						, function(response) {							// Response Call back
+							if( response.isSuccess ){					// true
+								alert("추천 취소되었습니다.");
+								//#("#recoCount").find("#recommendSpan").before(recoCancelBtn);
+								//#("#recoCount").find("#recommendBtn").remove();
+								$("#recommendSpan").text(response.recommendCnt);
+								isRecommendBtnStatus = true;
+							}
+							else {										// false
+								alert("다시시도해주세요.");
+							} 				
+						});			
+			}
+ 			
 		});
  		
  		
@@ -226,40 +242,46 @@
 </head>
 <body>
 	<%-- <jsp:include page="/WEB-INF/view/common/header.jsp"/> --%>
-	<div>
-		<c:if test="${boardVO.memberId eq sessionScope._USER_.memberId}">
-			<a href="/Traditional-Market/board/modify/${boardVO.boardId}">수정</a>
-			<a href="<c:url value='/board/delete/${boardVO.boardId}'/>">삭제</a>
-		</c:if>	
-	</div>
-	<h1>
-		${boardVO.title} 
-		<span style="font-size: 12pt;">${boardVO.crtDate}</span>
-	</h1>
-	<h3>${boardVO.memberId}</h3>
-	
-	<div>
-		<c:if test="${not empty boardVO.picture}">
-				<img src="/Traditional-Market/board/download/${boardVO.boardId}" style="width: 400px; height: 200px" /> 
-		</c:if>
-	</div>
-	<div style="width: 900px; height: 300px;">
-		${boardVO.content}
-	</div>
-
-	<input type="hidden"  id="womenCnt" value="${boardVO.womenCnt}"/>
-	<input type="hidden"  id="menCnt" value="${boardVO.menCnt}"/>
-	
-	<!-- 추천 -->	
-	<div id="recoCount" style="text-align: center;">
-		<%-- <a href="<c:url value='/board/recommend/${boardVO.boardId}?token=${sessionScope._CSRF_TOKEN_}'/>">추천</a> --%>
-		<input type="hidden"  id="bId" value="${boardVO.boardId}"/>
-		<input type="hidden"  id="csrfToken" value="${sessionScope._CSRF_TOKEN_}"/>
-		<input type="hidden"  id="reCount" value="${boardVO.recommendCount}"/>
-		<input type="button" id="recommendBtn" value="추천 " />
-		<span id="recommendSpan">${boardVO.recommendCount}</span>
-	</div>
+	<c:choose>
+		<c:when test="${boardVO.deleteBoard eq N}">
+			<div>
+				<c:if test="${boardVO.memberId eq sessionScope._USER_.memberId}">
+					<a href="/Traditional-Market/board/modify/${boardVO.boardId}">수정</a>
+					<a href="<c:url value='/board/delete/${boardVO.boardId}'/>">삭제</a>
+				</c:if>	
+			</div>
+			<h1>
+				${boardVO.title} 
+				<span style="font-size: 12pt;">${boardVO.crtDate}</span>
+			</h1>
+			<h3>${boardVO.memberId}</h3>
+			
+			<div>
+				<c:if test="${not empty boardVO.picture}">
+						<img src="/Traditional-Market/board/download/${boardVO.boardId}" style="width: 400px; height: 200px" /> 
+				</c:if>
+			</div>
+			<div style="width: 900px; height: 300px;">
+				${boardVO.content}
+			</div>
 		
+			<input type="hidden"  id="womenCnt" value="${boardVO.womenCnt}"/>
+			<input type="hidden"  id="menCnt" value="${boardVO.menCnt}"/>
+			
+			<!-- 추천 -->	
+			<div id="recoCount" style="text-align: center;">
+				<%-- <a href="<c:url value='/board/recommend/${boardVO.boardId}?token=${sessionScope._CSRF_TOKEN_}'/>">추천</a> --%>
+				<input type="hidden"  id="bId" value="${boardVO.boardId}"/>
+				<input type="hidden"  id="csrfToken" value="${sessionScope._CSRF_TOKEN_}"/>
+				<input type="hidden"  id="reCount" value="${boardVO.recommendCount}"/>
+				<input type="button" id="recommendBtn" value="추천♡" />
+				<span id="recommendSpan">${boardVO.recommendCount}</span>
+			</div>
+		</c:when>
+		<c:otherwise>
+		
+		</c:otherwise>	
+	
 	댓글   조회수${boardVO.viewCount} 
 	<hr/>
 	
@@ -302,8 +324,8 @@
 						<input type="button" class="replyDeleteBtn" value="삭제"/>
 					</c:if>
 					<div class="Reply_GoodBadDiv">
-						<input type="button" class="goodBtn" value="좋아요"/><span class="goodSpan">${reply.goodCount}</span>
-						<input type="button" class="badBtn" value="싫어요"/><span class="badSpan">${reply.badCount}</span>
+						<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
+						<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
 					</div>			
 				</div>
 			</div> 

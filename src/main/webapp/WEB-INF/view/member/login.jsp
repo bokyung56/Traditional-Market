@@ -56,7 +56,7 @@
 							}
 							else {								// isLoginSuccess가 "false": 로그인 실패!(LOGIN_FAIL_COUNT값 증가+1)				
 								alert("로그인에 실패하였습니다.");
-								location.href="../member/main";	//../member/login
+								location.href="../main/main";	//../member/login
 							}
 						}
 						

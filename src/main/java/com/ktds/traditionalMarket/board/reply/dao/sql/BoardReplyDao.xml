@@ -71,6 +71,7 @@
 			<result property="salt" column="SALT"/>
 			<result property="point" column="POINT"/> 
 			<result property="membership" column="MEMBERSHIP"/>
+			<result property="gender" column="GENDER"/>
 			<result property="email" column="EMAIL"/>
 			<result property="birth" column="BIRTH"/>
 			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
@@ -136,10 +137,12 @@
 		INSERT INTO GOOD (
    							BOARD_REPLY_ID
    							, MEMBER_ID
+   							, CRT_DATE
    						  ) 
 		VALUES ( 
 					#{boardReplyId}
  					, #{memberId}
+ 					, SYSDATE
  		       )			
 	</insert>
 	
@@ -148,10 +151,12 @@
 		INSERT INTO BAD (
    							BOARD_REPLY_ID
    							, MEMBER_ID
+   							, CRT_DATE
    						  ) 
 		VALUES ( 
 					#{boardReplyId}
  					, #{memberId}
+ 					, SYSDATE
  		       )			
 	</insert>
 	

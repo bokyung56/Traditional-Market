@@ -1,6 +1,7 @@
 package com.ktds.traditionalmarket.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -69,5 +70,26 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	public List<BoardVO> selectAllBoards(BoardSearchVO boardSearchVO) {
 		
 		return getSqlSession().selectList("BoardDao.selectAllBoards", boardSearchVO);
+	}
+
+	// 한 게시글당 추천을 누른 회원정보 추가
+	@Override
+	public int insertOneBoardRecommend(Map<String, String> boardRecommendVO) {
+	
+		return getSqlSession().insert("BoardDao.insertOneBoardRecommend", boardRecommendVO);
+	}
+
+	// 한 게시글당 추천을 누른 회원정보 삭제
+	@Override
+	public int deleteOneBoardRecommend(Map<String, String> boardRecommendVO) {
+		
+		return getSqlSession().delete("BoardDao.deleteOneBoardRecommend", boardRecommendVO);
+	}
+
+	// 하나의 게시글을 추천 수
+	@Override
+	public int selectOneBoardRecommendCount(String boardId) {
+		
+		return getSqlSession().selectOne("BoardDao.selectOneBoardRecommendCount", boardId);
 	}	
 }

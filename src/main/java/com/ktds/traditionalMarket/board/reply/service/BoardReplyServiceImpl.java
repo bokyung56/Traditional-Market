@@ -25,16 +25,6 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 	// 댓글들 읽어오기
 	@Override
 	public List<BoardReplyVO> selectAllBoardReplies(String boardId) {
-/*		List<BoardReplyVO> boardReplyList = this.boardReplyBiz.selectAllBoardReplies(boardId);
-		
-		for (BoardReplyVO boardReplyVO : boardReplyList ) {
-			int goodCount = this.boardReplyBiz.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());
-			int badCount = this.boardReplyBiz.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());
-			System.out.println("출력 " + goodCount);
-			boardReplyVO.setGoodCount(goodCount);
-			boardReplyVO.setBadCount(badCount);			
-		}*/
-		//return boardReplyList;
 		
 		return this.boardReplyBiz.readAllBoardReplies(boardId);
 	}

@@ -1,5 +1,8 @@
 package com.ktds.traditionalmarket.board.biz;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,11 +57,11 @@ public class BoardBizImpl implements BoardBiz{
 	}
 	
 	// 게시글 추천수 증가시키기
-	@Override
+/*	@Override
 	public boolean updateRecommendCount(String boardId) {
 		
 		return this.boardDao.updateRecommendCount(boardId) > 0;
-	}
+	}*/
 	
 	// 게시글 수정하기 
 	@Override
@@ -92,15 +95,37 @@ public class BoardBizImpl implements BoardBiz{
 		
 		return pageExplorer;
 	}
-	
+
 	/*
 	 * 51: 몇번부터 몇번까지 가져와라?
 	 * 
 	 * 53: 시작번호와 끝번호를 boardSearchVO한테 넣어준다.
 	 */
-
-
 	
+	// 한 게시글당 추천 누른 회원정보 추가
+	@Override
+	public boolean createOneBoardRecommend(String boardId, String memberId) {
+		Map<String, String> boardRecommendVO = new HashMap<>();
+		boardRecommendVO.put("boardId", boardId);
+		boardRecommendVO.put("memberId", memberId);
+		
+		return this.boardDao.insertOneBoardRecommend(boardRecommendVO) > 0;
+	}
 
-	
+	// 한 게시글당 추천을 누른 회원정보 삭제
+	@Override
+	public boolean deleteOneBoardRecommend(String boardId, String memberId) {
+		Map<String, String> boardRecommendVO = new HashMap<>();
+		boardRecommendVO.put("boardId", boardId);
+		boardRecommendVO.put("memberId", memberId);
+		
+		return this.boardDao.deleteOneBoardRecommend(boardRecommendVO) > 0;
+	}
+
+	// 하나의 게시글을 추천 수
+	@Override
+	public int readOneBoardRecommendCount(String boardId) {
+		
+		return this.boardDao.selectOneBoardRecommendCount(boardId);
+	}	
 }

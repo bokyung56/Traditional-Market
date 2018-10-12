@@ -73,10 +73,8 @@ public class BoardReplyController {
 			throw new RuntimeException("잘못된 접근입니다.");
 		} */
 		
-		boolean isSuccess = this.boardReplyService.createOneBoardReplyGood(boardReplyId, memberVO.getMemberId());
-		int goodCount = this.boardReplyService.readOneBoardReplyGoodCount(boardReplyId);
-	
-		System.out.println("controller 좋아요의 isSuccess= " + isSuccess);
+		boolean isSuccess = this.boardReplyService.createOneBoardReplyGood(boardReplyId, memberVO.getMemberId());	// 좋아요를 누른 회원정보 추가
+		int goodCount = this.boardReplyService.readOneBoardReplyGoodCount(boardReplyId);							// 좋아요 수
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("good", isSuccess);				
@@ -99,8 +97,6 @@ public class BoardReplyController {
 		
 		boolean isSuccess = this.boardReplyService.deleteOneBoardReplyGood(boardReplyId, memberVO.getMemberId());
 		int goodCount = this.boardReplyService.readOneBoardReplyGoodCount(boardReplyId);
-	
-		System.out.println("controller 싫어요의 isSuccess= " + isSuccess);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("good", isSuccess);				

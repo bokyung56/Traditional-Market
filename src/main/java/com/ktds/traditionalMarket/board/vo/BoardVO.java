@@ -19,7 +19,7 @@ public class BoardVO {
 	private String crtDate;
 	private String mdfyDate;
 	private String viewCount;
-	private String recommendCount;
+	private int recommendCount;
 	private String picture;
 
 	// 회원 Id
@@ -38,9 +38,12 @@ public class BoardVO {
 	// CSRF
 	private String token;
 	
-	
+	// 댓글 남녀 비율
 	private int womenCnt;
 	private int menCnt;
+	
+	// 게시글 삭제 여부
+	private String deleteBoard;
 	
 	
 	
@@ -130,11 +133,11 @@ public class BoardVO {
 		this.viewCount = viewCount;
 	}
 
-	public String getRecommendCount() {
+	public int getRecommendCount() {
 		return recommendCount;
 	}
 
-	public void setRecommendCount(String recommendCount) {
+	public void setRecommendCount(int recommendCount) {
 		this.recommendCount = recommendCount;
 	}
 

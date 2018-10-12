@@ -59,7 +59,7 @@ public class BoardController {
 		
 	@RequestMapping("/board/list/init")
 	public String viewBoardListPageForInitiate( HttpSession session ) {	// init이 들어오면 검색을 초기화하기위해서 session받음
-		session.removeAttribute(Session.SEARCH); 	// search세션을 지워라. null값이 되버림.
+		session.removeAttribute(Session.SEARCH); 						// search세션을 지워라. null값이 되버림.
 		return "redirect:/board/list";
 	}
 	
@@ -67,7 +67,7 @@ public class BoardController {
 	// 여러 게시글 가져오기(게시판)
 	@RequestMapping("/board/list")
 	public ModelAndView viewBoardListPage(
-			@ModelAttribute BoardSearchVO boardSearchVO					// 1. 얘한테 페이지번호를 줄거임
+			@ModelAttribute BoardSearchVO boardSearchVO								// 1. 얘한테 페이지번호를 줄거임
 			, HttpServletRequest request, HttpSession session) {
 		
 		// 전체검색 or 상세 -> 목록 or 글쓰기
@@ -188,11 +188,8 @@ public class BoardController {
 	// 게시글 추천 증가시키기
 	@PostMapping("/board/recommend")
 	@ResponseBody
-	public Map<String, Object> recommend(@RequestParam String boardId		// @PathVariable String boardId		// @PathVariable방식: http://localhost:8080/Traditional-Market/board/recommend/{boardId}
-									, @RequestParam String token			// @RequestParm방식: http://localhost:8080/Traditional-Market/board/recommend/{boardId}?token={sessionScope._CSRF_TOKEN_}
-									, HttpSession session) {
-		
-		//ModelAndView view = new ModelAndView("redirect:/board/detail/" + boardId);
+	public Map<String, Object> recommendUp(@RequestParam String boardId		
+									      , @RequestParam String token, HttpSession session) {
 		
 		// CSRF 방어하기
 /*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
@@ -200,12 +197,43 @@ public class BoardController {
 			throw new RuntimeException("잘못된 접근입니다.");
 		} */
 		
-		boolean isSuccess = this.boardService.updateRecommendCount(boardId);
+		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
+		String memberId = loginMemberVO.getMemberId();
+		
+		
+		boolean isSuccess = this.boardService.createOneBoardRecommend(boardId, memberId);	// 한 게시글당 추천 누른 회원정보 추가
+		int recommendCnt = this.boardService.readOneBoardRecommendCount(boardId);			// 한 게시글당 추천 수
+	
+		Map<String, Object> result = new HashMap<>();
+		result.put("isSuccess", isSuccess);
+		result.put("recommendCnt", recommendCnt);
+		
+		return result;		
+	}
+	
+	// 게시글 추천 감소시키기
+	@PostMapping("board/recommend/cancel")
+	@ResponseBody
+	public Map<String, Object> recommendDown(@RequestParam String boardId		
+											, @RequestParam String token, HttpSession session) {
+		
+		// CSRF 방어하기
+/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		if ( !sessionToken.equals(token) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		} */
+		
+		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
+		String memberId = loginMemberVO.getMemberId();
+		
+		boolean isSuccess = this.boardService.deleteOneBoardRecommend(boardId, memberId);	// 한 게시글당 추천 누른 회원정보 삭제
+		int recommendCnt = this.boardService.readOneBoardRecommendCount(boardId);			// 한 게시글당 추천 수
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("recommend", isSuccess);
+		result.put("isSuccess", isSuccess);
+		result.put("recommendCnt", recommendCnt);
 		
-		return result;	//return view; 		
+		return result;		
 	}
 	
 	// 게시글 하나 읽기
@@ -267,7 +295,9 @@ public class BoardController {
 	@GetMapping("/board/delete/{boardId}")
 	public String doBoardDeleteAction(@PathVariable String boardId) {
 		
-		boolean isSuccess = this.boardService.deleteOneBoard(boardId);
+		
+		
+		//boolean isSuccess = this.boardService.deleteOneBoard(boardId);
 		
 		return "redirect:/board/list";
 	}

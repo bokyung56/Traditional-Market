@@ -44,16 +44,11 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 		List<BoardReplyVO> boardReplyList = this.boardReplyDao.selectAllBoardReplies(boardId);
 		
 		for (BoardReplyVO boardReplyVO : boardReplyList ) {
-			int goodCount = this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());
-			int badCount = this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());			
-			boardReplyVO.setGoodCount(goodCount);
-			boardReplyVO.setBadCount(badCount);			
+			int goodCount = this.boardReplyDao.selectOneBoardReplyGoodCount(boardReplyVO.getBoardReplyId());	// 좋아요 수
+			int badCount = this.boardReplyDao.selectOneBoardReplyBadCount(boardReplyVO.getBoardReplyId());		// 싫어요 수
+			boardReplyVO.setGoodCount(goodCount);	// boardReplyVO에 있는 변수 goodCount에 좋아요 수 넣어줌
+			boardReplyVO.setBadCount(badCount);		// boardReplyVO에 있는 변수 badCount에 싫어요 수 넣어줌
 		}
-		
-		//int womenCnt = this.boardReplyDao.oneBoardMenCount(boardId);
-		//int menCnt = this.boardReplyDao.oneBoardWomenCount(boardId);
-		
-		
 		
 		return boardReplyList;
 	}

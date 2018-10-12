@@ -1,6 +1,7 @@
 package com.ktds.traditionalmarket.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ktds.traditionalmarket.board.vo.BoardSearchVO;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
@@ -18,4 +19,8 @@ public interface BoardDao {
 	
 	public int selectAllBoardsCount(BoardSearchVO boardSearchVO);
 	public List<BoardVO> selectAllBoards(BoardSearchVO boardSearchVO);
+	
+	public int insertOneBoardRecommend(Map<String, String> boardRecommendVO);	// 하나의 게시글을 추천한 회원 정보 추가
+	public int deleteOneBoardRecommend(Map<String, String> boardRecommendVO);	// 하나의 게시글을 추천한 회원 정보 삭제
+	public int selectOneBoardRecommendCount(String boardId);					// 하나의 게시글을 추천 수
 }

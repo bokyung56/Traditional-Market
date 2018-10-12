@@ -56,6 +56,7 @@
 			<result property="salt" column="SALT"/>
 			<result property="point" column="POINT"/> 
 			<result property="membership" column="MEMBERSHIP"/>
+			<result property="gender" column="GENDER"/>
 			<result property="email" column="EMAIL"/>
 			<result property="birth" column="BIRTH"/>
 			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
@@ -67,14 +68,6 @@
 	<update id="updateViewCount" parameterType="string">
 		UPDATE	BOARD
 		SET		VIEW_COUNT = VIEW_COUNT + 1
-		WHERE	BOARD_ID = #{boardId}
-	</update>
-	
-	
-	<!-- 해당 글 읽을 시, 추천수 증가시키기 -->
-	<update id="updateRecommendCount" parameterType="string">
-		UPDATE	BOARD
-		SET		RECOMMEND_COUNT = RECOMMEND_COUNT + 1
 		WHERE	BOARD_ID = #{boardId}
 	</update>
 	
@@ -151,6 +144,7 @@
 										, M.SALT
 										, M.POINT
 										, M.MEMBERSHIP
+										, M.GENDER
 										, M.EMAIL
 										, M.BIRTH
 										, M.LOGIN_FAIL_COUNT
@@ -191,14 +185,40 @@
 	
 	
 	
+	<!-- 하나의 게시글을 추천한 회원 정보 추가 -->
+	<insert id="insertOneBoardRecommend" parameterType="map">
+		INSERT	INTO BOARD_RECOMMEND(
+										BOARD_ID 
+										, MEMBER_ID
+										, CRT_DATE
+									)
+		VALUES	(
+					#{boardId}
+					, #{memberId}
+					, SYSDATE
+				)	
+	</insert>
 	
+	<!-- 하나의 게시글을 추천한 회원 정보 삭제 -->
+	<delete id="deleteOneBoardRecommend" parameterType="map">
+		DELETE	
+		FROM	BOARD_RECOMMEND
+		WHERE	BOARD_ID = #{boardId}
+		AND		MEMBER_ID = #{memberId}
+	</delete>
 	
+    <!-- 하나의 게시글을 추천 수 
+	<update id="updateRecommendCount" parameterType="string">
+		UPDATE	BOARD
+		SET		RECOMMEND_COUNT = RECOMMEND_COUNT + 1
+		WHERE	BOARD_ID = #{boardId}
+	</update> -->
 	
+	<!-- 하나의 게시글을 추천 수 -->
+	<select id="selectOneBoardRecommendCount" parameterType="string" resultType="int">
+		SELECT	COUNT(1)
+		FROM	BOARD_RECOMMEND
+		WHERE	BOARD_ID = #{boardId}
+	</select>
 	
-	
-	
-	
-	
-	
-
 </mapper>

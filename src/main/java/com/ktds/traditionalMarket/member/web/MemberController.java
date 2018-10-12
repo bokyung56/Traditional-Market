@@ -1,6 +1,8 @@
 package com.ktds.traditionalmarket.member.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -52,10 +54,24 @@ public class MemberController {
 	@ResponseBody
 	public Map<String, Object> doCheckDuplicateId( @RequestParam String memberId ){
 		
-		boolean Id = this.memberService.readOneId(memberId);
+		// 회원이 입력한 ID를 대문자로 입력했을 시, 소문자로 바꿔주기
+		String userId = memberId;
+		userId = userId.toLowerCase();
+		
+		List<String> blockId = new ArrayList<String>();
+		blockId.add("admin");
+		blockId.add("system");
+		blockId.add("sysadmin");
+		blockId.add("sysoper");
+		blockId.add("root");
+		blockId.add("manager");
+		blockId.add("master");
+		
+		boolean isBlockId = blockId.contains(userId);	// 만약 회원이 입력한 ID가 blockId에 존재한다면 True
+		boolean Id = this.memberService.readOneId(memberId);		// 만약 회원이 입력한 ID가 이미 존재한다면 True
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("status", "OK");
+		result.put("isBlockId", isBlockId);
 		result.put("duplicated", Id);
 		
 		return result;
@@ -164,6 +180,11 @@ public class MemberController {
 													, HttpSession session) {
 		
 		Map<String, Object> result = new HashMap<>();
+		
+		// 사용자가 로그인시 ID를 대문자로 입력했을때 소문자로 바꿔주기
+		String userId = memberVO.getMemberId();
+		userId = userId.toLowerCase();
+		memberVO.setMemberId(userId);
 		
 		boolean isBlockUser = this.memberService.isBlockUser(memberVO.getMemberId());		
 		if ( isBlockUser ) {
