@@ -18,6 +18,7 @@
 				<c:if test="${not empty sessionScope._USER_}">
 					${sessionScope._USER_.memberId}님 
 					${sessionScope._USER_.point}point
+					<input type="button" value="로그아웃" onclick="location.href='../member/logout'"/>
 				</c:if>
 			</div>
  			<div id="header_logo" style="text-align: center;">

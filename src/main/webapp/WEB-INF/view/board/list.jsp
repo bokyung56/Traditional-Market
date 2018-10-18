@@ -9,7 +9,7 @@
 <title>게시판</title>
 
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp"/>
-<link rel="stylesheet" type="text/css" href="/Traditional-Market/css/layout.css">
+
 
 
 <div>

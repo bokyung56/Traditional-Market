@@ -10,10 +10,9 @@
 		<!-- 배너 -->
 		<span style="display: inline-block; margin-top:300px">
 			<img src="http://localhost:8080/Traditional-Market/img/banner.png" width="1000" height="300"/> 
-		</span> 
-		
+		</span> 		
 		<!-- 로그인하는 곳 -->
-		<span id="lojo_button">
+		<span id="lojo_button" style="display: inline-block;">
 			<c:if test="${empty sessionScope._USER_}">
 				<jsp:include page="/WEB-INF/view/member/login.jsp"></jsp:include>
 			</c:if> 
