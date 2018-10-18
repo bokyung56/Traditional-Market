@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="StoreReplyDao">
+
+	<!-- Store 댓글 작성 -->
+	<insert id="insertOneStoreReply" parameterType="StoreReplyVO">
+		INSERT INTO STORE_REPLY (
+									STORE_REPLY_ID
+									, STORE_ID
+									, MEMBER_ID
+									, REPLY
+									, CRT_DATE
+									, RATING				
+								) 
+		VALUES 					( 
+									'SRP-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(STOREREPLY_ID_SEQ.NEXTVAL, 6, 0)
+									, #{storeId} 
+									, #{memberId}
+									, #{reply} 
+									, SYSDATE
+									, #{rating}
+								)
+	</insert>
+	
+	<!-- 하나의 댓글 삭제여부 --> 
+	<update id="updateDeleteStoreOneReply" parameterType="string">
+		UPDATE	STORE_REPLY
+		SET		DELETE_REPLY = 'Y'
+		WHERE	STORE_REPLY_ID = #{storeReplyId}
+	</update>
+	
+	<!-- 하나의 Store당 전체댓글들 조회 -->
+	<select id="selectAllStoreReplies" parameterType="string" resultType="StoreReplyVO">
+		SELECT	STORE_REPLY_ID storeReplyId
+				, STORE_ID storeId
+				, MEMBER_ID memberId
+				, REPLY reply
+				, CRT_DATE crtDate
+				, RATING rating
+				, DELETE_REPLY deleteReply
+		FROM	STORE_REPLY
+		WHERE	STORE_ID = #{storeId}	
+		ORDER	BY CRT_DATE ASC	
+	</select>
+	
+	<!-- 하나의 Store의 총점 -->
+	<select id="selectOneStoreRating" parameterType="string" resultType="double">
+		SELECT	NVL(AVG(RATING),0)
+		FROM	STORE_REPLY
+		WHERE	STORE_ID = #{storeId}
+	</select>
+	
+	
+
+</mapper>

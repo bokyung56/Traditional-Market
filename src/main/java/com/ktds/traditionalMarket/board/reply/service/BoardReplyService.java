@@ -13,7 +13,7 @@ public interface BoardReplyService {
 	public List<BoardReplyVO> selectAllBoardReplies(String boardId);
 	
 	// 하나의 댓글 삭제
-	public boolean deleteOneBoardReply( String boardReplyId );
+	//public boolean deleteOneBoardReply( String boardReplyId );
 	
 	// 댓글 졸아요
 	public boolean createOneBoardReplyGood( String boardReplyId, String memberId );
@@ -38,4 +38,7 @@ public interface BoardReplyService {
 		
 	// 해당 댓글의 싫어요 한 회원 검색
 	//public boolean readOneBoardReplyBad( String boardReplyId, String memberId );
+	
+	// 하나의 댓글 삭제 여부
+	public boolean updateDeleteOneReply( String boardReplyId );
 }

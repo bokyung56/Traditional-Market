@@ -25,18 +25,19 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 	}
 
 	// 그 게시글안에 있는 댓글 전체 삭제
-	@Override
-	public boolean deleteOneBoardReplies(String boardId) {
+	//@Override
+	//public boolean deleteOneBoardReplies(String boardId) {
 		
-		return this.boardReplyDao.deleteOneBoardReplies(boardId) > 0;
-	}
+	//	return this.boardReplyDao.deleteOneBoardReplies(boardId) > 0;
+	//}
 	
 	// 하나의 댓글 삭제
-	@Override
-	public boolean deleteOneBoardReply(String boardReplyId) {
+	//@Override
+	//public boolean deleteOneBoardReply(String boardReplyId) {
 		
-		return this.boardReplyDao.deleteOneBoardReply(boardReplyId) > 0;
-	}
+	//	return this.boardReplyDao.deleteOneBoardReply(boardReplyId) > 0;
+	//}
+	
 	
 	// 전체 댓글 가져오기
 	@Override
@@ -155,6 +156,13 @@ public class BoardReplyBizImpl implements BoardReplyBiz{
 	public int oneBoardMenCount(String boardReplyId) {
 		
 		return this.boardReplyDao.oneBoardMenCount(boardReplyId);
+	}
+
+	// 하나의 댓글 삭제 여부
+	@Override
+	public boolean updateDeleteOneReply(String boardReplyId) {
+		
+		return this.boardReplyDao.updateDeleteOneReply(boardReplyId) > 0;
 	}
 
 	

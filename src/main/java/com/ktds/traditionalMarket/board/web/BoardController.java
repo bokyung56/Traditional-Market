@@ -241,7 +241,7 @@ public class BoardController {
 	public ModelAndView viewBoardDetailPage(@RequestParam String boardId){
 		
 		BoardVO boardVO  = this.boardService.readOneBoard(boardId);		
-		
+				
 		ModelAndView view = new ModelAndView("board/detail");
 		// view.addObject("boardVO", boardVO);
 		
@@ -294,12 +294,18 @@ public class BoardController {
 	// 게시글 삭제하기
 	@GetMapping("/board/delete/{boardId}")
 	public String doBoardDeleteAction(@PathVariable String boardId) {
+		System.out.println("--------------doBoardDeleteAction");
+		BoardVO boardVO = this.boardService.readOneBoard(boardId);
+		System.out.println("--------------delete하기전 값= "+boardVO.getDeleteBoard());
 		
+		boolean isSuccess = this.boardService.updateDeleteOneBoard(boardVO.getBoardId());
 		
+		System.out.println("--------------delete하기후 값= " + boardVO.getDeleteBoard());
+		System.out.println("--------------isSuccess= " + isSuccess);
 		
-		//boolean isSuccess = this.boardService.deleteOneBoard(boardId);
+		//boolean isSuccess = this.boardService.deleteOneBoard(boardId); 게시글 자체를 삭제(안에 있는 댓글들도)		
 		
-		return "redirect:/board/list";
+		return "redirect:/board/detail?boardId="+boardId;
 	}
 	
 	
@@ -374,7 +380,6 @@ public class BoardController {
 		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
 					
 		return  view;
-	}			
-			
-
+	}	
+	
 }

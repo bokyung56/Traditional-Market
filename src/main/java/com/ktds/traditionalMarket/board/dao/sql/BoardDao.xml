@@ -46,6 +46,7 @@
 		<result property="viewCount" column="VIEW_COUNT"/>
 		<result property="recommendCount" column="RECOMMEND_COUNT"/>
 		<result property="picture" column="PICTURE"/>
+		<result property="deleteBoard" column="DELETE_BOARD"/>
 		<!-- 객체가 다른 객체한테 -->
 		<!-- property는 BoardVO에 있는 선언한  MemberVO변수명 -->
 		<!-- 이렇게 함으로써 BoardVO에 MemberVO를 가지게 됨.-->
@@ -81,6 +82,7 @@
 				, B.RECOMMEND_COUNT
 				, B.PICTURE
 				, B.MEMBER_ID B_MEMBER_ID
+				, B.DELETE_BOARD
 				, M.MEMBER_ID M_MEMBER_ID
 				, M.NAME
 				, M.PASSWORD
@@ -138,6 +140,7 @@
 										, B.RECOMMEND_COUNT
 										, B.PICTURE
 										, B.MEMBER_ID B_MEMBER_ID
+										, B.DELETE_BOARD
 										, M.MEMBER_ID M_MEMBER_ID
 										, M.NAME
 										, M.PASSWORD
@@ -154,10 +157,10 @@
 								WHERE	B.MEMBER_ID = M.MEMBER_ID
 								<if test="searchKeyword != null and searchKeyword != ''">
 									<choose>
-										<when test="TITLE != null">
+										<when test="searchKeyword != null">
 											AND		TITLE LIKE '%' || #{searchKeyword} || '%'
 										</when>
-										<when test="B_MEMBER_ID != null">
+										<when test="searchKeyword != null">
 											AND		B_MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
 										</when>
 									</choose>
@@ -219,6 +222,81 @@
 		SELECT	COUNT(1)
 		FROM	BOARD_RECOMMEND
 		WHERE	BOARD_ID = #{boardId}
+	</select>
+	
+	<!-- 하나의 게시글 삭제여부 --> 
+	<update id="updateDeleteOneBoard" parameterType="string">
+		UPDATE	BOARD
+		SET		DELETE_BOARD = 'Y'
+		WHERE	BOARD_ID = #{boardId}
+	</update> 
+	
+	<!-- main페이지에서 최시글 띄어줄 쿼리문 -->
+	<select id="selectTenDateBoard" resultMap="boardResultMap">	
+		SELECT  B.* 
+				, ROWNUM RNUM
+		FROM    (
+					SELECT	B.BOARD_ID
+							, B.TITLE
+							, B.CONTENT
+							, B.CRT_DATE
+							, B.MDFY_DATE
+							, B.VIEW_COUNT
+							, B.RECOMMEND_COUNT
+							, B.PICTURE
+							, B.MEMBER_ID B_MEMBER_ID
+							, B.DELETE_BOARD
+							, M.MEMBER_ID M_MEMBER_ID
+							, M.NAME
+							, M.PASSWORD
+							, M.SALT
+							, M.POINT
+							, M.MEMBERSHIP
+							, M.GENDER
+							, M.EMAIL
+							, M.BIRTH
+							, M.LOGIN_FAIL_COUNT
+							, M.LOGIN_FAIL_TIME
+					FROM	BOARD B
+							, MEMBER M
+					WHERE	B.MEMBER_ID = M.MEMBER_ID 
+					ORDER BY B.CRT_DATE DESC
+				) B
+		WHERE   ROWNUM <![CDATA[<=]]> 10
+	</select>
+	
+	<!-- main페이지에서 인기글 띄어줄 쿼리문 -->
+	<select id="selectTenRecommendBoard" resultMap="boardResultMap">	
+		SELECT  B.* 
+				, ROWNUM RNUM
+		FROM    (
+					SELECT	B.BOARD_ID
+							, B.TITLE
+							, B.CONTENT
+							, B.CRT_DATE
+							, B.MDFY_DATE
+							, B.VIEW_COUNT
+							, B.RECOMMEND_COUNT
+							, B.PICTURE
+							, B.MEMBER_ID B_MEMBER_ID
+							, B.DELETE_BOARD
+							, M.MEMBER_ID M_MEMBER_ID
+							, M.NAME
+							, M.PASSWORD
+							, M.SALT
+							, M.POINT
+							, M.MEMBERSHIP
+							, M.GENDER
+							, M.EMAIL
+							, M.BIRTH
+							, M.LOGIN_FAIL_COUNT
+							, M.LOGIN_FAIL_TIME
+					FROM	BOARD B
+							, MEMBER M
+					WHERE	B.MEMBER_ID = M.MEMBER_ID 
+					ORDER BY B.RECOMMEND_COUNT DESC
+				) B
+		WHERE   ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
 </mapper>

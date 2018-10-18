@@ -103,9 +103,9 @@
 		});
  		
  		
- 		
 	 	// <댓글 지우기>
-	 	$(".replyDeleteBtn").click(function(){
+ 	 	$(".replyDeleteBtn").click(function(){
+ 	 		
 	 		var reId = $(this).closest(".replyDiv").find(".replyId").val();
 	 			
    			$.post("/Traditional-Market/reply/delete"
@@ -113,15 +113,15 @@
   						"boardReplyId": reId
   				      }
   				    , function(response) {
-  						   if( response.reply_Id ){				// true
-  								alert("삭제되었습니다.");
+  						   if( response.isSuccess ){				// true
+  								alert("작성자의 댓글이 삭제되었습니다.");
   								location.href="../board/detail?boardId="+$("#bId").val();
   							}
   							else {									// false
-  								alert("삭제 실패야~");
+  								alert("다시 시도해주세요.");
   							}
   				         });  
-	 		});
+	 		}); 
 		
 
 		// <대댓글 달기>
@@ -230,9 +230,6 @@
 
 		});
  		
- 		
- 		
- 		
 		
 	}); 
 		
@@ -243,7 +240,7 @@
 <body>
 	<%-- <jsp:include page="/WEB-INF/view/common/header.jsp"/> --%>
 	<c:choose>
-		<c:when test="${boardVO.deleteBoard eq N}">
+		<c:when test="${boardVO.deleteBoard eq 'N'}">
 			<div>
 				<c:if test="${boardVO.memberId eq sessionScope._USER_.memberId}">
 					<a href="/Traditional-Market/board/modify/${boardVO.boardId}">수정</a>
@@ -279,9 +276,28 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-		
+			<h1>
+				${boardVO.title} 
+				<span style="font-size: 12pt;">${boardVO.crtDate}</span>
+			</h1>
+			<h3>${boardVO.memberId}</h3>
+			<div style="text-align: center; height:500px;">
+				<h2>작성자에의해 해당 게시글은 삭제가 되었습니다.</h2>
+			</div>
+			<input type="hidden"  id="womenCnt" value="${boardVO.womenCnt}"/>
+			<input type="hidden"  id="menCnt" value="${boardVO.menCnt}"/>
+			
+			<!-- 추천 -->	
+			<div id="recoCount" style="text-align: center;">
+				<%-- <a href="<c:url value='/board/recommend/${boardVO.boardId}?token=${sessionScope._CSRF_TOKEN_}'/>">추천</a> --%>
+				<input type="hidden"  id="bId" value="${boardVO.boardId}"/>
+				<input type="hidden"  id="csrfToken" value="${sessionScope._CSRF_TOKEN_}"/>
+				<input type="hidden"  id="reCount" value="${boardVO.recommendCount}"/>
+				<input type="button" id="recommendBtn" value="추천♡" />
+				<span id="recommendSpan">${boardVO.recommendCount}</span>
+			</div>
 		</c:otherwise>	
-	
+	</c:choose>
 	댓글   조회수${boardVO.viewCount} 
 	<hr/>
 	
@@ -305,30 +321,57 @@
 	<hr/>
 	
 	<div class="replyList">
-		<c:forEach items="${boardVO.replyList}" var="reply">
-			<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
-				<input type="hidden" name="boardReplyId" class="replyId" value="${reply.boardReplyId}" />
-				<input type="hidden" name="memberId" class="memberId" value="${reply.memberId}" />
-				<div>${reply.memberVO.memberId}</div>	<!-- <div>${reply.memberId}</div> -->
-				<div>${reply.crtDate}</div>				
-				<div>${reply.reply}</div>
-				<div>
-					<input type="button" class="reReplyBtn" value="답글"/>
-					<div id="reReplyDiv">
-						<form action="/Traditional-Market/reply/write" method="post">
-							<input type="hidden" name="boardId" value="${boardVO.boardId}" />
-							<input type="hidden" name="parentReplyId" value="${reply.boardReplyId}" />
-						</form>
-					</div>
-					<c:if test="${reply.memberId eq sessionScope._USER_.memberId}">
-						<input type="button" class="replyDeleteBtn" value="삭제"/>
-					</c:if>
-					<div class="Reply_GoodBadDiv">
-						<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
-						<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
-					</div>			
-				</div>
-			</div> 
+		<c:forEach items="${boardVO.replyList}" var="reply">		
+				<c:choose>
+					<c:when test="${reply.deleteReply eq 'N'}">
+						<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
+							<input type="hidden" name="boardReplyId" class="replyId" value="${reply.boardReplyId}" />
+							<input type="hidden" name="memberId" class="memberId" value="${reply.memberId}" />
+							<div>${reply.memberVO.memberId}</div>	<!-- <div>${reply.memberId}</div> -->
+							<div>${reply.crtDate}</div>				
+							<div>${reply.reply}</div>
+							<div>
+								<input type="button" class="reReplyBtn" value="답글"/>
+								<div id="reReplyDiv">
+									<form action="/Traditional-Market/reply/write" method="post">
+										<input type="hidden" name="boardId" value="${boardVO.boardId}" />
+										<input type="hidden" name="parentReplyId" value="${reply.boardReplyId}" />
+									</form>
+								</div>
+								<c:if test="${reply.memberId eq sessionScope._USER_.memberId}">
+									<input type="button" class="replyDeleteBtn" value="삭제"/>
+								</c:if>
+								<div class="Reply_GoodBadDiv">
+									<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
+									<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
+								</div>			
+							</div>
+						</div> 
+					</c:when>
+					<c:otherwise>
+					<input type="hidden" class="a" value="${reply.deleteReply}"/>
+						<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
+							<input type="hidden" name="boardReplyId" class="replyId" value="${reply.boardReplyId}" />
+							<input type="hidden" name="memberId" class="memberId" value="${reply.memberId}" />
+							<div>${reply.memberVO.memberId}</div>	
+							<div>${reply.crtDate}</div>
+							<div><b>작성자에의해 해당 댓글은 삭제되었습니다.</b></div>
+							<div>
+								<input type="button" class="reReplyBtn" value="답글"/>
+								<div id="reReplyDiv">
+									<form action="/Traditional-Market/reply/write" method="post">
+										<input type="hidden" name="boardId" value="${boardVO.boardId}" />
+										<input type="hidden" name="parentReplyId" value="${reply.boardReplyId}" />
+									</form>
+								</div>
+								<div class="Reply_GoodBadDiv">
+									<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
+									<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
+								</div>			
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 		</c:forEach>
 	</div>
 	

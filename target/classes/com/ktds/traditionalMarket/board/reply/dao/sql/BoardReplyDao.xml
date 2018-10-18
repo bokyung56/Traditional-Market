@@ -52,6 +52,7 @@
 		<result column="BR_BOARD_ID" property="boardId"/>
 		<result column="PARENT_REPLY_ID" property="parentReplyId"/>
 		<result column="LEVEL" property="level"/>
+		<result column="BR_DELETE_REPLY" property="deleteReply"/>
 		<!-- 객체가 다른 객체한테...이렇게 함으로써 BoardReplyVO에 BoardVO, MemberVO를 가지게 됨.  -->
 		<association property="boardVO" javaType="BoardVO">	
 			<id property="boardId" column="B_BOARD_ID"/>			<!-- PK -->
@@ -63,6 +64,7 @@
 			<result property="recommendCount" column="RECOMMEND_COUNT"/>
 			<result property="picture" column="PICTURE"/>
 			<result property="memberId" column="B_MEMBER_ID"/>
+			<result property="deleteBoard" column="DELETE_BOARD"/>
 		</association>
 		<association property="memberVO" javaType="MemberVO">	
 			<id property="memberId" column="R_M_MEMBER_ID"/>
@@ -90,6 +92,7 @@
 				, BR.MEMBER_ID BR_MEMBER_ID
 				, BR.BOARD_ID BR_BOARD_ID
 				, BR.PARENT_REPLY_ID
+				, BR.DELETE_REPLY BR_DELETE_REPLY
 				, B.BOARD_ID B_BOARD_ID
 				, B.TITLE
 				, B.CONTENT 
@@ -99,6 +102,7 @@
 				, B.RECOMMEND_COUNT
 				, B.PICTURE
 				, B.MEMBER_ID B_MEMBER_ID
+				, B.DELETE_BOARD B_DELETE_BOARD
 				, R_M.MEMBER_ID R_M_MEMBER_ID
 				, R_M.NAME
 				, R_M.PASSWORD
@@ -239,6 +243,7 @@
 		AND		GENDER = 'W'	
 	</select>
 	
+	
 	<!-- 하나의 게시글의 댓글을 작성한 남자 인원 -->
 	<select id = "oneBoardMenCount" parameterType="String" resultType="int">
 		SELECT	count(1)
@@ -248,6 +253,14 @@
 		AND		BOARD_ID = #{boardId}
 		AND		GENDER = 'M'
 	</select>
+	
+	
+	<!-- 하나의 댓글 삭제여부 --> 
+	<update id="updateDeleteOneReply" parameterType="string">
+		UPDATE	BOARD_REPLY
+		SET		DELETE_REPLY = 'Y'
+		WHERE	BOARD_REPLY_ID = #{boardReplyId}
+	</update>
 	
 	
 	

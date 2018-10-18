@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace="현재 패키지의 인터페이스명" -->
+<mapper namespace="TrdtnmarketDao">
+	<!-- 각 하나의 태그(<insert>,<select>....)마다 이거를 "Mapped Statement"라 한다  -->
+	<!-- 이제, 별칭해주기! src/main/resources에 있는 myBatis.xml로 간다. -->
+	
+ 	<select id="selectOneTrdtnMarket" parameterType="string" resultType="TrdtnmarketVO">
+		SELECT	MARKET_ID marketId
+				, LATITUDE latitude
+				, LONGITUDE longitude
+				, NAME name
+				, ADDRESS address
+				, PAGE page
+		FROM	TRADITIONAL_MARKET
+		WHERE	MARKET_ID = #{marketId}
+	</select>  
+	
+	
+	<select id="selectAllTrdtnMarkets" resultType="TrdtnmarketVO">
+		SELECT	MARKET_ID marketId
+				, LATITUDE latitude
+				, LONGITUDE longitude
+				, NAME name
+				, ADDRESS address
+				, PAGE page
+		FROM	TRADITIONAL_MARKET
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

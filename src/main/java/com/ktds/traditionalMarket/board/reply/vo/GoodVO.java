@@ -4,6 +4,7 @@ public class GoodVO {
 
 	private String memberId;
 	private String boardReplyId;
+	private String crtDate;
 			
 	public String getMemberId() {
 		return memberId;
@@ -19,5 +20,13 @@ public class GoodVO {
 	
 	public void setBoardReplyId(String boardId) {
 		this.boardReplyId = boardReplyId;
+	}
+
+	public String getCrtDate() {
+		return crtDate;
+	}
+
+	public void setCrtDate(String crtDate) {
+		this.crtDate = crtDate;
 	}
 }

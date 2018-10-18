@@ -72,11 +72,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	// 게시글 지우기
-	@Override
-	public boolean deleteOneBoard(String boardId) {
+	//@Override
+	//public boolean deleteOneBoard(String boardId) {
 		
-		return this.boardBiz.deleteOneBoard(boardId);
-	}
+		//return this.boardBiz.deleteOneBoard(boardId);
+	//}
 
 	// 여러 게시글들 읽어오기(게시판)
 	@Override
@@ -104,5 +104,13 @@ public class BoardServiceImpl implements BoardService{
 	public int readOneBoardRecommendCount(String boardId) {
 		
 		return this.boardBiz.readOneBoardRecommendCount(boardId);
-	}	
+	}
+
+	// 게시글 지운 여부
+	@Override
+	public boolean updateDeleteOneBoard(String boardId) {
+		
+		return this.boardBiz.updateDeleteOneBoard(boardId);
+	}
+	
 }

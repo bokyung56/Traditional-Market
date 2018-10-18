@@ -9,7 +9,7 @@
 	<!-- The front controller of this Spring Web application, responsible for 
 		handling all application requests -->
 	
-	<!-- session 유지시간 60분 -->
+	<!-- session 유지시간 10분 -->
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>

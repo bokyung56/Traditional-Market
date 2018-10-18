@@ -17,10 +17,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
+import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.common.session.Session;
 import com.ktds.traditionalmarket.member.service.MemberService;
 import com.ktds.traditionalmarket.member.validator.MemberValidator;
@@ -234,11 +237,32 @@ public class MemberController {
 	
 	
 	
-	@GetMapping("/main/main")
+/*	@GetMapping("/main/main")
 	public String viewMain() {	
 		
 		return "main/main";
-	} 
+	} */
+	
+	
+	// 메인 페이지
+	@GetMapping("/main/main")
+	public ModelAndView viewTenBoardListPage() {
+		
+		ModelAndView view = new ModelAndView("main/main");
+		
+		List<BoardVO> boardTenList = this.memberService.readTenDateBoard();
+		List<BoardVO> boardRecommendList = this.memberService.readTenRecommendBoard();
+		
+		view.addObject("boardTenList", boardTenList);
+		view.addObject("boardRecommendList", boardRecommendList);
+		
+	/*	for ( Object boardVO : boardTenList ) {
+			BoardVO board = (BoardVO) boardVO;
+			System.out.println("board.title= " + board.getTitle());
+		}*/
+					
+		return view;
+	}
 	
 	
 }

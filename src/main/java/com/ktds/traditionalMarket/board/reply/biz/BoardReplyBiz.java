@@ -13,10 +13,10 @@ public interface BoardReplyBiz {
 	public boolean createOneBoardReply( BoardReplyVO boardReplyVO );
 	
 	// 그 게시글안에 있는 댓글 전체 삭제
-	public boolean deleteOneBoardReplies( String boardId );
+	//public boolean deleteOneBoardReplies( String boardId );
 	
 	// 하나의 댓글 삭제
-	public boolean deleteOneBoardReply( String boardReplyId );
+	//public boolean deleteOneBoardReply( String boardReplyId );
 	
 	// 댓글 읽어오기
 	public List<BoardReplyVO> readAllBoardReplies(String boardId);
@@ -50,4 +50,7 @@ public interface BoardReplyBiz {
 	
 	// 한 게시글의 댓글의 남자 수
 	public int oneBoardMenCount( String boardReplyId );
+	
+	// 하나의 댓글 삭제 여부
+	public boolean updateDeleteOneReply( String boardReplyId );
 }

@@ -21,29 +21,21 @@ public class BoardVO {
 	private String viewCount;
 	private int recommendCount;
 	private String picture;
+	private String memberId;				// 회원 Id
 
-	// 회원 Id
-	private String memberId;
-
-	// BOARD테이블과 MEMBE테이블을 조인하기 위해서
-	private MemberVO memberVO;
-
-	// 이미지업로드 다운로드를 위한 변수
-	private MultipartFile pictureFile;
+	private MemberVO memberVO;				// BOARD테이블과 MEMBE테이블을 조인하기 위해서
+	
+	private MultipartFile pictureFile;		// 이미지업로드 다운로드를 위한 변수
 	//private List<MultipartFile> pictureFiles;
 	
-	// 댓글
-	private List<BoardReplyVO> replyList;
+	private List<BoardReplyVO> replyList;	// 댓글
 		
-	// CSRF
-	private String token;
+	private String token;					// CSRF
 	
-	// 댓글 남녀 비율
-	private int womenCnt;
+	private int womenCnt;					// 댓글 남녀 비율
 	private int menCnt;
-	
-	// 게시글 삭제 여부
-	private String deleteBoard;
+			
+	private String deleteBoard;				// 게시글 삭제 여부
 	
 	
 	
@@ -198,9 +190,14 @@ public class BoardVO {
 
 	public void setMenCnt(int menCnt) {
 		this.menCnt = menCnt;
+	}
+
+	public String getDeleteBoard() {
+		return deleteBoard;
+	}
+
+	public void setDeleteBoard(String deleteBoard) {
+		this.deleteBoard = deleteBoard;
 	}	
-	
-	
-	
 
 }

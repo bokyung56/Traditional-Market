@@ -39,10 +39,10 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	}
 
 	// 글 지우기
-	@Override
-	public int deleteOneBoard(String boardId) {		
-		return getSqlSession().delete("BoardDao.deleteOneBoard", boardId);
-	}
+	//@Override
+	//public int deleteOneBoard(String boardId) {		
+	//	return getSqlSession().delete("BoardDao.deleteOneBoard", boardId);
+	//}
 
 	// 조회수 증가시키기
 	@Override
@@ -52,11 +52,11 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	}
 	
 	// 추천수 증가시키기
-	@Override
-	public int updateRecommendCount(String boardId) {
+	//@Override
+	//public int updateRecommendCount(String boardId) {
 		
-		return getSqlSession().update("BoardDao.updateRecommendCount", boardId);
-	}
+	//	return getSqlSession().update("BoardDao.updateRecommendCount", boardId);
+	//}
 
 	// 전체글 개수
 	@Override
@@ -91,5 +91,27 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	public int selectOneBoardRecommendCount(String boardId) {
 		
 		return getSqlSession().selectOne("BoardDao.selectOneBoardRecommendCount", boardId);
+	}
+
+	// 글 지운 여부
+	@Override
+	public int updateDeleteOneBoard(String boardId) {
+		
+		return getSqlSession().update("BoardDao.updateDeleteOneBoard", boardId);
+	}
+
+		
+	// main페이지에서 최시글 띄어줄 메소드
+	@Override
+	public List<BoardVO> selectTenDateBoard() {
+		
+		return getSqlSession().selectList("BoardDao.selectTenDateBoard");
+	}
+	
+	// main페이지에서 인기글 띄어줄 메소드
+	@Override
+	public List<BoardVO> selectTenRecommendBoard() {
+		
+		return getSqlSession().selectList("BoardDao.selectTenRecommendBoard");
 	}	
 }

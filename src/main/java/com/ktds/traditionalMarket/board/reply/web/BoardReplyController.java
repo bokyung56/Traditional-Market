@@ -46,16 +46,17 @@ public class BoardReplyController {
 	// 하나의 댓글 삭제(POST)
 	@PostMapping("/reply/delete")
 	@ResponseBody
-	public Map<String, Object> doDeleteOneReply( @RequestParam String boardReplyId ){
+	public Map<String, Object> doDeleteOneReply( @RequestParam String boardReplyId){
 		
 		//ModelAndView view = new ModelAndView("redirect:/board/detail/{boardId}");
 		
-		boolean replyId = this.boardReplyService.deleteOneBoardReply(boardReplyId);
+		//boolean replyId = this.boardReplyService.deleteOneBoardReply(boardReplyId);
 	
-		//System.out.println("****************replyId= " + replyId);
+		
+		boolean isSuccess = this.boardReplyService.updateDeleteOneReply(boardReplyId);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("reply_Id", replyId);
+		result.put("isSuccess", isSuccess);
 		
 		return result;
 	}

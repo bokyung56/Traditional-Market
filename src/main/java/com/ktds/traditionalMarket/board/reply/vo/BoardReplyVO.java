@@ -9,26 +9,26 @@ import com.ktds.traditionalmarket.member.vo.MemberVO;
 
 public class BoardReplyVO {
 
-	// DB에 있는 columns 6개
+	// DB에 있는 columns 7개
 	private String boardReplyId;
 	private String reply;
 	private String crtDate;
 	private String memberId;
 	private String boardId;
 	private String parentReplyId;
+	private String deleteReply;		// 댓글 삭제 여부
 	
-	private int goodCount;
+	private int goodCount;			// 좋아요, 싫어요
 	private int badCount;
+		
+	private int level;				// 아마 Rownum 역할?
 	
-	
-
-	// 아마 Rownum 역할?
-	private int level;
-
-	// join 해줄 테이블들
-	private BoardVO boardVO;
+	private BoardVO boardVO;		// join 해줄 테이블들
 	private MemberVO memberVO;
+	
+	
 
+	
 	// getter, setter
 	public String getBoardReplyId() {
 		return boardReplyId;
@@ -118,4 +118,11 @@ public class BoardReplyVO {
 		this.badCount = badCount;
 	}
 
+	public String getDeleteReply() {
+		return deleteReply;
+	}
+
+	public void setDeleteReply(String deleteReply) {
+		this.deleteReply = deleteReply;
+	}
 }

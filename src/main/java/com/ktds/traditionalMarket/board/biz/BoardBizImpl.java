@@ -1,6 +1,7 @@
 package com.ktds.traditionalmarket.board.biz;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +72,14 @@ public class BoardBizImpl implements BoardBiz{
 	}
 
 	// 게시글 지우기
-	@Override
-	public boolean deleteOneBoard(String boardId) {
+	//@Override
+	//public boolean deleteOneBoard(String boardId) {
 		
 		// 그 게시글안에 있는 댓글 전체 삭제
-		boardReplyBiz.deleteOneBoardReplies(boardId);
+		//boardReplyBiz.deleteOneBoardReplies(boardId);
 		
-		return boardDao.deleteOneBoard(boardId) > 0;
-	}
+		//return boardDao.deleteOneBoard(boardId) > 0;
+	//}
 	
 	// 제일 중요한 코드!
 	@Override
@@ -127,5 +128,30 @@ public class BoardBizImpl implements BoardBiz{
 	public int readOneBoardRecommendCount(String boardId) {
 		
 		return this.boardDao.selectOneBoardRecommendCount(boardId);
+	}
+
+	// 게시글 지운 여부
+	@Override
+	public boolean updateDeleteOneBoard(String boardId) {
+		
+		return this.boardDao.updateDeleteOneBoard(boardId) > 0;
+	}
+
+	
+	
+	
+	// main페이지에서 최시글 띄어줄 메소드
+	@Override
+	public List<BoardVO> readTenDateBoard() {
+		
+		return this.boardDao.selectTenDateBoard();
+	}
+
+	// main페이지에서 인기글 띄어줄 메소드
+	@Override
+	public List<BoardVO> readTenRecommendBoard() {
+		
+		return this.boardDao.selectTenRecommendBoard();
 	}	
+	
 }

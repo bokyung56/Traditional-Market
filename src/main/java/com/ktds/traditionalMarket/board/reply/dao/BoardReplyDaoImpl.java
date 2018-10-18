@@ -30,18 +30,18 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 	}
 
 	// 그 게시글안에 있는 댓글 전체 삭제
-	@Override
-	public int deleteOneBoardReplies(String boardId) {
+	//@Override
+	//public int deleteOneBoardReplies(String boardId) {
 		
-		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReplies", boardId);
-	}
+		//return getSqlSession().delete("BoardReplyDao.deleteOneBoardReplies", boardId);
+	//}
 	
 	// 하나의 댓글 삭제
-	@Override
-	public int deleteOneBoardReply(String boardReplyId) {
+	//@Override
+	//public int deleteOneBoardReply(String boardReplyId) {
 		
-		return getSqlSession().delete("BoardReplyDao.deleteOneBoardReply", boardReplyId);
-	}
+		//return getSqlSession().delete("BoardReplyDao.deleteOneBoardReply", boardReplyId);
+	//}
 	
 	// 댓글들 읽어오기
 	@Override
@@ -122,6 +122,13 @@ public class BoardReplyDaoImpl extends SqlSessionDaoSupport implements BoardRepl
 	public int oneBoardMenCount(String boardId) {
 		
 		return getSqlSession().selectOne("BoardReplyDao.oneBoardMenCount", boardId);
+	}
+
+	// 하나의 댓글 삭제 여부
+	@Override
+	public int updateDeleteOneReply(String boardReplyId) {
+		
+		return getSqlSession().update("BoardReplyDao.updateDeleteOneReply", boardReplyId);
 	}
 
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="현재 패키지의 인터페이스명" -->
+<mapper namespace="StoreDao">
+	<!-- 각 하나의 태그(<insert>,<select>....)마다 이거를 "Mapped Statement"라 한다  -->
+	<!-- 이제, 별칭해주기! src/main/resources에 있는 myBatis.xml로 간다. -->
+	
+	<!-- 하나의 재래시장에서 하나의 Store 가져오기 -->
+	<select id="selectOneStore"  parameterType="string" resultType="StoreVO">
+		SELECT	STORE_ID storeId
+				, MARKET_ID marketId
+				, STORE_NAME storeName
+				, REPRESENTATIVE representative
+				, STORE_INFORMATION storeInformation
+				, PHONE phone
+				, LATITUDE latitude
+				, LONGITUDE longitude
+				, PICTURE picture
+		FROM	STORE
+		WHERE	STORE_ID = #{storeId}
+	</select>
+	
+	<!-- 하나의 재래시장에서 여러개 Store 가져오기 -->
+	<select id="selectAllStores"  parameterType="string" resultType="StoreVO">
+		SELECT	STORE_ID storeId
+				, MARKET_ID marketId
+				, STORE_NAME storeName
+				, REPRESENTATIVE representative
+				, STORE_INFORMATION storeInformation
+				, PHONE phone
+				, LATITUDE latitude
+				, LONGITUDE longitude
+				, PICTURE picture
+		FROM	STORE
+		WHERE	MARKET_ID = #{marketId}
+	</select>
+	
+</mapper>

@@ -30,11 +30,11 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 	}
 
 	// 하나의 댓글 삭제
-	@Override
-	public boolean deleteOneBoardReply(String boardReplyId) {
+	//@Override
+	//public boolean deleteOneBoardReply(String boardReplyId) {
 		
-		return this.boardReplyBiz.deleteOneBoardReply(boardReplyId);
-	}
+	//	return this.boardReplyBiz.deleteOneBoardReply(boardReplyId);
+	//}
 
 	// 댓글 좋아요
 	@Override
@@ -96,5 +96,12 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 	public boolean deleteOneBoardReplyBad( String boardReplyId, String memberId ) {
 		
 		return this.boardReplyBiz.deleteOneBoardReplyBad(boardReplyId, memberId);
+	}
+
+	// 하나의 댓글 삭제 여부
+	@Override
+	public boolean updateDeleteOneReply(String boardReplyId) {
+		
+		return this.boardReplyBiz.updateDeleteOneReply(boardReplyId);
 	}	
 }

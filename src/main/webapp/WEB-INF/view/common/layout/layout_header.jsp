@@ -34,7 +34,7 @@
 						<a href="/Traditional-Market/notice">소식•알림</a>
 					</li>
 					<li class="menu">
-						<a href="/Traditional-Market/trdtnmarket">재래시장</a>
+						<a href="/Traditional-Market/trdtnmarket/map">재래시장</a>
 					</li>
 					<li class="menu">
 						<a href="/Traditional-Market/board/list">게시판</a>

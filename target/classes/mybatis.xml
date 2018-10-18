@@ -12,8 +12,10 @@
 	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO" alias="BoardReplyVO" />
 	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.GoodVO" alias="GoodVO" />
 	  	<typeAlias type="com.ktds.traditionalmarket.board.reply.vo.BadVO" alias="BadVO" />
-	  	 
-	  	 
+	  	<typeAlias type="com.ktds.traditionalmarket.trdtnmarket.vo.TrdtnmarketVO" alias="TrdtnmarketVO" /> 	  	 
+	  	<typeAlias type="com.ktds.traditionalmarket.store.vo.StoreVO" alias="StoreVO" />
+	  	<typeAlias type="com.ktds.traditionalmarket.store.reply.vo.StoreReplyVO" alias="StoreReplyVO" />
+	  	
 	  </typeAliases>
   
 	</configuration> 
