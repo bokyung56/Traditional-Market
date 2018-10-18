@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- namespace="현재 패키지의 인터페이스명" -->
+<mapper namespace="ProductDao">
+	<!-- 각 하나의 태그(<insert>,<select>....)마다 이거를 "Mapped Statement"라 한다  -->
+	<!-- 이제, 별칭해주기! src/main/resources에 있는 myBatis.xml로 간다. -->
+	
+	<select id="selectAllProducts" parameterType="string" resultType="ProductVO">
+		SELECT	PRODUCT_ID productId
+				, STORE_ID storeId
+				, LARGE_CLASSIFICATION largeClassification
+				, MEDIUM_CLASSIFICAION mediumClassification
+				, SMALL_CLASSIFICATION smallClassification
+				, NAME name
+				, PICTURE picture
+				, PRICE price
+		FROM	PRODUCT
+		WHERE	STORE_ID = #{storeId}
+	</select>
+	
+</mapper>

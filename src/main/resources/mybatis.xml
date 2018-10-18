@@ -15,7 +15,7 @@
 	  	<typeAlias type="com.ktds.traditionalmarket.trdtnmarket.vo.TrdtnmarketVO" alias="TrdtnmarketVO" /> 	  	 
 	  	<typeAlias type="com.ktds.traditionalmarket.store.vo.StoreVO" alias="StoreVO" />
 	  	<typeAlias type="com.ktds.traditionalmarket.store.reply.vo.StoreReplyVO" alias="StoreReplyVO" />
-	  	
+	  	<typeAlias type="com.ktds.traditionalmarket.product.vo.ProductVO" alias="ProductVO" />
 	  </typeAliases>
   
 	</configuration> 

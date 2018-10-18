@@ -3,6 +3,7 @@ package com.ktds.traditionalmarket.store.vo;
 import java.util.List;
 
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
+import com.ktds.traditionalmarket.product.vo.ProductVO;
 import com.ktds.traditionalmarket.store.reply.vo.StoreReplyVO;
 
 public class StoreVO {
@@ -16,11 +17,18 @@ public class StoreVO {
 	private String longitude;
 	private String picture;
 	
-	private List<StoreReplyVO> storeReplyList;
+	private List<StoreReplyVO> storeReplyList;	// 하나의 상점에 대한 댓글들	
+	private double storeRating; 				// 10.18.목 하나의 상점에 대한 총 평점	
+	private List<ProductVO> productList;		// 10.18.목 하나의 상점에 대한 상품들
+
 	
-	private double storeRating; // 10.18.목 하나의 상점에 대한 총 평점
+	public List<ProductVO> getProductList() {
+		return productList;
+	}
 
-
+	public void setProductList(List<ProductVO> productList) {
+		this.productList = productList;
+	}
 
 	public double getStoreRating() {
 		return storeRating;

@@ -4,10 +4,12 @@ public class ProductVO {
 
 	private String productId;			
 	private String storeId;
-	private String name;					// 상품이름
 	private String largeClassification;		// 대분류
 	private String mediumClassification;	// 중분류
 	private String smallClassification;		// 소분류
+	private String name;					// 상품이름
+	private int price;						// 가격
+	private String picture;					// 사진
 
 	public String getProductId() {
 		return productId;
@@ -55,6 +57,22 @@ public class ProductVO {
 
 	public void setSmallClassification(String smallClassification) {
 		this.smallClassification = smallClassification;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 }

@@ -93,13 +93,12 @@
 	        	$(this).closest(".storeInfo").find(".storeInformation").slideDown(100);
 	        	$(this).closest(".storeInfo").find(".picture").slideDown(100);	  
 	        	$(this).closest(".storeInfo").find(".storeRating").slideDown(100);
-	        	        	
+	        	
+	        	
 	        	marker.setMap(map);							// 마커가 지도 위에 표시되도록 설정		  
 	        	infowindow.open(map, marker);  				// 마커 위에 인포윈도우를 표시
 	        		        	       	
-	        	//$("#inputStoreReply").show();
-	        	//$("#storeReplyList").show();
-	        	
+	  	        		        	        	
 	        	// 하나의 상점에 평점과 댓글 
 	        	$.post(
          				"/Traditional-Market/oneTrdtnMarket/oneStore"
@@ -124,9 +123,8 @@
      							var inputMarketId = $('<input type="hidden" name="marketId" value="'+response.storeVO.marketId+'" />');
      							var inputReply = $('<textarea name="reply" placeholder="건전한 댓글 문화를 위해 타인에게 불쾌감을 주는 비하단어들 사용을 자제합시다 :)" style="width:600px; height:50px; display: inline-block;"></textarea>');
      							var submit = $('<input type="submit" id="registBtn" value="등록" style="width:50px; height:50px";/>');	
-       							
-         						
-       							spanStart1.addClass("rate");
+       							        						
+       							spanStart1.addClass("rate"); 	// shadow dom한테 css적용시키기
        							
          						$("#replyDiv").prepend(spanStart1);
          						$(spanStart1).append(input5);
@@ -145,14 +143,31 @@
          						$(spanStart2).append(inputReply);
          						$(spanStart2).append(submit);
 
+         						$("#productList").before($('<h3>가격 정보</h3>'));     
+         						var plist = response.storeVO.productList;		// 하나의 상점에 대한 상품들
+         						for ( var p in plist ) {
+         							var pName = plist[p].name;
+         							var	pPrice = plist[p].price;
+         							var pPicture = plist[p].picture;
+         							
+         							var proDiv = $('<div class="proDiv" style="text-alian: center"></div>');
+         							var proName = $('<span >'+ pName +'</span>');
+         							var proPrice = $('<span>'+ pPrice +'</span>');
+         							var proPicture = $('<span><img src="/Traditional-Market/img/international/koreanpancake/' + pPicture + '" width="70" height="70"></span>');
+         							
+         							
+         							$("#productList").prepend(proDiv);
+         							$(proDiv).append(proName);
+         							$(proDiv).append(proPrice);
+         							$(proDiv).append(proPicture);        							
+         						}
          						
-         						      							
-         						var list = response.storeVO.storeReplyList;
-         						for ( var i in list ) { 	
-         							var storeReplyId = list[i].storeReplyId;
-         							var memberId = list[i].memberId;
-         							var reply = list[i].reply;
-         							var crtDate = list[i].crtDate;
+         						var slist = response.storeVO.storeReplyList;	// 하나의 상점에 대한 댓글들        				
+         						for ( var i in slist ) { 	
+         							var storeReplyId = slist[i].storeReplyId;
+         							var memberId = slist[i].memberId;
+         							var reply = slist[i].reply;
+         							var crtDate = slist[i].crtDate;
          							
          							var startDiv = $('<div class="startDiv"></div>')
          							var oneReplyDiv = $('<div class="replyId" style="display: none">' + storeReplyId + '</div>')
@@ -166,38 +181,25 @@
              						
              						
              					    $("#storeReplyList").prepend(startDiv);
-             						
-             					    
-             					   $(startDiv).append(oneReplyDiv);
+             						             					    
+             					   	$(startDiv).append(oneReplyDiv);
              						//$(startDiv).append($(oneReplyDiv)); 저기 태그에 $()이거 안 감싸는대신에 이렇게 쓰는데 이거 적용 안됨!!!!!!!!!!!!!
              						//$("#storeReplyList").append(oneReplyDiv);		
              						
-             						$(startDiv).append(mDiv);
-             						//$(startDiv).append($(mDiv));
-         							//$("#storeReplyList").append(mDiv);			// 회원ID
-         							
-         							$(startDiv).append(rDiv);
-         							//$(startDiv).append($(rDiv));
-         							//$("#storeReplyList").append(rDiv);			// 작성일        	
-         							
-         							if (list[i].deleteReply == 'N') {				// 해당 댓글 삭제 여부 = N
-         								$(startDiv).append(cDiv);
-         								//$(startDiv).append($(cDiv));
-         								//$("#storeReplyList").append(cDiv);	
+             						$(startDiv).append(mDiv);						// 회원ID      			
+         							$(startDiv).append(rDiv);						// 작성일  
+         						    					
+         							if (slist[i].deleteReply == 'N') {				// 해당 댓글 삭제 여부 = N
+         								$(startDiv).append(cDiv);					// 댓글
+         								
             							if( session == memberId ) { 				// 댓글 삭제하기	
-             								$(startDiv).append(delBtn);
-             								//$(startDiv).append($(delBtn));    								
-             								//$("#storeReplyList").append(delBtn);	// 댓글 삭제버튼     								
+             								$(startDiv).append(delBtn);				// 댓글 삭제버튼     							
              							} 
          							}
          							else {											// 해당 댓글 삭제 여부 = Y
          								$(startDiv).append(cDivYes);
-         								$(".delBtn").remove();		// 댓글들 (회원ID와 일치시 버튼)
-         								//$(startDiv).append($(cDivYes));
-         								//$("#storeReplyList").append(cDivYes);       								
-         							}
-         							
-						
+         								$(".delBtn").remove();		// 댓글들 (회원ID와 일치시 버튼)         								
+         							}					
          						}        						
          					}
          					else {
@@ -264,7 +266,7 @@
 
 </head>
 <!-- <body> --> 
-
+		<!-- 상점 -->
 		<div style="margin-left:200px; margin-top:200px; display: inline-block;">
 		    <c:forEach items="${trdtnmarket.storeList}" var="stores">
 		    	<div class="storeInfo">
@@ -285,10 +287,29 @@
 		    </c:forEach>
 		</div>
 	
-		<!-- 지도가 붙을 위치 -->	
-		
-	 	<div id="map" style="width:600px; height:600px; margin-left:300px; margin-top:200px; display: inline-block;">
-	 		
+		<!-- 지도가 붙을 위치 -->		
+	 	<div id="map" style="width:600px; height:600px; margin-left:300px; margin-top:200px; display: inline-block;"></div>
+	 	
+	 	
+	 	<!-- 상점에 대한 상품들 -->
+<%-- 	 	<div style="margin-left:200px; margin-top:200px; display: inline-block;">
+		    <c:forEach items="${trdtnmarket.storeList}" var="stores">
+		    	<c:forEach items="stores.productList" var="products">
+		    	<div class="productInfo">
+		    		<div class="pName" ><b>${products.name}</b></div>
+		    		<div class="pStoreId" style="display: none;">${products.storeId}</div>
+			        <div class="pPrice" style="display: none;"> - 가격: ${products.price}</div>			  
+			        <br>
+			        <div class="picture" style="display: none;">
+			        	<img src="/Traditional-Market/img/international/koreanpancake/${products.picture}" width="300" height="200"> 
+			        </div>			        
+				</div>
+				</c:forEach>
+		    </c:forEach>
+		</div> --%>
+	 	<div>
+	 		<div id="productList">
+	 		</div>
 	 	</div>
 
 
