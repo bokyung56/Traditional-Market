@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"> -->
+<jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp"></jsp:include>
 <title>전통시장: 회원가입</title>
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -121,7 +122,7 @@
 </head>
 <body>
 
-	<form id="registForm">
+	<form id="registForm" style="margin-top: 150px">
 		<div>
 			<h3 class="join_title">아이디</h3>
 			<input type="text" id="memberId" name="memberId" value="${memberVO.memberId}" placeholder="아이디">
