@@ -192,10 +192,10 @@ public class BoardController {
 									      , @RequestParam String token, HttpSession session) {
 		
 		// CSRF 방어하기
-/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
 		if ( !sessionToken.equals(token) ){
 			throw new RuntimeException("잘못된 접근입니다.");
-		} */
+		} 
 		
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
 		String memberId = loginMemberVO.getMemberId();
@@ -218,10 +218,10 @@ public class BoardController {
 											, @RequestParam String token, HttpSession session) {
 		
 		// CSRF 방어하기
-/*		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
+		String sessionToken = (String)session.getAttribute(Session.CSRF_TOKEN);
 		if ( !sessionToken.equals(token) ){
 			throw new RuntimeException("잘못된 접근입니다.");
-		} */
+		} 
 		
 		MemberVO loginMemberVO = (MemberVO) session.getAttribute("_USER_");	// 키값을 써주면된다. 혹은 (MemberVO) session.getAttribute(Session.USER); 이거 할려면 import
 		String memberId = loginMemberVO.getMemberId();

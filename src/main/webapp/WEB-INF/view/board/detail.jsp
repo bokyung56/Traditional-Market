@@ -19,28 +19,43 @@
 
 	$().ready(function(){
 		
+		$("#inputReplyBtn").click( function(){
+			if( $("#inputReply").val() == "" ){	
+				$("#inputReply").focus();
+				return;
+			}
+			$("#replyForm").attr({
+				method: "post"
+				, action: "/Traditional-Market/reply/write" 
+			})
+			.submit()	
+		})
+		 
+		
 		// 댓글 남녀 비율
 		var ctx = document.getElementById('genderChart').getContext('2d');
 		var myChart = new Chart(ctx, {
 			type: 'bar',									// 막대모양으로 차트를 그리겠다
 		    data: {
-		        labels: ["여자 회원👩", "남자 회원🧑"],				// x축 데이터 
+		        labels: ["여자 회원 👩", "남자 회원 🧑"],				// x축 데이터 
 		        datasets: [{
 		        	label: "회원 성별 비율",						// 그래프 제목
 		            data: [$("#menCnt").val(), $("#womenCnt").val()], //y축 데이터, 컨트롤러에서 모델로 받아온다. 
 		            backgroundColor: [
-		                //'rgba(255, 99, 132, 0.2' red
-		                //'rgba(54, 162, 235, 0.2)' blue
+		                'rgba(255, 99, 132, 0.2' //red
+		                 , 'rgba(54, 162, 235, 0.2)' //blue
 						//'rgba(255, 206, 86, 0.2)' yellow
 		            	//'rgba(75, 192, 192, 0.2)' green
 		            	//'rgba(153, 102, 255, 0.2)' purple
 		            	//'rgba(255, 159, 64, 0.2)'orange
-		            	'rgba(255, 159, 64, 0.2)',
-		            	'rgba(153, 102, 255, 0.2)'
+		            	//'rgba(255, 159, 64, 0.2)',
+		            	//'rgba(153, 102, 255, 0.2)'
 		            ],
 		            borderColor: [
-		            	'rgba(255, 159, 64, 1)',
-		                'rgba(153, 102, 255, 1)'
+		            	 'rgba(255, 99, 132, 0.2' //red
+		                 , 'rgba(54, 162, 235, 0.2)' //blue
+		            	//'rgba(255, 159, 64, 1)',
+		                //'rgba(153, 102, 255, 1)'
 		
 		            ],
 		            borderWidth: 1
@@ -312,24 +327,30 @@
 	</div>
 	
 	<hr/>
-	<form action="/Traditional-Market/reply/write" method="post">
+	<!-- 댓글달기 -->
+	<form id="replyForm">
 		<input type="hidden" name="boardId" value="${boardVO.boardId}" />
 		<input type="hidden" name="parentReplyId" value="0" />
-		<textarea name="reply" placeholder="건전한 댓글 문화를 위해 타인에게 불쾌감을 주는 비하단어들 사용을 자제합시다 :)" style="width: 650px; height: 50px"></textarea>
-		<input type="submit" value="등록" />
+		<textarea name="reply" id="inputReply" placeholder="건전한 댓글 문화를 위해 타인에게 불쾌감을 주는 비하단어들 사용을 자제합시다 :)" style="width: 650px; height: 50px"></textarea>
+		<input type="button" id="inputReplyBtn" value="등록" />
 	</form>
 	<hr/>
 	
 	<div class="replyList">
 		<c:forEach items="${boardVO.replyList}" var="reply">		
-				<c:choose>
-					<c:when test="${reply.deleteReply eq 'N'}">
-						<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
+				<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
 							<input type="hidden" name="boardReplyId" class="replyId" value="${reply.boardReplyId}" />
 							<input type="hidden" name="memberId" class="memberId" value="${reply.memberId}" />
 							<div>${reply.memberVO.memberId}</div>	<!-- <div>${reply.memberId}</div> -->
-							<div>${reply.crtDate}</div>				
-							<div>${reply.reply}</div>
+							<div>${reply.crtDate}</div>
+							<c:choose>
+								<c:when test="${reply.deleteReply eq 'N'}">				
+									<div>${reply.reply}</div>
+								</c:when>
+								<c:otherwise>
+									<div><b>작성자에의해 해당 댓글은 삭제되었습니다.</b></div>
+								</c:otherwise>
+							</c:choose>
 							<div>
 								<input type="button" class="reReplyBtn" value="답글"/>
 								<div id="reReplyDiv">
@@ -339,39 +360,16 @@
 									</form>
 								</div>
 								<c:if test="${reply.memberId eq sessionScope._USER_.memberId}">
-									<input type="button" class="replyDeleteBtn" value="삭제"/>
+										<c:if test="${reply.deleteReply eq 'N'}">
+											<input type="button" class="replyDeleteBtn" value="삭제"/>
+										</c:if>
 								</c:if>
 								<div class="Reply_GoodBadDiv">
 									<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
 									<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
 								</div>			
 							</div>
-						</div> 
-					</c:when>
-					<c:otherwise>
-					<input type="hidden" class="a" value="${reply.deleteReply}"/>
-						<div class="replyDiv" style="margin-left: ${(reply.level-1) * 30}px" >
-							<input type="hidden" name="boardReplyId" class="replyId" value="${reply.boardReplyId}" />
-							<input type="hidden" name="memberId" class="memberId" value="${reply.memberId}" />
-							<div>${reply.memberVO.memberId}</div>	
-							<div>${reply.crtDate}</div>
-							<div><b>작성자에의해 해당 댓글은 삭제되었습니다.</b></div>
-							<div>
-								<input type="button" class="reReplyBtn" value="답글"/>
-								<div id="reReplyDiv">
-									<form action="/Traditional-Market/reply/write" method="post">
-										<input type="hidden" name="boardId" value="${boardVO.boardId}" />
-										<input type="hidden" name="parentReplyId" value="${reply.boardReplyId}" />
-									</form>
-								</div>
-								<div class="Reply_GoodBadDiv">
-									<input type="button" class="goodBtn" value="좋아요😍"/><span class="goodSpan">${reply.goodCount}</span>
-									<input type="button" class="badBtn" value="싫어요😡"/><span class="badSpan">${reply.badCount}</span>
-								</div>			
-							</div>
-						</div>
-					</c:otherwise>
-				</c:choose>
+				</div> 
 		</c:forEach>
 	</div>
 	
