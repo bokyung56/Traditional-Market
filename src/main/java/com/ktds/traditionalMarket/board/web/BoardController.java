@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.ktds.traditionalmarket.board.reply.service.BoardReplyService;
 import com.ktds.traditionalmarket.board.reply.vo.BoardReplyVO;
@@ -55,6 +58,9 @@ public class BoardController {
 		return "D:/uploadVideos";
 	}*/
 	
+	private Logger statisticsLogger = LoggerFactory.getLogger("list.statistics");
+	private Logger paramLogger = LoggerFactory.getLogger(BoardController.class);
+	
 	
 		
 	@RequestMapping("/board/list/init")
@@ -80,6 +86,11 @@ public class BoardController {
 		}
 
 		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
+		
+		statisticsLogger.info("URL : /board/list, IP : "	// <logger> 
+				+ request.getRemoteAddr() 
+				+ ", List Size : " 
+				+ pageExplorer.getList().size());
 		
 		session.setAttribute(Session.SEARCH, boardSearchVO);
 			
@@ -117,6 +128,7 @@ public class BoardController {
 	@PostMapping("/board/write")
 	public ModelAndView doCreateOneBoardAction( @Valid @ModelAttribute BoardVO boardVO
 											, Errors errors
+											, HttpServletRequest request
 											, HttpSession session
 											, MultipartHttpServletRequest multipartRequest) {
 		
@@ -181,6 +193,19 @@ public class BoardController {
 		boardVO.setTitle( filter.doFilter(boardVO.getTitle()) );
 		boardVO.setContent( filter.doFilter(boardVO.getContent()) );
 		
+		
+		String paramFormat = "IP:%s, Param:%s, Result:%s";
+		paramLogger.debug( String.format(paramFormat
+					, request.getRemoteAddr()
+					, boardVO.getTitle() + ", "
+							+ boardVO.getContent() + ", "
+							+ boardVO.getMemberId() + ", "
+							+ boardVO.getPictureFile() //+ ", "
+							//+ boardVO.getOriginFileName()
+					, view.getViewName() // "redirect:/board/list"
+					) );
+		
+		
 		return  view;
 	}
 	
@@ -238,7 +263,7 @@ public class BoardController {
 	
 	// 게시글 하나 읽기
 	@GetMapping("/board/detail")
-	public ModelAndView viewBoardDetailPage(@RequestParam String boardId){
+	public ModelAndView viewBoardDetailPage(@RequestParam String boardId, HttpServletRequest request){
 		
 		BoardVO boardVO  = this.boardService.readOneBoard(boardId);		
 				
@@ -259,6 +284,18 @@ public class BoardController {
 		}
 		
 		//view.addObject("boardVO.getReplyList()", boardVO.getReplyList());
+		
+		String paramFormat = "IP:%s, Param:%s, Result:%s";
+		paramLogger.debug( String.format(paramFormat
+					, request.getRemoteAddr()
+					, boardId
+					, "ID : " + boardVO.getBoardId() + ", "
+							+ "TITLE : " + boardVO.getTitle() + ", "
+							+ "CONT : " + boardVO.getContent() + ", "
+							+ "MemID : " + boardVO.getMemberId() + ", "
+							+ "FILENAME : " + boardVO.getPictureFile() //+ ", "
+							//+ "OFN : " + boardVO.getOriginFileName()
+					) );
 		
 		return view;
 	}
@@ -293,7 +330,8 @@ public class BoardController {
 	
 	// 게시글 삭제하기
 	@GetMapping("/board/delete/{boardId}")
-	public String doBoardDeleteAction(@PathVariable String boardId) {
+	public String doBoardDeleteAction( @PathVariable String boardId, HttpServletRequest request
+									   , @SessionAttribute(Session.USER) MemberVO memberVO) {
 		System.out.println("--------------doBoardDeleteAction");
 		BoardVO boardVO = this.boardService.readOneBoard(boardId);
 		System.out.println("--------------delete하기전 값= "+boardVO.getDeleteBoard());
@@ -303,7 +341,15 @@ public class BoardController {
 		System.out.println("--------------delete하기후 값= " + boardVO.getDeleteBoard());
 		System.out.println("--------------isSuccess= " + isSuccess);
 		
-		//boolean isSuccess = this.boardService.deleteOneBoard(boardId); 게시글 자체를 삭제(안에 있는 댓글들도)		
+		//boolean isSuccess = this.boardService.deleteOneBoard(boardId); 게시글 자체를 삭제(안에 있는 댓글들도)	
+		
+		String paramFormat = "IP:%s, Actor:%s Param:%s, Result:%s";
+		paramLogger.debug( String.format(paramFormat
+					, request.getRemoteAddr()
+					, memberVO
+					, id
+					, isSuccess
+					) );
 		
 		return "redirect:/board/detail?boardId="+boardId;
 	}
