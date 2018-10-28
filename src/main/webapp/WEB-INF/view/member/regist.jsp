@@ -156,8 +156,8 @@
 		</div>
 		<div>
 			<h3 class="join_gender">성별</h3>
-			<input type="radio" name="gender" value="W"/>여자
-			<input type="radio" name="gender" value="M"/>남자
+			<input type="radio" class="gender_size" name="gender" value="W"/>여자
+			<input type="radio" class="gender_size" name="gender" value="M"/>남자
 		</div>
 		<div class="bir_wrap">
 			<h3 class="join_title">생년월일</h3>

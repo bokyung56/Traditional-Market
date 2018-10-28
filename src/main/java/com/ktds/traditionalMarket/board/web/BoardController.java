@@ -330,7 +330,7 @@ public class BoardController {
 	
 	// 게시글 삭제하기
 	@GetMapping("/board/delete/{boardId}")
-	public String doBoardDeleteAction( @PathVariable String boardId, HttpServletRequest request
+	public String doBoardDeleteAction( @PathVariable String boardId
 									   , @SessionAttribute(Session.USER) MemberVO memberVO) {
 		System.out.println("--------------doBoardDeleteAction");
 		BoardVO boardVO = this.boardService.readOneBoard(boardId);
@@ -342,14 +342,6 @@ public class BoardController {
 		System.out.println("--------------isSuccess= " + isSuccess);
 		
 		//boolean isSuccess = this.boardService.deleteOneBoard(boardId); 게시글 자체를 삭제(안에 있는 댓글들도)	
-		
-		String paramFormat = "IP:%s, Actor:%s Param:%s, Result:%s";
-		paramLogger.debug( String.format(paramFormat
-					, request.getRemoteAddr()
-					, memberVO
-					, id
-					, isSuccess
-					) );
 		
 		return "redirect:/board/detail?boardId="+boardId;
 	}

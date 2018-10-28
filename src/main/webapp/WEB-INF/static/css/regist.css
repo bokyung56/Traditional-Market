@@ -12,7 +12,7 @@
 	margin-left: 1200px;
 }
 
-#registForm .join_title {
+#registForm .join_title, #registForm .join_gender{
 	font-size: 30px;
 	display: inline-block;
 }
@@ -36,5 +36,45 @@
 	margin-left: 20px;
 	width: 350px;
 	height: 50px;
+}
+
+/* 이름 input */
+#registForm #name {
+	margin-left: 180px;
+	width: 350px;
+	height: 50px;
+}
+
+/* 성별 radio-box */
+#registForm .gender_size {
+	margin-left: 180px;
+	width: 40px;
+	height: 30px;
+}
+
+/* 생년월일 */
+#registForm #birth {
+	margin-left: 120px;
+	width: 350px;
+	height: 50px;
+}
+
+/* 이메일 input */
+#registForm #email {
+	margin-left: 150px;
+	width: 350px;
+	height: 50px;
+}
+
+#registForm #regist {
+	margin-left: 250px;
+	margin-top: 50px;
+	width: 150px;
+	height: 50px;
+	background-color: #e5e5e5;
+	border: 0;
+	cursor:pointer;
+	font-size: 20px;
+	font-weight: bold;
 }
 
