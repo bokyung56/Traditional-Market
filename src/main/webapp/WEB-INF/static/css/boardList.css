@@ -1,6 +1,13 @@
 @charset "UTF-8";
 
+#menuBoard {
+	font-size: 30px;
+	margin-left: 500px;
+	margin-top: 50px;
+}
+
 #wrapper {
+	margin-top: 150px;
 	width: 100%;
 	text-align: center;
 }
@@ -14,6 +21,11 @@
 	margin:20px;
 }
 
+#allBackground #popularity .oneWrapper .headerWrapper, 
+#allBackground #theNewest .oneWrapper .headerWrapper{
+	margin-bottom: 15px;
+}
+
 #wrapper>#headerWrapper>div
 , #wrapper>.contentWrapper>div {
 	padding: 15px;
@@ -25,7 +37,7 @@
 }
 
 .number {
-	width: 55px;
+	width: 70px;
 }
 
 .subject {
@@ -50,4 +62,9 @@
 
 .box {
 	display: inline-block;
+}
+
+
+.cntr {
+	text-align: center;
 }

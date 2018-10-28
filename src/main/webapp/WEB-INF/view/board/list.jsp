@@ -11,7 +11,9 @@
 	
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp"/>
 
-
+	<div id="menuBoard">
+		> 게시판
+	</div>
 	<div id="wrapper">
 		<div id="headerWrapper">
 			<div class="number header box">글 번호</div><!-- 

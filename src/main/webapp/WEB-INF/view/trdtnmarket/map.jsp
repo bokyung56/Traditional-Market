@@ -7,6 +7,7 @@
 <meta charset="UTF-8"> -->
 <title>전국재래시장</title>
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp"/>
+<link rel="stylesheet" type="text/css" href="/Traditional-Market/css/map.css" />
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=32cdf8d5c7307247cda3f39acf0762a3&libraries=services,clusterer,drawing"></script>
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
  <script type="text/javascript">
@@ -83,11 +84,17 @@
 </script>
 </head>
 <!-- <body> -->
-
-
-	<!-- 지도가 붙을 위치 -->	
- 	<div id="map" style="width:700px; height:700px; margin-left:400px; margin-top:300px"></div>
- 	
+	<div id="all">
+		<div id="title1">
+			> 전국 재래시장 온누리 지도
+		</div>
+		<div id="title2">
+			아래 지도에서 원하는 재래시장을 선택해주세요 :D
+		</div>
+		<!-- 지도가 붙을 위치 -->	
+	 	<div id="map">
+	 	</div>
+ 	</div>
 
 <!-- </body>
 </html> -->

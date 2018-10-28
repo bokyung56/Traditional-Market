@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8"> -->
+<link rel="stylesheet" type="text/css" href="/Traditional-Market/css/regist.css" />
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp"></jsp:include>
 <title>전통시장: 회원가입</title>
 <script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
@@ -121,8 +122,10 @@
 </script>
 </head>
 <body>
-
-	<form id="registForm" style="margin-top: 150px">
+	<div id="menu_regist">
+		> 회원가입
+	</div>
+	<form id="registForm">
 		<div>
 			<h3 class="join_title">아이디</h3>
 			<input type="text" id="memberId" name="memberId" value="${memberVO.memberId}" placeholder="아이디">
@@ -139,6 +142,8 @@
 			<div id="password-error" style="display: none;">
 				10~20자 영문 대 소문자, 숫자, 특수문자를 사용하세요.
 			</div>
+		</div>
+		<div>
 			<h3 class="join_title">비밀번호 재확인</h3>
 			<input type="password" id="password_ckeck" name="password_ckeck" placeholder="비밀번호 재확인" maxlength="20">
 			<div id="password_ckeck-error" style="display: none;">
@@ -157,28 +162,6 @@
 		<div class="bir_wrap">
 			<h3 class="join_title">생년월일</h3>
 			<input type="date" id="birth" name="birth" min="1930-01-01" value="${memberVO.birth}">
-			<!-- <span>
-			<input type="text" id="yy" placeholder="년(4자)" maxlength="4">
-		</span>
-		<span>
-			<select id="mm" title="월" class="sel">
-				<option value="01">1</option>
-				<option value="02">2</option>
-				<option value="03">3</option>
-				<option value="04">4</option>
-				<option value="05">5</option>
-				<option value="06">6</option>
-				<option value="07">7</option>
-				<option value="08">8</option>
-				<option value="09">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-			</select>
-		</span>
-		<span>
-			<input type="text" id="dd" placeholder="일" maxlength="2">
-		</span> -->
 		</div>
 		<div>
 			<h3 class="join_title">이메일</h3>

@@ -1,27 +1,96 @@
 @charset "UTF-8";
 
 #wrapperHeader {
-	height: 500px;
+	background-color: #ffffff;
+	height: 400px;
+	width: 100%;
+   	text-align: center;
+	/* position: fixed; */	/* 항상 그 자리에 잇게 */
+	top:0 px;
+	left: 0px;
+	z-index: 1;			/* 쌓이게? 태그 위에 태그 위에 태그 이런식으로! 얘가 1이니까  맨위에 */
 }
 
+ 
+ /* 로그인시 header에 회원 정보 표시 */
+ #wrapperHeader > #member_login {
+	margin-top:0px;
+	margin-right:0px;
+	width: 100%;
+	height: 50px;
+	text-align: right;
+	font-size: 22px;
+	font-weight: bold;
+	color: gray;
+}
+  /* 로그인시 header에 회원 정보 표시-로그아웃버튼 */
+ #wrapperHeader #member_login > #hLogoutBtn {
+ 	margin-left: 40px;
+ 	margin-right: 5px;
+ 	width: 130px;
+ 	height: 50px;
+	border: 0;
+	background-color: #e5e5e5;
+	font-size: 20px;
+	font-weight: bold;
+	cursor:pointer
+ }
+ 
+  #wrapperHeader #member_login > #hMyInfoBtn {
+ 	margin-right: 60px;
+ 	width: 100px;
+ 	height: 50px;
+	border: 0;
+	background-color: #e5e5e5;
+	font-size: 20px;
+	font-weight: bold;
+	cursor:pointer
+ }  
+ 
+ 
 #wrapperHeader #header_logo, #wrapperHeader #header_search{
 	display: inline-block;
+	vertical-align:middle;
 }
 
-#wrapperHeader #header_logo > a > img{
+/* 로그인시, 회원정보 맨 위에 뛰우기 */
+/* #wrapperHeader>#member_login {
+	width:400px;
+	height:50px;
+	text-align: right;
+}  */
+
+#wrapperHeader #wrapperInner{
+	width: 100%;
+	height: 200px;
+	text-align: center;	
+	margin-top:10px;
+	margin-bottom:50px;
+}
+
+#wrapperHeader #wrapperInner #header_logo > a > img{
+	/* margin-top:20px; */
 	width: 350px;
 	height: 200px;
-	vertical-align: center;
 }
 
-#wrapperHeader #header_search input {
-	width: 400px;
-	height: 35px;
+#wrapperHeader #wrapperInner #header_search{
+	margin-left:30px;
+	width: 700px;
+	height:50px;
 }
 
-#wrapperHeader #header_search img {
-	width: 53px;
-	height: 41px;
+/* 메인화면에서 검색 input */
+#wrapperHeader #wrapperInner > #header_search > input {
+	width: 600px;
+	height:50px;
+	border: 3px solid gray;
+	/* margin-bottom:100px; */
+}
+
+#wrapperHeader #wrapperInner > #header_search > img {
+	width: 60px;
+	margin-left:20px;
 }
 
 
@@ -36,7 +105,7 @@
 	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans",
 		"Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica,
 		sans-serif;
-	font-size: 20px;
+	font-size: 25px;
 	font-weight: bold;
 }
 
@@ -57,7 +126,6 @@
 	/* text-align: center; */
 	/* vertical-align:center;  */
 	/* align-items: center; */
-	padding: 100px;
 	
 	float: left;
     position: relative;
@@ -66,21 +134,21 @@
 
 .menubar li a {
 	/* background: rgb(109, 109, 109); */
-	color: #5d5d5d;
+	color: #000000;
 	font-weight: bold;
 	display: block;
 	font-weight: normal;
 	line-height: 50px;
 	margin: 0px;
-	padding: 0px;
+	padding-left: 200px;
 	text-align: center;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: bold;		/* font-weight: 100; */
 }
 
 .menubar li a:hover, .menubar ul li:hover a {
 	/* background: rgb(71, 71, 71); */
-	color: #5d5d5d;
+	color: #c0c0c0;
 	text-decoration: overline underline;
 	font-weight: bold;
 }

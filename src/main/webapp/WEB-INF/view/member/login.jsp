@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <!DOCTYPE html>--%>
 <%--<html>--%>
 <%--<head>--%>
@@ -9,9 +9,13 @@
 <meta name="viewport"
 	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 <%--<title>전통시장: 로그인</title>--%>
+<link rel="stylesheet" type="text/css"
+	href="/Traditional-Market/css/login.css" />
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="/Traditional-Market/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> 
+<script src="/Traditional-Market/js/jquery-3.3.1.min.js"
+	type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js"
+	type="text/javascript" language="javascript"></script>
 
 <script type="text/javascript">
 	$().ready( function(){		
@@ -113,42 +117,70 @@
 	 	
 			
 </script>
-</head>
+<!-- </head> -->
 
-<!-- <body> -->	
-		<c:choose>
-			<c:when test="${not empty sessionScope._USER_.memberId}">
-					<div style="width: 370px; height: 150px;">
-						${sessionScope._USER_.memberId}님 환영합니다.
-						<div>
-							${sessionScope._USER_.membership}등급    
-							${sessionScope._USER_.point}point
-						</div>
-						<br>
-						<div style="width: 370px; height: 25px;">
-							<input type="button" id="logoutBtn" value="로그아웃"/>
-							<input type="button" id="myInfoBtn" value="내 정보" />
-							<a id="kakao-login-btn"></a>
-						</div>
-					</div>
-			</c:when>
-			<c:otherwise>
-				<form id="loginForm">
+<!-- <body> -->
+<c:choose>
+	<c:when test="${not empty sessionScope._USER_}">
+		<div id="mloginSuccess">
+			<div id="userInfo">
+				<b>${sessionScope._USER_.memberId}</b>님 환영합니다.
+			</div>
+			<div id="info">
+				<b>${sessionScope._USER_.membership}</b>&nbsp;등급 &nbsp;&nbsp;<b>${sessionScope._USER_.point}</b>&nbsp;point
+			</div>
+			<br>
+			<div id="infoA">
+				<!-- <input type="button" id="myInfoBtn" value="내 정보" /> -->
+				<a href="#">내&nbsp;정보</a>
+			</div>
+			<div style="float: left">
+				<div class="btns">
+					<input type="button" id="logoutBtn" value="로그아웃" />&nbsp;
+				</div>
+			</div> 
+			<div style="float: left">
+				<div class="btns">
+					<a id="kakao-login-btn"></a>
+				</div>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<form id="loginForm">
+			<div style="float: left">
+				<div id="intput_IdPw">
 					<div>
-						<input type="text" id="mId" name="memberId" placeholder="아이디"/>
+						<input type="text" name="memberId" placeholder="아이디" />
 					</div>
 					<div>
-						<input type="password" id="mPassword" name="password" placeholder="비밀번호" />
+						<input type="password" name="password" placeholder="비밀번호" />
 					</div>
-					<div id="submit" style="width: 370px; height: 50px;">
-						<input type="button" id="loginBtn" value="로그인" />
-						<input type="button" id="joinBtn" name="joinBtn" value="회원가입" />
-						<a id="kakao-login-btn"></a>			
+					<div id="kakao">
+						<a id="kakao-login-btn"></a>
 					</div>
-				</form>
-			</c:otherwise>
-		</c:choose>
-	
+					<div id="join_find">
+						<input type="button" id="joinBtn" name="joinBtn" value="회원가입" /> 
+						<input type="button" id="find_IdPw" name="findBtn" value="아이디•비밀번호 찾기" />
+					</div> 
+				</div>
+			</div>
+			<div style="float: left">
+				<div id="loginBtn">
+					<input type="button" id="loginBtn" value="로그인" />
+				</div>
+			</div>
+<!-- 			<div id="kakao">
+				<a id="kakao-login-btn"></a>
+			</div>
+			<div id="join_find">
+				<input type="button" id="joinBtn" name="joinBtn" value="회원가입" /> <input
+					type="button" id="find_IdPw" name="findBtn" value="아이디•비밀번호 찾기" />
+			</div> -->
+		</form>
+	</c:otherwise>
+</c:choose>
+
 
 <!-- </body>
 </html> -->

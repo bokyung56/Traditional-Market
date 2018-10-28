@@ -150,7 +150,7 @@
          							var	pPrice = plist[p].price;
          							var pPicture = plist[p].picture;
          							
-         							var proDiv = $('<div class="proDiv" style="text-alian: center"></div>');
+         							var proDiv = $('<div class="proDiv" style="text-alian: center; display:inline-block;"></div>');
          							var proName = $('<span >'+ pName +'</span>');
          							var proPrice = $('<span>'+ pPrice +'</span>');
          							var proPicture = $('<span><img src="/Traditional-Market/img/international/koreanpancake/' + pPicture + '" width="70" height="70"></span>');

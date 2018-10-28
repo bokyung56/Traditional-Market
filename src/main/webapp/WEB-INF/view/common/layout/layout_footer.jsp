@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 
  			</section>
- 			<footer>
+ 			<!-- <aside class="aside_right"></aside> -->
+ 			<!-- <footer>
  				Footer
- 			</footer>
+ 			</footer> -->
 		</section>
 	</div>
 
-</body>
 </html>

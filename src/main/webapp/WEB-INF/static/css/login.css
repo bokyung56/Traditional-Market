@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+/* <로그인 하기전 > */
+
+#loginForm {
+	background-color:#ffffff;
+	margin-top: 15px;
+	height: 350px;
+}
+
+#loginForm #intput_IdPw {
+	display: inline-block;
+	margin-top:20px;
+	margin-left:20px;
+	width: 320px;
+}
+
+/* 아이디와 비밀번호 input */
+#loginForm #intput_IdPw div input {
+	width: 290px;
+	height: 50px;
+	margin-bottom:10px;
+	border: 3px solid;
+	border-color: #dadada
+}
+
+/* 로그인버튼 */
+#loginForm #loginBtn {
+	/* display: inline-block; */
+	width: 100px; 
+	height: 100px;
+	margin-top:20px; 
+	margin-right: 10px;
+	background-color: #e5e5e5;
+	border: 0;
+	/* outline: 0; */
+	font-size: 20px;
+	font-weight: bold;
+	cursor:pointer
+}
+
+/* 카카오 로그인버튼 */
+#loginForm #kakao {
+	margin-top: 30px;
+	width: 370px; 
+	height: 50px;
+	text-align:center;
+}
+
+/* 회원가입버튼 */
+#loginForm #join_find #joinBtn{
+/* 	margin-top: 80px; */
+	margin-left: 10px;
+	margin-bottom: 10px;
+	width: 100px; 
+	height: 50px;
+	font-size: 17px;
+	font-weight: bold;
+	border: 0;
+	background-color: #e5e5e5;
+	cursor:pointer;
+}
+
+/* 아이디 비밀번호 찾기 버튼 */
+#loginForm #join_find #find_IdPw{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 200px; 
+	height: 50px;
+	font-size: 17px;
+	font-weight: bold;
+	border: 0;
+	background-color: #e5e5e5;
+	cursor:pointer
+}
+
+
+/* <로그인 한 후 > */
+
+
+#mloginSuccess {
+	background-color:#ffffff;
+	margin-top: 15px;
+	height: 350px;
+	font-size: 25px;
+	
+}
+
+#mloginSuccess > #userInfo{
+	margin-top: 20px;
+	margin-left: 20px;
+	padding-top: 15px;
+}
+
+#mloginSuccess > #info {
+	margin-top: 30px;
+	margin-left: 20px;
+}
+
+#mloginSuccess > #infoA {
+	width: 445px;
+	height: 50px;
+	/* border: 3px solid;
+	border-color: #dedede; */
+}
+
+#mloginSuccess > #infoA > a {
+	text-decoration: none;
+	width: 390px;
+	margin-left: 350px;
+	text-weight: bold;
+	color: #000000;
+	margin-bottom: 20px;
+	
+}
+
+#mloginSuccess div .btns {
+	margin-top: 70px;
+	margin-left: 20px;
+}
+
+#mloginSuccess div .btns kakao-login-btn{
+	width: 200px;
+}
+
+#mloginSuccess div .btns #logoutBtn{
+	width: 150px;
+	height: 50px;
+	background-color: #e5e5e5;
+	border: 0;
+	cursor:pointer;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+

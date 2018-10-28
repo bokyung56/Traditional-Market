@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#menu_regist {
+	margin-top: 50px;
+	margin-left: 700px;
+	font-size: 30px;
+}
+
+
+#registForm {
+	margin-top: 100px;
+	margin-left: 1200px;
+}
+
+#registForm .join_title {
+	font-size: 30px;
+	display: inline-block;
+}
+
+/* 아이디 input */
+#registForm #memberId {
+	margin-left: 150px;
+	width: 350px;
+	height: 50px;
+}
+
+/* 비밀번호 input */
+#registForm #password {
+	margin-left: 120px;
+	width: 350px;
+	height: 50px;
+}
+
+/* 비밀번호 재확인 input */
+#registForm #password_ckeck {
+	margin-left: 20px;
+	width: 350px;
+	height: 50px;
+}
+
