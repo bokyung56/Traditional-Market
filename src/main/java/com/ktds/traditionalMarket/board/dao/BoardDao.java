@@ -27,6 +27,6 @@ public interface BoardDao {
 	public int updateDeleteOneBoard(String boardId);		// 글 지운 여부
 	
 	
-	public List<BoardVO> selectTenDateBoard();				// main페이지에서 최시글 띄어줄 메소드
-	public List<BoardVO> selectTenRecommendBoard();			// main페이지에서 인기글 띄어줄 메소드
+	//public List<BoardVO> selectTenDateBoard();				// main페이지에서 최시글 띄어줄 메소드
+	//public List<BoardVO> selectTenRecommendBoard();			// main페이지에서 인기글 띄어줄 메소드
 }

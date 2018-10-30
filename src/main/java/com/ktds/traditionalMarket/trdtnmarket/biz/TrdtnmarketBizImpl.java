@@ -20,6 +20,9 @@ public class TrdtnmarketBizImpl implements TrdtnmarketBiz{
 	@Override
 	public TrdtnmarketVO readOneTrdtnMarket( String marketId ) {
 		
+		// 재래시장 조회수 
+		this.trdtnmarketDao.updateTrdtnViewCount(marketId);
+		
 		return this.trdtnmarketDao.selectOneTrdtnMarket(marketId);
 	}
 
@@ -29,5 +32,12 @@ public class TrdtnmarketBizImpl implements TrdtnmarketBiz{
 		
 		return this.trdtnmarketDao.selectAllTrdtnMarkets();
 	}
+
+	// 조회수순으로 인기 재래시장명 순위 
+	/*@Override
+	public List<String> readTenTrdtnName() {
+		
+		return this.trdtnmarketDao.selectTenTrdtnName();
+	}*/
 
 }

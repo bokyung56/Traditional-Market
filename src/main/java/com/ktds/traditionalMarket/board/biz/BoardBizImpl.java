@@ -141,7 +141,7 @@ public class BoardBizImpl implements BoardBiz{
 	
 	
 	// main페이지에서 최시글 띄어줄 메소드
-	@Override
+/*	@Override
 	public List<BoardVO> readTenDateBoard() {
 		
 		return this.boardDao.selectTenDateBoard();
@@ -152,6 +152,6 @@ public class BoardBizImpl implements BoardBiz{
 	public List<BoardVO> readTenRecommendBoard() {
 		
 		return this.boardDao.selectTenRecommendBoard();
-	}	
+	}	*/
 	
 }

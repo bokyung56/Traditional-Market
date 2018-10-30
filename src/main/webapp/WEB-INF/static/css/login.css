@@ -21,7 +21,8 @@
 	height: 50px;
 	margin-bottom:10px;
 	border: 3px solid;
-	border-color: #dadada
+	border-color: #dadada;
+	font-size: 20px;
 }
 
 /* 로그인버튼 */

@@ -12,5 +12,8 @@ public interface TrdtnmarketBiz {
 	
 	// 전국에 있는 재래시장들 위치
 	public List<TrdtnmarketVO> readAllTrdtnMarkets();
+	
+	// 조회수순으로 인기 재래시장명 순위 
+	/*public List<String> readTenTrdtnName();*/
 
 }

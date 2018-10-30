@@ -23,7 +23,7 @@
 					</span> 		
 					<!-- 인기 게시글 -->	
 					<div id="popularity">
-						<h3><b style="font-size: 30px; font-weight: bold; color: #000000;">인기 게시글</b></h3>
+						<h3>인기 게시글</h3>
 						<div class="oneWrapper">
 							<div class="headerWrapper">
 								<div class="number header box">글 번호</div><!-- 
@@ -35,20 +35,22 @@
 							</div>
 							<c:choose>
 								<c:when test="${not empty boardRecommendList}">
-									<c:forEach items="${boardRecommendList}" var="board">
-										<div class="contentWrapper">
-										<div class="number box cntr" >${board.rowNum}</div><!-- 
-										 --><div class="subject box cntr">
-											 	<a href="/Traditional-Market/board/detail?boardId=${board.boardId}">
-											 		${board.title}
-											 	</a>
-										 </div><!--
-										 	--><div class="writer box cntr">${board.memberId}</div><!--
-											--><div class="create-date box">${board.crtDate}</div><!--
-											--><div class="view box cntr">${board.viewCount}</div><!--
-											--><div class="recommend box cntr">${board.recommendCount}</div>
-										</div>
-									</c:forEach>
+									<div class="contentSize">
+										<c:forEach items="${boardRecommendList}" var="board">
+											<div class="contentWrapper">
+												<div class="number box cntr" >${board.rowNum}</div><!-- 
+											 --><div class="subject box cntr">
+												 	<a href="/Traditional-Market/board/detail?boardId=${board.boardId}" style="color: #000000; text-decoration:none">
+												 		${board.title}
+												 	</a>
+											 	</div><!--
+											 	--><div class="writer box cntr">${board.memberId}</div><!--
+												--><div class="create-date box">${board.crtDate}</div><!--
+												--><div class="view box cntr">${board.viewCount}</div><!--
+												--><div class="recommend box cntr">${board.recommendCount}</div>
+											</div>
+										</c:forEach>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<div id="no-articles">
@@ -61,7 +63,7 @@
 					
 					<!-- 최신 게시글 -->
 					<div id="theNewest">
-						<h3><b style="font-size: 30px; font-weight: bold; color: #000000;">최신 게시글</b></h3>
+						<h3>최신 게시글</h3>
 						<div class="oneWrapper">
 							<div class="headerWrapper">
 								<div class="number header box">글 번호</div><!-- 
@@ -73,20 +75,22 @@
 							</div>
 							<c:choose>
 								<c:when test="${not empty boardTenList}">
-									<c:forEach items="${boardTenList}" var="board">
-										<div class="contentWrapper">
-										<div class="number box cntr">${board.rowNum}</div><!-- 
-										 --><div class="subject box cntr">
-											 	<a href="/Traditional-Market/board/detail?boardId=${board.boardId}">
-											 		${board.title}
-											 	</a>
-										 </div><!--
-										 	--><div class="writer box cntr">${board.memberId}</div><!--
-											--><div class="create-date box">${board.crtDate}</div><!--
-											--><div class="view box cntr">${board.viewCount}</div><!--
-											--><div class="recommend box cntr">${board.recommendCount}</div>
-										</div>
-									</c:forEach>
+									<div class="contentSize">
+										<c:forEach items="${boardTenList}" var="board">
+											<div class="contentWrapper">
+											<div class="number box cntr">${board.rowNum}</div><!-- 
+											 --><div class="subject box cntr">
+												 	<a href="/Traditional-Market/board/detail?boardId=${board.boardId}" style="color: #000000; text-decoration:none">
+												 		${board.title}
+												 	</a>
+											 </div><!--
+											 	--><div class="writer box cntr">${board.memberId}</div><!--
+												--><div class="create-date box">${board.crtDate}</div><!--
+												--><div class="view box cntr">${board.viewCount}</div><!--
+												--><div class="recommend box cntr">${board.recommendCount}</div>
+											</div>
+										</c:forEach>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<div id="no-articles">
@@ -98,7 +102,7 @@
 					</div>
 				</div> 
 				<!-- 로그인하는 곳 -->
-				<div id="login_popTrd" style="float:left">
+				<div id="login_popTrd" style="float:left;">
 					<span id="lojo_button">
 						<%-- <c:if test="${empty sessionScope._USER_}"> --%>
 							<jsp:include page="/WEB-INF/view/member/login.jsp"></jsp:include>
@@ -106,7 +110,28 @@
 					</span>
 					<!-- 인기재래시장 -->
 					<div id="popularTrdtnName">
-						<h3><b style="font-size: 30px; font-weight: bold; color: #000000;">인기 재래시장</b></h3>
+						<h3>인기 재래시장</h3>
+							<div id="num">
+								<c:forEach var="i" begin="1" end="10">
+									<div>
+										${i}
+									</div>
+								</c:forEach>						
+							</div>
+							<div id="name">
+								<c:forEach items="${trdtnName}" var="trdtn">
+									 <div>
+									 	<marquee direction=up scrollamount=1>
+										<a href="/Traditional-Market/trdtnmarket/oneMarket?marketId=${trdtn.marketId}" style="color: #000000; text-decoration:none">
+											 ${trdtn.name}
+										</a>
+										</marquee>
+									</div>	
+								</c:forEach>
+							</div>
+					</div>
+					<div id="mainBanner2">
+						<img src="http://localhost:8080/Traditional-Market/img/mainBanner2.png"/> 
 					</div>
 				</div>
 			</div>	

@@ -16,6 +16,7 @@
 				, NAME name
 				, ADDRESS address
 				, PAGE page
+				, VIEW_COUNT view_count
 		FROM	TRADITIONAL_MARKET
 		WHERE	MARKET_ID = #{marketId}
 	</select>  
@@ -28,12 +29,24 @@
 				, NAME name
 				, ADDRESS address
 				, PAGE page
+				, VIEW_COUNT view_count
 		FROM	TRADITIONAL_MARKET
 	</select>
 	
 	
+	<!-- 해당 글 읽을 시, 조회수 증가시키기 -->
+	<update id="updateTrdtnViewCount" parameterType="string">
+		UPDATE	TRADITIONAL_MARKET
+		SET		VIEW_COUNT = VIEW_COUNT + 1
+		WHERE	MARKET_ID = #{marketId}
+	</update>
 	
 	
-	
-	
+	<!-- 조회수순으로 인기 재래시장명 순위 -->	
+	<!-- <select id="selectTenTrdtnName" resultType="string">
+		SELECT	NAME name
+		FROM	TRADITIONAL_MARKET
+		ORDER	BY VIEW_COUNT DESC
+	</select> -->
+		
 </mapper>

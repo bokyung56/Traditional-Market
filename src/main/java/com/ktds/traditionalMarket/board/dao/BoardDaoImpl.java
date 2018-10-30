@@ -102,7 +102,7 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 
 		
 	// main페이지에서 최시글 띄어줄 메소드
-	@Override
+/*	@Override
 	public List<BoardVO> selectTenDateBoard() {
 		
 		return getSqlSession().selectList("BoardDao.selectTenDateBoard");
@@ -113,5 +113,5 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
 	public List<BoardVO> selectTenRecommendBoard() {
 		
 		return getSqlSession().selectList("BoardDao.selectTenRecommendBoard");
-	}	
+	}	*/
 }

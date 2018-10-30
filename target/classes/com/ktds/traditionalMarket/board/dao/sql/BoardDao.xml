@@ -232,7 +232,7 @@
 	</update> 
 	
 	<!-- main페이지에서 최시글 띄어줄 쿼리문 -->
-	<select id="selectTenDateBoard" resultMap="boardResultMap">	
+	<!-- <select id="selectTenDateBoard" resultMap="boardResultMap">	
 		SELECT  B.* 
 				, ROWNUM RNUM
 		FROM    (
@@ -263,10 +263,10 @@
 					ORDER BY B.CRT_DATE DESC
 				) B
 		WHERE   ROWNUM <![CDATA[<=]]> 10
-	</select>
+	</select> -->
 	
 	<!-- main페이지에서 인기글 띄어줄 쿼리문 -->
-	<select id="selectTenRecommendBoard" resultMap="boardResultMap">	
+	<!-- <select id="selectTenRecommendBoard" resultMap="boardResultMap">	
 		SELECT  B.* 
 				, ROWNUM RNUM
 		FROM    (
@@ -297,6 +297,6 @@
 					ORDER BY B.RECOMMEND_COUNT DESC
 				) B
 		WHERE   ROWNUM <![CDATA[<=]]> 10
-	</select>
+	</select> -->
 	
 </mapper>

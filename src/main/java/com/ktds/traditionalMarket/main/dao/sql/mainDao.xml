@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace="현재 패키지의 인터페이스명" -->
+<mapper namespace="MainDao">
+	<!-- 각 하나의 태그(<insert>,<select>....)마다 이거를 "Mapped Statement"라 한다  -->
+	<!-- 이제, 별칭해주기! src/main/resources에 있는 myBatis.xml로 간다. -->
+
+	<!-- Join된 query를 쓸 때는 무조건 얘를 써준다. query결과를 객체와 매핑시켜준다. -->
+	<resultMap type="BoardVO" id="boardResultMap">
+		<id property="boardId" column="BOARD_ID"/>			<!-- PK -->
+		<result property="rowNum" column="RNUM" /> 			<!-- 글번호 -->
+		<result property="memberId" column="B_MEMBER_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="writer" column="WRITER"/>
+		<result property="content" column="CONTENT"/>
+		<result property="crtDate" column="CRT_DATE"/>
+		<result property="mdfyDate" column="MDFY_DATE"/>
+		<result property="viewCount" column="VIEW_COUNT"/>
+		<result property="recommendCount" column="RECOMMEND_COUNT"/>
+		<result property="picture" column="PICTURE"/>
+		<result property="deleteBoard" column="DELETE_BOARD"/>
+		<!-- 객체가 다른 객체한테
+		property는 BoardVO에 있는 선언한  MemberVO변수명
+		이렇게 함으로써 BoardVO에 MemberVO를 가지게 됨. -->
+		<association property="memberVO" javaType="MemberVO">
+			<id property="memberId" column="M_MEMBER_ID"/>
+			<result property="name" column="NAME"/>
+			<result property="password" column="PASSWORD"/>
+			<result property="salt" column="SALT"/>
+			<result property="point" column="POINT"/> 
+			<result property="membership" column="MEMBERSHIP"/>
+			<result property="gender" column="GENDER"/>
+			<result property="email" column="EMAIL"/>
+			<result property="birth" column="BIRTH"/>
+			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
+			<result property="loginFailTime" column="LOGIN_FAIL_TIME"/>
+		</association>
+	</resultMap>
+	
+	
+	
+	<!-- main페이지에서 최시글 띄어줄 쿼리문 -->
+	<select id="selectTenDateBoard" resultMap="boardResultMap">	
+		SELECT  B.* 
+				, ROWNUM RNUM
+		FROM    (
+					SELECT	B.BOARD_ID
+							, B.TITLE
+							, B.CONTENT
+							, B.CRT_DATE
+							, B.MDFY_DATE
+							, B.VIEW_COUNT
+							, B.RECOMMEND_COUNT
+							, B.PICTURE
+							, B.MEMBER_ID B_MEMBER_ID
+							, B.DELETE_BOARD
+							, M.MEMBER_ID M_MEMBER_ID
+							, M.NAME
+							, M.PASSWORD
+							, M.SALT
+							, M.POINT
+							, M.MEMBERSHIP
+							, M.GENDER
+							, M.EMAIL
+							, M.BIRTH
+							, M.LOGIN_FAIL_COUNT
+							, M.LOGIN_FAIL_TIME
+					FROM	BOARD B
+							, MEMBER M
+					WHERE	B.MEMBER_ID = M.MEMBER_ID 
+					ORDER BY B.CRT_DATE DESC
+				) B
+		WHERE   ROWNUM <![CDATA[<=]]> 10
+	</select>
+	
+	<!-- main페이지에서 인기글 띄어줄 쿼리문 -->
+	<select id="selectTenRecommendBoard" resultMap="boardResultMap">	
+		SELECT  B.* 
+				, ROWNUM RNUM
+		FROM    (
+					SELECT	B.BOARD_ID
+							, B.TITLE
+							, B.CONTENT
+							, B.CRT_DATE
+							, B.MDFY_DATE
+							, B.VIEW_COUNT
+							, B.RECOMMEND_COUNT
+							, B.PICTURE
+							, B.MEMBER_ID B_MEMBER_ID
+							, B.DELETE_BOARD
+							, M.MEMBER_ID M_MEMBER_ID
+							, M.NAME
+							, M.PASSWORD
+							, M.SALT
+							, M.POINT
+							, M.MEMBERSHIP
+							, M.GENDER
+							, M.EMAIL
+							, M.BIRTH
+							, M.LOGIN_FAIL_COUNT
+							, M.LOGIN_FAIL_TIME
+					FROM	BOARD B
+							, MEMBER M
+					WHERE	B.MEMBER_ID = M.MEMBER_ID 
+					ORDER BY B.RECOMMEND_COUNT DESC
+				) B
+		WHERE   ROWNUM <![CDATA[<=]]> 10
+	</select>
+	
+	<!-- 조회수순으로 인기 재래시장명 순위 -->
+	<!-- <select id="selectTenTrdtnName" resultType="string">
+		SELECT	NAME name
+		FROM	TRADITIONAL_MARKET
+		ORDER	BY VIEW_COUNT DESC
+	</select> -->
+	<select id="selectTenTrdtnName" resultType="TrdtnmarketVO">
+		SELECT	MARKET_ID marketId
+				, LATITUDE latitude
+				, LONGITUDE longitude
+				, NAME name
+				, ADDRESS address
+				, PAGE page
+				, VIEW_COUNT view_count
+		FROM	TRADITIONAL_MARKET
+		ORDER	BY VIEW_COUNT DESC
+	</select>
+	
+</mapper>

@@ -11,6 +11,7 @@ public class TrdtnmarketVO {
 	private String name; 		// 재래시장 이름
 	private String address; 	// 재래시장 주소
 	private String page;		// 각각의 재래시장마다 jsp이름
+	private String viewCount;	// 재래시장 조회수
 	
 	private List<StoreVO> storeList;
 	
@@ -70,6 +71,14 @@ public class TrdtnmarketVO {
 
 	public void setStoreList(List<StoreVO> storeList) {
 		this.storeList = storeList;
+	}
+
+	public String getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
 	}
 	
 	

@@ -37,24 +37,27 @@ body .inline #allBackground{
 
 }
 
-/* 인기 게시글 */
-#allBackground #popularity {
-/* 	display: inline-block; */
-	
-}
-
 /* 인기 재래시장 순위 */
 #allBackground #login_popTrd #popularTrdtnName{
 /* 	display: inline-block; */
 	background-color:#ffffff;
 	width: 450px;
 	height: 600px;
-    /* margin-top: 80px; */
 } 
 
 /* vertical-align:middle; */
-/* 인기, 최신 게시글 크기 */
-#allBackground #popularity, #allBackground #theNewest {
+
+/* 인기게시글, 최신게시글, 인기재래시장 글자 */
+#popularity h3, #theNewest h3, #login_popTrd #popularTrdtnName h3 {
+	padding-left: 10px;
+	padding-top: 10px;
+	font-size: 30px;
+	font-weight: bold;
+	color: #000000;
+}
+
+/* 인기, 최신 게시글 div 크기 */
+#allBackground #popularity, #allBackground #theNewest{
 	background-color:#ffffff;
 	width:1200px;
 	height:400px;
@@ -63,11 +66,32 @@ body .inline #allBackground{
 /* 	margin-right: 15px; */
 }
 
+/* 인기, 최신 게시글 제목, 작성자 등등 있는 div 크기 */
+#allBackground #popularity .headerWrapper, #allBackground #theNewest .headerWrapper {
+	width: 1200px;
+	height: 35px;
+	padding-left: 40px;
+}
+
+/* 인기, 최신 게시글 제목, 작성자 등등 내용있는 div 크기 */
+#allBackground #popularity .contentSize, #allBackground #theNewest .contentSize {
+	width: 1200px;
+	height: 360px;
+	padding-left: 40px;
+}
+
 /* 인기, 최신 게시글 헤더 글자 */
 #allBackground #popularity .oneWrapper > .headerWrapper div, #allBackground #theNewest .oneWrapper > .headerWrapper div{
+	/* padding-left: 20px; */
 	font-size: 20px; 
 	font-weight: bold;
-	color: #666666;
+	color: #c1c1c1
+}
+
+#allBackground #popularity .oneWrapper .contentSize .contentWrapper
+, #allBackground #theNewest .oneWrapper .contentSize .contentWrapper {
+	font-size: 18px; 
+	padding-bottom: 2px;
 }
 
 /* footer.jsp */
@@ -78,7 +102,47 @@ section.inline > section > #allBackground {
 	/* overflow-y: scroll; */
 }
 
+/* 인기재래시장 - 숫자 */
+#login_popTrd #popularTrdtnName #num {	
+	float: left;
+	margin-left: 35px;
+	margin-right: 50px;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+}
 
+#login_popTrd #popularTrdtnName #num div {
+	/* border: 3px solid gray; */	
+	background-color: #e5e5e5;
+	width: 35px;
+}
+
+#login_popTrd #popularTrdtnName #num div,
+#login_popTrd #popularTrdtnName #name div {
+	margin-bottom: 	15px;
+	height: 35px
+}
+
+/* 인기재래시장 - 이름 */
+#login_popTrd #popularTrdtnName #name {
+	float:left;
+	/* margin-bottom: 20px; */
+	font-size: 22px;
+
+}
+
+#login_popTrd #mainBanner2 {
+	float:left;
+	margin-top: 20px;
+/* 	width: 450px;
+	height: 200px; */
+}
+
+#login_popTrd #mainBanner2 img {
+	width: 455px;
+	height: 220px;
+}
 
 /* .aside_left {
    position:fixed;

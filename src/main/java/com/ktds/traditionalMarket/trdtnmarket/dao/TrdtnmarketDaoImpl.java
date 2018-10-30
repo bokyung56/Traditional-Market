@@ -33,8 +33,20 @@ public class TrdtnmarketDaoImpl extends SqlSessionDaoSupport implements Trdtnmar
 		
 		return getSqlSession().selectList("TrdtnmarketDao.selectAllTrdtnMarkets");
 	}
-	
-	
-	
 
+	// 재래시장 조회수 
+	@Override
+	public int updateTrdtnViewCount(String marketId) {
+	
+		return getSqlSession().update("TrdtnmarketDao.updateTrdtnViewCount", marketId);
+	}
+
+	
+	// 조회수순으로 인기 재래시장명 순위 
+	/*@Override
+	public List<String> selectTenTrdtnName() {
+		
+		return getSqlSession().selectList("TrdtnmarketDao.selectTenTrdtnName");
+	}*/
+	
 }

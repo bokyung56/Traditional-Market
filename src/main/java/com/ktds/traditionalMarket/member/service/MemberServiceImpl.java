@@ -11,15 +11,20 @@ import com.ktds.traditionalmarket.board.biz.BoardBiz;
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.member.biz.MemberBiz;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.trdtnmarket.biz.TrdtnmarketBiz;
+import com.ktds.traditionalmarket.trdtnmarket.vo.TrdtnmarketVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
-	private MemberBiz memberBiz;
+	private MemberBiz memberBiz;				// 회원
 	
-	@Autowired
-	private BoardBiz boardBiz;
+	//@Autowired
+	//private BoardBiz boardBiz;					// 게시판
+	
+	//@Autowired
+	//private TrdtnmarketBiz trdtnmarketBiz;		// 재래시장
 
 	// 입력한 아이디가 DB에 있는지 확인하기
 	@Override
@@ -48,7 +53,7 @@ public class MemberServiceImpl implements MemberService{
 		return this.memberBiz.isBlockUser(memberId);
 	}
 	
-	// main 페이지에서 게시글 날짜순 10개 띄어줄려고
+/*	// main 페이지에서 게시글 날짜순 10개 띄어줄려고
 	public List<BoardVO> readTenDateBoard(){
 		
 		return this.boardBiz.readTenDateBoard();
@@ -59,4 +64,13 @@ public class MemberServiceImpl implements MemberService{
 		
 		return this.boardBiz.readTenRecommendBoard();
 	}
+
+	// main 페이지에서 인기 재래시장 순위 10개 
+	@Override
+	public List<String> readTenTrdtnName() {
+		
+		return this.trdtnmarketBiz.readTenTrdtnName();
+	}*/
+	
+	
 }

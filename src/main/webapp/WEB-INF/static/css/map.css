@@ -1,31 +1,80 @@
 @charset "UTF-8";
 
 #all {
-	margin-left:800px;
-	margin-top:200px;
+	/* margin-left:800px;
 	width:1000px; 
-	height:850px; 
+	height:850px; */ 
+	/* margin-top:200px; */
+	display: table;
+    margin: 0 auto;
 }
 
-#title1 {
+#all #title1 {
 	/* margin-top:150px; */
 	margin-left: 0px;
 	font-size: 30px;
 }
 
-#title2 {
-	margin-left: 100px;
+#all #title2 {
+	/* margin-left: 50px; */
 	margin-top: 100px;
 	font-size: 20px;
 }
 
-#map {
-	margin-left: 100px;
-	margin-top:20px;
-	margin-bottom:100px;
+#all #trdtn_name {
+	float: left;
+	margin-top:30px;
+	width: 700px;
+	height: 400px;
+	margin-bottom: 10px;
+}
+
+/* #all #trdtn_name #trdtnNameOne{
+	float: left;
+	padding-bottom: 10px;
+	margin-right: 50px;
+}
+
+#all #trdtn_name #trdtnNameTwo{
+	float: left;
+	padding-bottom: 10px;
+} */
+
+#all #trdtn_name #DoNameOne {
+	float: left;
+	margin-right: 100px;
+}
+
+#all #trdtn_name #DoNameOne #trdtnNameOne 
+, #all #trdtn_name #DoNameTwo #trdtnNameThree{
+	margin-top: 50px;
+	margin-bottom: 120px;
+}
+
+#all #trdtn_name #DoNameTwo {
+	float: left;
+}
+
+#all #trdtn_name li>.sName {
+	font-size: 25px;
+	cursor: pointer; 
+	color: #000000;  
+	text-decoration:none;
+	margin-bottom: 10px;
+}
+
+#all #map {
+	float: left;
+	margin-top:30px;
+
 	width:700px; 
 	height:700px; 
 
 	/* text-align: center; */
 	/* vertical-align: middle; */
+}
+
+
+.do {
+	cursor:pointer;
 }

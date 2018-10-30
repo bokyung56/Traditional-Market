@@ -244,7 +244,7 @@ public class MemberController {
 	} */
 	
 	
-	// 메인 페이지
+/*	// 메인 페이지
 	@GetMapping("/main/main")
 	public ModelAndView viewTenBoardListPage() {
 		
@@ -252,17 +252,20 @@ public class MemberController {
 		
 		List<BoardVO> boardTenList = this.memberService.readTenDateBoard();
 		List<BoardVO> boardRecommendList = this.memberService.readTenRecommendBoard();
+		List<String> trdtnName = this.memberService.readTenTrdtnName();
 		
 		view.addObject("boardTenList", boardTenList);
 		view.addObject("boardRecommendList", boardRecommendList);
+		view.addObject("trdtnName", trdtnName);
 		
-	/*	for ( Object boardVO : boardTenList ) {
+		
+		for ( Object boardVO : boardTenList ) {
 			BoardVO board = (BoardVO) boardVO;
 			System.out.println("board.title= " + board.getTitle());
-		}*/
+		}
 					
 		return view;
-	}
+	}*/
 	
 	
 }

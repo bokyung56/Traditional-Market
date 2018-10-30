@@ -27,6 +27,6 @@ public interface BoardBiz {
 	public boolean updateDeleteOneBoard(String boardId);		// 게시글 지운 여부
 	
 	
-	public List<BoardVO> readTenDateBoard();				// main페이지에서 최시글 띄어줄 메소드
-	public List<BoardVO> readTenRecommendBoard();			// main페이지에서 인기글 띄어줄 메소드
+	//public List<BoardVO> readTenDateBoard();				// main페이지에서 최시글 띄어줄 메소드
+	//public List<BoardVO> readTenRecommendBoard();			// main페이지에서 인기글 띄어줄 메소드
 }

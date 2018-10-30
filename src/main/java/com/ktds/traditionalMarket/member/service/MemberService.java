@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ktds.traditionalmarket.board.vo.BoardVO;
 import com.ktds.traditionalmarket.member.vo.MemberVO;
+import com.ktds.traditionalmarket.trdtnmarket.vo.TrdtnmarketVO;
 
 public interface MemberService {
 	
@@ -22,9 +23,12 @@ public interface MemberService {
 	
 	
 	
-	// main 페이지에서 게시글 날짜순 10개 띄어줄려고
+	/*// main 페이지에서 게시글 날짜순 10개 띄어줄려고
 	public List<BoardVO> readTenDateBoard();
 	
 	// main 페이지에서 게시글 추천순10개 띄어줄려고
 	public List<BoardVO> readTenRecommendBoard();
+	
+	// main 페이지에서 인기 재래시장 순위 10개 
+	public List<String> readTenTrdtnName();*/
 }

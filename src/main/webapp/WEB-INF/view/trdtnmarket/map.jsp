@@ -50,6 +50,19 @@
         	marketList.push(object);
         </c:forEach>
         
+        $(".do").click(function(){
+        	for (let i in marketList) {
+        		/* alert("for i= "+i); */
+        		var doFirst = marketList[i].address.split(' ', 1);
+        		if ( $(this).text() == doFirst ) {	
+        			let doName =  $('<div>' + marketList[i].name + '</div>');
+        			$(this).children("div").append(doName);
+        			/* alert("i="+ i + ", " + marketList[i].name);  */
+        		}
+        		
+        	}
+        })
+        
         for (let i in marketList) {
         	let marker = new daum.maps.Marker({			// 마커를 생성
 	 		    position: new daum.maps.LatLng(marketList[i].latitude, marketList[i].longitude),
@@ -94,6 +107,41 @@
 		<div id="title2">
 			아래 지도에서 원하는 재래시장을 선택해주세요 :D
 		</div>
+		<div id="trdtn_name"> 
+			<%-- <c:forEach items="${location}" var="oneTrdtnName">
+			<div class="trdtnName">
+				<li><a class="sName">${oneTrdtnName.name}</a></li>
+			</div>
+			</c:forEach> --%>
+			<div id="DoNameOne">
+				<div id="trdtnNameOne">
+					<div class="do"><h1>서울특별시</h1><div></div></div>
+					<div class="do"><h1>경기도</h1></div>
+					<div class="do"><h1>강원도</h1></div>
+					<div class="do"><h1>충청북도</h1></div>
+				</div>
+				<div id="trdtnNameTwo">
+					<div class="do"><h1>충청남도</h1></div>
+					<div class="do"><h1>경상북도</h1><div></div></div>
+					<div class="do"><h1>경상남도</h1></div>
+					<div class="do"><h1>전라북도</h1></div>
+				</div>
+			</div>
+			<div id="DoNameTwo">
+				<div id="trdtnNameThree">
+					<div class="do"><h1>전라남도</h1></div>
+					<div class="do"><h1>부산광역시</h1></div>
+					<div class="do"><h1>울산광역시</h1></div>
+					<div class="do"><h1>대구광역시</h1></div>
+				</div>
+				<div id="trdtnNameFour">
+					<div class="do"><h1>대전광역시</h1></div>
+					<div class="do"><h1>인천광역시</h1></div>
+					<div class="do"><h1>광주광역시</h1></div>
+					<div class="do"><h1>제주특별자치도</h1></div>
+				</div>
+			</div>
+		</div>
 		<!-- 지도가 붙을 위치 -->	
 	 	<div id="map">
 	 	</div>
@@ -101,3 +149,33 @@
 
 <!-- </body>
 </html> -->
+
+
+
+
+			<!-- <div id="trdtnNameOne">
+					<h1 id="DoOne">서울특별시</h1>
+					<h1 id="DoTwo">경기도</h1>
+					<h1 id="DoThree">강원도</h1>
+					<h1 id="DoFour">충청북도</h1>
+				</div>
+				<div id="trdtnNameTwo">
+					<h1 id="DoFive">충청남도</h1>
+					<h1 id="DoSix">경상북도</h1>
+					<h1 id="DoSeven">경상남도</h1>
+					<h1 id="Doeight">전라북도</h1>
+				</div>
+			</div>
+			<div id="DoNameTwo">
+				<div id="trdtnNameThree">
+					<h1 id="DoNine">전라남도</h1>
+					<h1 id="DoTen">부산광역시</h1>
+					<h1 id="DoEleven">울산광역시</h1>
+					<h1 id="DoTwelve">대구광역시</h1>
+				</div>
+				<div id="trdtnNameFour">
+					<h1 id="DoThirteen">대전광역시</h1>
+					<h1 id="DoFourteen">인천광역시</h1>
+					<h1 id="DoFifteen">광주광역시</h1>
+					<h1 id="DoSixteen">제주특별자치도</h1>
+				</div> -->
