@@ -1,4 +1,18 @@
 @charset "UTF-8";
+	body {
+		background-color:#f0f0f0;
+	}
+
+	#all {
+		/* margin-top: 5px; */
+		width: 60%;
+		height: 100%; 
+		display: table;
+		margin: 0 auto;
+		margin-top: 25px;
+		margin-bottom: 25px;
+		background-color:#ffffff;
+	}
 
 	*{
 	    margin: 0;

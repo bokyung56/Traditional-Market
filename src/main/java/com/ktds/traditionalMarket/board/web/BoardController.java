@@ -77,7 +77,7 @@ public class BoardController {
 			, HttpServletRequest request, HttpSession session) {
 		
 		// 전체검색 or 상세 -> 목록 or 글쓰기
-		if ( boardSearchVO.getSearchKeyword() == null ) {
+		if ( boardSearchVO.getSearchKeyword() == null && boardSearchVO.getSearchTitle() == null && boardSearchVO.getSearchMemberId() == null ) {
 			boardSearchVO = (BoardSearchVO) session.getAttribute(Session.SEARCH);	// Session.SEARCH
 			if( boardSearchVO == null ) {	// 전체 페이지보여주기
 				boardSearchVO = new BoardSearchVO();
@@ -85,12 +85,11 @@ public class BoardController {
 			}
 		}
 
+		System.out.println("getSearchKeyword-------------" + boardSearchVO.getSearchKeyword());
+		System.out.println("getSearchTitle-------------" + boardSearchVO.getSearchTitle());
+		System.out.println("getSearchMemberId-------------" + boardSearchVO.getSearchMemberId());
+			
 		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);	// 2. List<BoardVO> boardVOList = this.boardService.readAllBoards();
-		
-		statisticsLogger.info("URL : /board/list, IP : "	// <logger> 
-				+ request.getRemoteAddr() 
-				+ ", List Size : " 
-				+ pageExplorer.getList().size());
 		
 		session.setAttribute(Session.SEARCH, boardSearchVO);
 			

@@ -132,7 +132,7 @@
 			<br>
 			<div id="infoA">
 				<!-- <input type="button" id="myInfoBtn" value="내 정보" /> -->
-				<a href="#">내&nbsp;정보</a>
+				<a href="../member/myInformation">내&nbsp;정보</a>
 			</div>
 			<div style="float: left">
 				<div class="btns">

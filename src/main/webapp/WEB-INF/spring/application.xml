@@ -33,7 +33,8 @@
 		<mvc:interceptor>
 			<!-- <mvc:mapping path="/**"/> 전체 url에 interceptor을 거는것-->
 			<mvc:mapping path="/board/**" />
-			<mvc:mapping path="/reply/**" />	
+			<mvc:mapping path="/reply/**" />
+			<mvc:mapping path="/member/myInformation" />	
 			<mvc:exclude-mapping path="/js/**" />
 			<mvc:exclude-mapping path="/css/**" />
 			<mvc:exclude-mapping path="/img/**" />		

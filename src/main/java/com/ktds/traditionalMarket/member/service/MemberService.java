@@ -19,16 +19,11 @@ public interface MemberService {
 	// 회원 한명정보 가져오기
 	public boolean readOneMember(MemberVO memberVO, HttpSession session);
 	
+	// 회원정보 수정하기
+	public boolean updateMyInformation(MemberVO memberVO);
+	
 	public boolean isBlockUser(String memberId);
 	
-	
-	
-	/*// main 페이지에서 게시글 날짜순 10개 띄어줄려고
-	public List<BoardVO> readTenDateBoard();
-	
-	// main 페이지에서 게시글 추천순10개 띄어줄려고
-	public List<BoardVO> readTenRecommendBoard();
-	
-	// main 페이지에서 인기 재래시장 순위 10개 
-	public List<String> readTenTrdtnName();*/
+	// 회원 정보가져오기(내 정보)
+	public MemberVO readOneMemberInfo(MemberVO memberId);
 }

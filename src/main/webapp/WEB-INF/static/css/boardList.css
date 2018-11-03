@@ -1,24 +1,112 @@
 @charset "UTF-8";
 
+body {
+	background-color:#f0f0f0;	/* gray */
+}
+
+#allBoard {
+	/* margin-top: 5px; */
+	width: 60%;
+	height: auto;
+	min-height: 1000px; 
+	display: table;
+    margin-bottom: 25px;
+	background-color:#ffffff;	/* white */
+	margin: 0 auto;
+    margin-top: 25px;
+}
+
 #menuBoard {
-	font-size: 30px;
-	margin-left: 500px;
-	margin-top: 50px;
+	margin-left: 20px;
+	margin-top: 40px;
+	font-size: 25px;
+	color: #808080;
+	font-weight: bold;
+}
+
+#menuBoard:after{
+   content: "";
+   width: 80px;
+   text-align: center;
+   /* margin-left: 50%;
+   transform: translateX(-50%); */
+   display: block;
+   border-bottom: 5px solid #00bb5e;
+   margin-top: 10px;
+   margin-left: 25px;
 }
 
 #wrapper {
-	margin-top: 150px;
+	margin-top: 80px;
+	margin-left: 20px;
 	width: 100%;
 	text-align: center;
+}
+
+#wrapper a {
+	text-decoration: none;
+	color: #000000;
 }
 
 #no-articles {
 	padding: 15px;
 }
 
-.padded {
-	padding: 20px;
-	margin:20px;
+#writePart {
+	position: absolute;
+	width: 100%;
+	margin-top: 40px;
+	margin-right: 50px;
+}
+
+#writePart > #writeBtn {
+	background-color: #e5e5e5;
+	border: 0;
+	width: 80px;
+	height: 40px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	color: #000000;			/* black */
+}
+
+
+#searchPart {
+	margin-top: 130px;
+	margin-left:20px;
+}
+
+#searchPart #searchForm #pagenation {
+	margin-bottom: 50px;
+}
+
+#searchPart #searchForm #pagenation a {
+	font-size: 20px;
+	font-weight: bold;
+	color: #000000;
+}
+
+#searchForm select {
+	width: 150px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#searchForm input {
+	width: 400px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#searchForm #searchBtn{
+	background-color: #e5e5e5;
+	border: 0;
+	width: 130px;
+	height: 40px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	color: #000000;
 }
 
 #allBackground #popularity .oneWrapper .headerWrapper, 
@@ -26,9 +114,22 @@
 	margin-bottom: 15px;
 }
 
-#wrapper>#headerWrapper>div
-, #wrapper>.contentWrapper>div {
-	padding: 15px;
+
+#wrapper>.contentWrapper {
+	margin-top: 20px;
+}
+
+.fontSizeOne {
+	font-size: 25px;
+}
+
+
+.fontSizeTwo {
+	font-size: 20px;
+}
+
+.pdbottom {
+	padding-bottom: 10px;
 }
 
 .header {
@@ -37,7 +138,7 @@
 }
 
 .number {
-	width: 70px;
+	width: 90px;
 }
 
 .subject {
@@ -49,7 +150,7 @@
 }
 
 .create-date {
-	width: 170px;
+	width: 200px;
 }
 
 .view {
@@ -68,3 +169,4 @@
 .cntr {
 	text-align: center;
 }
+

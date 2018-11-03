@@ -19,12 +19,6 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private MemberBiz memberBiz;				// 회원
-	
-	//@Autowired
-	//private BoardBiz boardBiz;					// 게시판
-	
-	//@Autowired
-	//private TrdtnmarketBiz trdtnmarketBiz;		// 재래시장
 
 	// 입력한 아이디가 DB에 있는지 확인하기
 	@Override
@@ -53,24 +47,19 @@ public class MemberServiceImpl implements MemberService{
 		return this.memberBiz.isBlockUser(memberId);
 	}
 	
-/*	// main 페이지에서 게시글 날짜순 10개 띄어줄려고
-	public List<BoardVO> readTenDateBoard(){
-		
-		return this.boardBiz.readTenDateBoard();
-	}
 	
-	// main 페이지에서 게시글 추천순10개 띄어줄려고
-	public List<BoardVO> readTenRecommendBoard(){
+	// 회원 정보가져오기(내 정보)
+	@Override
+	public MemberVO readOneMemberInfo(MemberVO memberId) {
 		
-		return this.boardBiz.readTenRecommendBoard();
+		return this.memberBiz.readOneMemberInfo(memberId);
 	}
 
-	// main 페이지에서 인기 재래시장 순위 10개 
+	// 회원정보 수정하기
 	@Override
-	public List<String> readTenTrdtnName() {
+	public boolean updateMyInformation(MemberVO memberVO) {
 		
-		return this.trdtnmarketBiz.readTenTrdtnName();
-	}*/
-	
-	
+		return this.memberBiz.updateMyInformation(memberVO);
+	}
+
 }

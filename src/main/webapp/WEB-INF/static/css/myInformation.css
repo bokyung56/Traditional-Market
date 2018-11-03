@@ -1,1 +1,168 @@
 @charset "UTF-8";
+
+body {
+	background-color:#f0f0f0;
+}
+
+#all {
+	/* margin-top: 5px; */
+	width: 60%;
+	min-height: 1000px; 
+	display: table;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color:#ffffff;
+}
+
+#all #headerOne {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+#headerOne:after{
+   content: "";
+   width: 115px;
+   text-align: center;
+   display: block;
+   border-bottom: 5px solid #00bb5e;
+   margin-top: 10px;
+   margin-left: 25px;
+}
+
+#all #headerTwo {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 60px;
+}
+
+#headerTwo:after{
+   content: "";
+   width: 250px;
+   text-align: center;
+   display: block;
+   border-bottom: 5px solid #00bb5e;
+   margin-top: 10px;
+   margin-left: 25px;
+}
+
+#all #information {
+    margin-top: 40px;
+    margin-left: 40px;
+    width:95%;
+    height: 350px;
+    background-color:#f0f0f0;
+}
+
+#all #information #membership {
+    float: left;
+    width: 43%;
+}
+
+#all #information #coupon {
+    float: left;
+    width: 22%;
+}
+
+#all #information #point {
+    float: left;
+    width: 30%;
+}
+
+#all #information .inHeader {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 100px;
+}
+
+#all #information #membershipFont {
+    margin-left: 40px;
+    font-size: 30px;
+}
+
+
+#all #information #pointFont {
+    margin-left: 40px;
+    font-size: 30px;
+}
+
+#all #infoPart .infoHeader {
+    display: inline-block;
+}
+
+
+
+/* 내 정보 수정 입력 폼 */
+#all #infoPart {
+    margin-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 40px;
+    float: left;
+}
+
+#all .inputSize {
+    display: inline-block;
+    width: 350px;
+	height: 35px;
+	font-size: 20px;
+}
+
+#all #infoPart #password {
+    margin-left: 120px;
+    display: inline-block;
+    width: 350px;
+	height: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+    border: 3px solid gray;
+}
+
+#all #infoPart #password_ckeck {
+    margin-left: 37px;
+    display: inline-block;
+    width: 350px;
+	height: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+    border: 3px solid gray;
+}
+
+#all #infoPart #email {
+    margin-left: 140px;
+    display: inline-block;
+    width: 350px;
+	height: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+    border: 3px solid gray;
+}
+
+#all #modifyBtn {
+    margin-top: 70px;
+    margin-left: 240px;
+	width: 100px;
+	height: 50px;
+	background-color: #636262;
+	border: 0;
+	cursor:pointer;
+	font-size: 20px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+#all #marker {
+    float: left;
+    margin-left:870px;
+    margin-top: 350px;
+}
+
+#all #marker img {
+    width: 200px;
+    height: 120px;
+    margin-right: 0;
+}

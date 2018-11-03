@@ -37,6 +37,7 @@ WHERE	MEMBER_ID = #{memberId}
 </select>
 
 
+<!-- login -->
 <select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
 SELECT	MEMBER_ID memberId
 		, NAME name
@@ -51,6 +52,28 @@ FROM	MEMBER
 WHERE	MEMBER_ID = #{memberId}
 AND		PASSWORD = #{password}
 </select>
+
+
+<!-- member Information -->
+<select id="selectOneMemberInfo" parameterType="MemberVO" resultType="MemberVO">
+SELECT	MEMBER_ID memberId
+		, NAME name
+		, PASSWORD password
+		, SALT salt
+		, POINT point
+		, MEMBERSHIP membership
+		, GENDER gender
+		, EMAIL email
+		, BIRTH birth
+FROM	MEMBER
+WHERE	MEMBER_ID = #{memberId}
+</select>
+
+<update id="updateMyInformation" parameterType="MemberVO">
+UPDATE	MEMBER
+SET		PASSWORD = #{password}, SALT = #{salt}, EMAIL = #{email}
+WHERE	MEMBER_ID = #{memberId}
+</update>
 
 <select id="getSaltById" parameterType="string" resultType="string">
 SELECT	SALT 

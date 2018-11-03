@@ -119,9 +119,20 @@
 		FROM	BOARD B
 				, MEMBER M
 		WHERE	B.MEMBER_ID = M.MEMBER_ID
-		<if test="searchKeyword != null and searchKeyword != ''">
-		AND		TITLE LIKE '%' || #{searchKeyword} || '%'
-		</if>
+		<choose>
+			<when test="searchKeyword != null and searchKeyword != ''">
+				AND ( (TITLE LIKE '%' || #{searchKeyword} || '%') OR (B.MEMBER_ID LIKE '%' || #{searchKeyword} || '%') )
+			</when>
+			<when test="searchTitle != null and searchTitle != ''">
+				AND TITLE LIKE '%' || #{searchTitle} || '%'
+			</when>
+			<when test="searchMemberId != null and searchMemberId != ''">
+				AND B.MEMBER_ID LIKE '%' || #{searchMemberId} || '%'
+			</when>
+		</choose>
+		<!-- <if test="searchKeyword != null and searchKeyword != ''">
+			AND		TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if> -->
 	</select>
 	
 	
@@ -155,28 +166,17 @@
 								FROM	BOARD B
 										, MEMBER M
 								WHERE	B.MEMBER_ID = M.MEMBER_ID
-								<if test="searchKeyword != null and searchKeyword != ''">
-									<choose>
-										<when test="searchKeyword != null">
-											AND		TITLE LIKE '%' || #{searchKeyword} || '%'
-										</when>
-										<when test="searchKeyword != null">
-											AND		B_MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
-										</when>
-									</choose>
-																
-								</if>
-			<!-- 					<choose>
-									<when test="searchTitle != null">
+			 					<choose>
+								 	<when test="searchKeyword != null and searchKeyword != ''">
+										AND ( (TITLE LIKE '%' || #{searchKeyword} || '%') OR (B.MEMBER_ID LIKE '%' || #{searchKeyword} || '%') )
+									</when>
+									<when test="searchTitle != null and searchTitle != ''">
 										AND TITLE LIKE '%' || #{searchTitle} || '%'
 									</when>
-									<when test="searchMemberId != null">
-										AND B_MEMBER_ID LIKE '%' || #{searchMemberId} || '%'
+									<when test="searchMemberId != null and searchMemberId != ''">
+										AND B.MEMBER_ID LIKE '%' || #{searchMemberId} || '%'
 									</when>
-									<otherwise>
-										AND featured = 1
-									</otherwise>
-								</choose> -->
+								</choose>
 								
 								ORDER	BY BOARD_ID DESC			
 							) A

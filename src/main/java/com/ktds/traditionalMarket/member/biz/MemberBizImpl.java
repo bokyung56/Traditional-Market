@@ -103,11 +103,30 @@ public class MemberBizImpl implements MemberBiz{
 	
 	
 	
+	// 회원 정보가져오기(내 정보)
+	@Override
+	public MemberVO readOneMemberInfo(MemberVO memberId) {
+		
+		return this.memberDao.selectOneMemberInfo(memberId);
+	}
+	
+	// 회원정보 수정하기
+	@Override
+	public boolean updateMyInformation(MemberVO memberVO) {
+		
+		String salt = SHA256Util.generateSalt();			// 난수값을 이용해 5글자를 만들어냄
+		String password = this.getHashedPassword(memberVO.getPassword(), salt);
+		
+		memberVO.setPassword(password);
+		memberVO.setSalt(salt);
+		
+		return this.memberDao.updateMyInformation(memberVO) > 0;
+	}
 	
 	// 시큐리티
 	@Override
 	public boolean isBlockUser(String memberId) {
-		Integer isBlockUser = memberDao.isBlockUser(memberId);	// isBlockUser = LOGIN_FAIL_COUNT;
+		Integer isBlockUser = this.memberDao.isBlockUser(memberId);	// isBlockUser = LOGIN_FAIL_COUNT;
 		
 		// 1번. WHERE MEMBER_ID = #{memberId} 2번. AND LOGIN_FAIL_TIME + 1/24 >= SYSDATE
 		// 둘 중 하나라도 조건이 성립하지 않으면 null값을 가져온다. (memberDao.xml)
@@ -130,5 +149,7 @@ public class MemberBizImpl implements MemberBiz{
 		
 		return memberDao.increaseLoginFailCount(memberId) > 0;
 	}
+
+	
 
 }

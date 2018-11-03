@@ -19,7 +19,7 @@
 				<input type="button" id="hLogoutBtn" value="로그아웃"
 						onclick="location.href='../member/logout'" />
 				<input type="button" id="hMyInfoBtn" value="내 정보"
-						onclick="location.href='../member/logout'" />
+						onclick="location.href='../member/myInformation'" />
 			</c:if>
 		</div>
 		<div id="wrapperInner">
@@ -29,8 +29,12 @@
 				</a>
 			</div>
 			<div id="header_search"">
-				<input type="text" name="search_main">
-				<img src="http://localhost:8080/Traditional-Market/img/searchKeyword.png">
+				<div id="search_main">
+					<input type="text" name="search_main">
+				</div>
+				<div id="search_button">
+					<img src="http://localhost:8080/Traditional-Market/img/searchKeyword.png">
+				</div>
 			</div>  
 		</div>
 

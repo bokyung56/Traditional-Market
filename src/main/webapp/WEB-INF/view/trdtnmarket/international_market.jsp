@@ -143,7 +143,7 @@
          						$(spanStart2).append(inputReply);
          						$(spanStart2).append(submit);
 
-         						$("#productList").before($('<h3>가격 정보</h3>'));     
+         						$("#productList").before($('<h3 id="priceTitle">가격 정보</h3>'));     
          						var plist = response.storeVO.productList;		// 하나의 상점에 대한 상품들
          						for ( var p in plist ) {
          							var pName = plist[p].name;
@@ -151,15 +151,15 @@
          							var pPicture = plist[p].picture;
          							
          							var proDiv = $('<div class="proDiv" style="text-alian: center; display:inline-block;"></div>');
-         							var proName = $('<span >'+ pName +'</span>');
+         							var proName = $('<span>'+ pName +'</span>');
          							var proPrice = $('<span>'+ pPrice +'</span>');
          							var proPicture = $('<span><img src="/Traditional-Market/img/international/koreanpancake/' + pPicture + '" width="70" height="70"></span>');
          							
          							
          							$("#productList").prepend(proDiv);
+         							$(proDiv).append(proPicture);
          							$(proDiv).append(proName);
-         							$(proDiv).append(proPrice);
-         							$(proDiv).append(proPicture);        							
+         							$(proDiv).append(proPrice);       							        							
          						}
          						
          						var slist = response.storeVO.storeReplyList;	// 하나의 상점에 대한 댓글들        				
@@ -229,7 +229,8 @@
 	        	isCheck = false;       	
         	}
         	
-        	else {
+        	else {	// 다시 click시에 펼쳐둔거 없애기
+        		
 	        	$(this).closest(".storeInfo").find(".representative").slideUp(100);
 	        	$(this).closest(".storeInfo").find(".phone").slideUp(100);
 	        	$(this).closest(".storeInfo").find(".storeInformation").slideUp(100);
@@ -252,6 +253,10 @@
 	        	$(".deleteY").remove();		// 댓글들 (회원ID이 작성한 내용을 삭제)
 	        	$(".delBtn").remove();		// 댓글들 (회원ID와 일치시 버튼)
 	        	
+	        	$("#priceTitle").remove();
+	        	$(".proDiv").empty();		// 하나의 상점에 대한 상품들
+	        	
+	        	
 	        	isCheck = true;
         	}
         })
@@ -265,7 +270,8 @@
 
 
 </head>
-<!-- <body> --> 
+<body> 
+	<div id="all">
 		<!-- 상점 -->
 		<div style="margin-left:200px; margin-top:200px; display: inline-block;">
 		    <c:forEach items="${trdtnmarket.storeList}" var="stores">
@@ -332,6 +338,8 @@
 			</div>	
 		</div>
 		
+		
+	</div>	
 		<%-- <c:forEach items="${storeVO.replyList}" var="OneReply">	
 				<div class="replyDiv" style="margin-left: ${(OneReply.level-1) * 30}px" >
 					<div>${OneReply.memberId}</div>	<!-- <div>${reply.memberId}</div> -->

@@ -21,6 +21,11 @@ public interface MemberBiz {
 	// 회원 point 업데이트하기(글 작성시)
 	public boolean updatePoint(String memberId, int point);
 	
+	// 회원 정보가져오기(내 정보)
+	public MemberVO readOneMemberInfo(MemberVO memberId);
+	
+	// 회원정보 수정하기
+	public boolean updateMyInformation(MemberVO memberVO);
 	
 	// 시큐리티
 	public boolean isBlockUser(String memberId);

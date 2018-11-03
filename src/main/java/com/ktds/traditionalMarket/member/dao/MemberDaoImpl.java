@@ -48,6 +48,21 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 		
 		return getSqlSession().update("MemberDao.updatePoint", memberVO);
 	}
+	
+	//회원 정보가져오기(내 정보)
+	@Override
+	public MemberVO selectOneMemberInfo(MemberVO memberId) {
+		
+		return getSqlSession().selectOne("MemberDao.selectOneMemberInfo", memberId);
+	}
+	
+	
+	// 회원정보 수정하기
+	@Override
+	public int updateMyInformation(MemberVO memberVO) {
+		
+		return getSqlSession().update("MemberDao.updateMyInformation", memberVO);
+	}
 
 	
 	// 시큐리티
@@ -67,6 +82,7 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	public int increaseLoginFailCount(String memberId) {
 		
 		return getSqlSession().update("MemberDao.increaseLoginFailCount", memberId);
-	}	
-
+	}
+	
+	
 }

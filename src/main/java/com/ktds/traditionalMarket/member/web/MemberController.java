@@ -236,36 +236,47 @@ public class MemberController {
 	// <카카오회원-로그인>
 	
 	
+
 	
-/*	@GetMapping("/main/main")
-	public String viewMain() {	
-		
-		return "main/main";
-	} */
+
 	
+	// 내 정보 +수정 
+	@GetMapping("/member/myInformation")
+	public ModelAndView viewMyInformation(HttpSession session) {
 	
-/*	// 메인 페이지
-	@GetMapping("/main/main")
-	public ModelAndView viewTenBoardListPage() {
+		ModelAndView view = new ModelAndView("member/myInformation");
+
+		MemberVO userId = (MemberVO)session.getAttribute("_USER_");
 		
-		ModelAndView view = new ModelAndView("main/main");
+		//String userId = (String) session.getAttribute("_USER_");
+		//MemberVO myInfo = this.memberService.readOneMemberInfo(userId);
 		
-		List<BoardVO> boardTenList = this.memberService.readTenDateBoard();
-		List<BoardVO> boardRecommendList = this.memberService.readTenRecommendBoard();
-		List<String> trdtnName = this.memberService.readTenTrdtnName();
+		view.addObject("myInfo", userId);
 		
-		view.addObject("boardTenList", boardTenList);
-		view.addObject("boardRecommendList", boardRecommendList);
-		view.addObject("trdtnName", trdtnName);
-		
-		
-		for ( Object boardVO : boardTenList ) {
-			BoardVO board = (BoardVO) boardVO;
-			System.out.println("board.title= " + board.getTitle());
-		}
-					
 		return view;
-	}*/
+	}
 	
+	// 내 정보 +수정 
+	@PostMapping("/member/myInformation")
+	public ModelAndView doMyInformation( HttpSession session
+										 , @ModelAttribute MemberVO memberVO
+										 /*, Errors errors*/) {
+	
+		ModelAndView view = new ModelAndView("redirect:member/myInformation");
+		
+		// 만약, 회원가입하는데 에러가 있다면 다시 회원가입페이지로 가서 입력했던 값 살려두기.
+		/*if( errors.hasErrors() ) {
+			view.setViewName("member/myInformation");
+			view.addObject("memberVO", memberVO);
+			return view;	// 위에 2줄 값을 담고 return
+		}*/
+		
+		boolean isSuccess = this.memberService.updateMyInformation(memberVO);
+		
+		MemberVO userId = (MemberVO)session.getAttribute("_USER_");		
+		view.addObject("myInfo", userId);
+		
+		return view;
+	}
 	
 }
